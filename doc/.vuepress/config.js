@@ -52,6 +52,7 @@ module.exports = config({
         link: "/category/",
         icon: "categoryselected",
       },
+      { text: "读书", link: "/book/", icon: "stack" },
       {
         text: "编程语言",
         icon: "code",
@@ -72,6 +73,7 @@ module.exports = config({
 
     sidebar: {
       "/java/": [{ title: "Java SE 部分", children: ["install"] }],
+      "/book/": [],
     },
 
     blog: {

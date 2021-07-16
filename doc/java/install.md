@@ -88,7 +88,7 @@ Java ME 则为一种“瘦身版”，是一个针对嵌入式设备的版本。
 │                                                   │
 │· Documentation          Oracle JDK                │
 │· Installation...          ■■■■■■■■■■■■■■■■        │
-│· Release Notes            ■ JDK Download ■        │
+│· Release Notes            ■ <a href="https://www.oracle.com/java/technologies/javase-jdk16-downloads.html" target="_blank">JDK Download</a> ■        │
 │· Oracle License           ■■■■■■■■■■■■■■■■        │
 │    · Binary License         Documentation Download│
 │    · Documentation License                        │
