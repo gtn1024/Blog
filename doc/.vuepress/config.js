@@ -60,7 +60,10 @@ module.exports = config({
           {
             text: "Java",
             link: "/java/",
-            icon: "java",
+          },
+          {
+            text: "PHP",
+            link: "/php/",
           },
         ],
       },
