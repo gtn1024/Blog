@@ -76,6 +76,7 @@ module.exports = config({
 
     sidebar: {
       "/java/": [{ title: "Java SE 部分", children: ["install"] }],
+      "/php/": [],
       "/book/": [],
     },
 
