@@ -75,8 +75,14 @@ module.exports = config({
     ],
 
     sidebar: {
-      "/java/": [{ title: "Java SE 部分", children: ["install"] }],
-      "/php/": [],
+      "/java/": [{ title: "Java SE 部分", collapsable: false, children: ["a_01_install.md"] }],
+      "/php/": [
+        {
+          title: "PHP基础",
+          collapsable: false,
+          children: ["a_01_intro.md", "a_02_env.md", "a_03_basic.md"],
+        },
+      ],
       "/book/": [],
     },
 
