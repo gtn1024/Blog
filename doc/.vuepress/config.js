@@ -42,7 +42,7 @@ module.exports = config({
     author: "Taoning",
 
     custom: {
-      contentTop: "./components/ArticleTopAd.vue",
+      // contentTop: "./components/ArticleTopAd.vue",
     },
 
     nav: [
@@ -52,7 +52,7 @@ module.exports = config({
         link: "/category/",
         icon: "categoryselected",
       },
-      { text: "读书", link: "/book/", icon: "stack" },
+      { text: "读书", icon: "stack", items: [{ text: "图解HTTP", link: "/book/tjhttp/" }] },
       {
         text: "编程语言",
         icon: "code",
@@ -83,7 +83,7 @@ module.exports = config({
           children: ["a_01_intro.md", "a_02_env.md", "a_03_basic.md"],
         },
       ],
-      "/book/": [],
+      "/book/": [{ title: "图解HTTP", collapsable: false, children: ["tjhttp/c_01_http.md"] }],
     },
 
     blog: {
