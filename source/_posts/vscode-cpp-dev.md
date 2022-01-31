@@ -8,8 +8,6 @@ tags:
 - VSCode
 - C++
 ---
-[TOC]
-
 **VSCode**(Visual Studio Code)是一款由微软开发且跨平台的轻量级编辑器。可通过各种插件扩展实现各个编程语言的开发（如 C/C++、Python、Java 等）。
 
 ## 编译器安装
