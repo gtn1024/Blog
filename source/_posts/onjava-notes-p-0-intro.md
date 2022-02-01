@@ -36,7 +36,7 @@ Java 在世界范围内的受欢迎程度始终位于前列，这一点可以查
 
 - 实验（Experimental）阶段：该功能处于早期阶段。
 - 预览（Preview）阶段：该功能已实现，但可能有所调整。
-- 孵化（Incubating）阶段：目前还不是 Java 的一部分，需要主动获取。如 [Loom Project](https://openjdk.java.net/projects/loom/)
+- 孵化（Incubating）阶段：目前还不是 Java 的一部分，需要主动获取。如 [Loom Project](https://openjdk.java.net/projects/loom/)。
 
 ## Java 三大版本
 
