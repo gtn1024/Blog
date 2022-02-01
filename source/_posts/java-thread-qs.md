@@ -1,5 +1,5 @@
 ---
-title: Java 多线程入门
+title: Java 多线程快速入门
 date: 2022-01-30 09:57:56
 categories:
 - [编程语言, Java]
@@ -8,7 +8,7 @@ tags:
 - 多线程
 ---
 
-多线程对于提高程序的并发有着十分重要的影响。
+多线程对于提高程序的并发有着十分重要的影响，本篇侧重于多线程的入门知识。
 
 <!-- more -->
 
@@ -244,7 +244,7 @@ public class JoinThreadTest {
 
 执行效果如下：
 
-```
+```text
 ...
 main ---> 18
 main ---> 19
@@ -286,7 +286,7 @@ public class SleepThreadTest {
 
 执行效果如下：
 
-```
+```text
 main ---> 0
 main ---> 1
 ...
@@ -320,7 +320,7 @@ public class DaemonThreadTest {
 
 以上代码未将线程`t`设为后台线程，运行该程序时，程序将一直运行（无限循环）。
 
-```
+```text
 Thread-0 ------> 1
 Thread-0 ------> 2
 Thread-0 ------> 3
