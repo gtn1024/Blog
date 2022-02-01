@@ -7,9 +7,9 @@ tags:
 - Java
 - Stream
 ---
-**目录**：
+Java 8 的 Stream，又一个非常好用的特性。
 
-[TOC]
+<!-- more -->
 
 ## 综述
 

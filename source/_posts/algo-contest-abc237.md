@@ -7,7 +7,9 @@ tags:
 - 算法竞赛
 mathjax: true
 ---
-[比赛链接](https://atcoder.jp/contests/abc237)
+2022 年 1 月 30 日晚 8:00 - 9:40。[比赛链接](https://atcoder.jp/contests/abc237)
+
+<!-- more -->
 
 ## A - Not Overflow
 
