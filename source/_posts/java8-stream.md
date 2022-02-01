@@ -254,7 +254,7 @@ foo.forEach(System.out::println);
 
 使用数组创建 Stream 可以使用`Arrays.stream()`方法来创建。
 
-```
+```java
 String[] foo = new String[]{"Java", "Python", "Kotlin", "JavaScript"};
 Stream<String> bar = Arrays.stream(foo);
 bar.forEach(System.out::println);
