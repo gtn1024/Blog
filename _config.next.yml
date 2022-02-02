@@ -160,3 +160,7 @@ google_analytics:
 # Easily enable fast Ajax navigation on your website.
 # For more information: https://github.com/next-theme/pjax
 pjax: true
+
+# Local search
+local_search:
+  enable: true
