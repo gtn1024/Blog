@@ -13,7 +13,7 @@ Java 8 的 Stream，又一个非常好用的特性。
 
 ## 综述
 
-Java 8 新增了 **Stream API**。**Stream API**有点类似使用**SQL 语句**，可以将**集合**中的元素进行过滤。
+Java 8 新增了 **Stream API**。**Stream API**有点类似使用**SQL 语句**，可以将**集合**中的元素进行过滤。使用时，类似于从一个管道中抽取元素，并对他们进行操作。使用流的一个优点是，他可以使得我们的程序更小，并且更容易理解。
 
 与**Stream API**相关的接口有`Stream`、`IntStream`, `LongStream`, `DoubleStream`（因为 Java 的泛型不支持基本数据类型，而又因频繁的装箱、拆箱存在效率问题，故额外有后三者）。
 
