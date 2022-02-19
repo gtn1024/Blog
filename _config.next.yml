@@ -37,6 +37,10 @@ toc:
 
 footer:
   since: 2021
+  # Icon between year and copyright info.
+  icon:
+    # If you want to animate the icon, set it to true.
+    animated: false
   beian:
     enable: true
     icp: 苏ICP备2022004206号-1
@@ -164,3 +168,9 @@ pjax: true
 # Local search
 local_search:
   enable: true
+
+# Use Animate.css to animate everything.
+# For more information: https://animate.style
+motion:
+  enable: false
+  async: false
