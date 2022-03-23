@@ -107,4 +107,6 @@ int main() {
 
 {% asset_img 16429128213147.jpg %}
 
-**注意**：使用 Apple Silicon 芯片的 mac 用户截至 2022 年 1 月需要通过 [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) 插件进行调试，具体配置见插件页面。
+**注意**：~~使用 Apple Silicon 芯片的 mac 用户截至 2022 年 1 月需要通过 [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) 插件进行调试，具体配置见插件页面。~~
+
+**2022 年 3 月 24 日更**：根据 [ISSUE 6779](https://github.com/microsoft/vscode-cpptools/issues/6779) ，目前官方插件已支持 ARM 架构 mac，有兴趣的同学可以试试。
