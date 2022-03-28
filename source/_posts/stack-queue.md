@@ -1,12 +1,12 @@
 ---
-title: 栈、队列、单调栈、单调队列例题分析
+title: 栈、队列例题分析
 date: 2022-03-02 20:31:08
 categories:
 - [数据结构与算法, 算法知识]
 tags:
 - 数据结构
 ---
-**栈**、**队列**、**单调栈**、**单调队列** 是算法中十分常见的数据结构。
+**栈**、**队列** 是算法中十分常见的数据结构。
 
 <!-- more -->
 
@@ -423,14 +423,86 @@ public class Main {
 }
 ```
 
+### 栈练习题
+
+- [NC15029 - 吐泡泡](https://ac.nowcoder.com/acm/problem/15029)
+- [NC15975 - 小C的记事本](https://ac.nowcoder.com/acm/problem/15975)
+
 ## 队列
 
-待更新
+队列是一种 FIFO （先入先出）的数据结构。关于 **队列** 相关的知识参见 [本篇文章](https://getaoning.com/archives/data-structure-stack-queue/#%E9%98%9F%E5%88%97-queue) 。
 
-## 单调栈
+### 队列例 1 —— [NOIP2004] 合并果子
 
-待更新
+[题目来源](https://ac.nowcoder.com/acm/problem/16663)
 
-## 单调队列
+要想消耗的体力值最小，必须使得每次合并的重量为最小的两个。该题可以使用 **优先队列** （**Priority Queue**）进行实现。
 
-待更新
+优先队列中每一个元素都有一个优先级，优先级高的优先。
+
+**参考代码**：
+
+C++ 实现：
+
+```cpp
+#include <functional>
+#include <ios>
+#include <iostream>
+#include <queue>
+#include <vector>
+#define endl '\n'
+typedef long long ll;
+using namespace std;
+
+int n;
+ll ans;
+priority_queue<int, vector<int>, greater<int>> pq;  // 升序的优先队列
+
+int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  cin >> n;
+  while (n--) {
+    int tmp;
+    cin >> tmp;
+    pq.push(tmp);
+  }
+  while (pq.size() != 1) {
+    int a = pq.top();
+    pq.pop();
+    int b = pq.top();
+    pq.pop();
+    pq.push(a + b);
+    ans += a + b;
+  }
+  cout << ans << endl;
+  return 0;
+}
+```
+
+Java 实现：
+
+```java
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class Main {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int n = sc.nextInt();
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    for (int i = 0; i < n; i++)
+      pq.offer(sc.nextInt());
+    long ans = 0;
+    while (pq.size() !=1) {
+      int a = pq.poll();
+      int b = pq.poll();
+      pq.add(a + b);
+      ans += a + b;
+    }
+    System.out.println(ans);
+    sc.close();
+  }
+}
+```
