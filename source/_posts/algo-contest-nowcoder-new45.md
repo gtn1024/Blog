@@ -215,15 +215,3 @@ int main() {
   return 0;
 }
 ```
-
-## E - 筑巢
-
-[题目直达](https://ac.nowcoder.com/acm/contest/11222/E)
-
-待更新
-
-## F - 交换
-
-[题目直达](https://ac.nowcoder.com/acm/contest/11222/F)
-
-待更新
