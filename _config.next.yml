@@ -178,3 +178,6 @@ local_search:
 motion:
   enable: false
   async: false
+
+custom_file_path:
+  head: source/theme/head.swig
