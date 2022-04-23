@@ -10,7 +10,9 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.cdn.v20180606 import cdn_client, models
 
 if __name__ == '__main__':
-    os.system('git add . && git commit -m update && git push origin && git push jihu')
+    os.system('git add . && git commit -m update')
+    os.system('git push origin main')
+    os.system('git push jihu main')
     os.system('npx hexo clean && npx hexo g')
 
     BLOG_SERVER_IP = os.getenv('BLOG_SERVER_IP')
