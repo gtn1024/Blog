@@ -160,10 +160,9 @@ math:
     # See: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex
     copy_tex: false
 
-# Google Analytics
-google_analytics:
-  tracking_id: UA-167951370-1
-  only_pageview: false
+# Microsoft Clarity Analytics
+# See: https://clarity.microsoft.com/
+clarity_analytics: cnwsn0j9pq
 
 # Easily enable fast Ajax navigation on your website.
 # For more information: https://github.com/next-theme/pjax
