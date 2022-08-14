@@ -83,8 +83,8 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: default
-    dark: tomorrow-night
+    light: a11y-light
+    dark: a11y-dark
   prism:
     light: prism
     dark: prism-dark
