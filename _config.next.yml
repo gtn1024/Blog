@@ -11,6 +11,7 @@ scheme: Mist
 
 avatar:
   url: /images/logo.jpg
+  rounded: true
 
 site_state: true
 
@@ -19,15 +20,10 @@ social_icons:
   icons_only: true
 social:
   GitHub: https://github.com/gtn1024 || fab fa-github
+  GitLab: https://jihulab.com/gtn1024 || fab fa-gitlab
   E-Mail: mailto:gtn1024o@outlook.com || fa fa-envelope
-  # Weibo: https://weibo.com/yourname || fab fa-weibo
-  # Google: https://plus.google.com/yourname || fab fa-google
+  Telegram: https://t.me/gtn1024 || fab fa-telegram
   Twitter: https://twitter.com/gtn1024 || fab fa-twitter
-  # FB Page: https://www.facebook.com/yourname || fab fa-facebook
-  # StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow
-  # YouTube: https://youtube.com/yourname || fab fa-youtube
-  # Instagram: https://instagram.com/yourname || fab fa-instagram
-  # Skype: skype:yourname?call|chat || fab fa-skype
 
 toc:
   enable: true
@@ -132,8 +128,8 @@ creative_commons:
 menu:
   home: / || fa fa-home
   #about: /about/ || fa fa-user
-  #tags: /tags/ || fa fa-tags
-  #categories: /categories/ || fa fa-th
+  tags: /tags/ || fa fa-tags
+  categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
@@ -180,3 +176,11 @@ motion:
 
 custom_file_path:
   head: source/theme/head.swig
+
+# TagCloud settings for tags page.
+tagcloud:
+  min: 12 # Minimum font size in px
+  max: 30 # Maximum font size in px
+  amount: 200 # Total amount of tags
+  orderby: name # Order of tags
+  order: 1 # Sort order
