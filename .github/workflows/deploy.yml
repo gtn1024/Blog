@@ -16,8 +16,6 @@ jobs:
     if: github.repository == 'gtn1024/Blog'
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Install pandoc
         run: |
           cd /tmp
