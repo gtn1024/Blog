@@ -13,6 +13,8 @@ Hexo 是基于 Node.js 的纯静态博客系统，即构建以后为纯 HTML 文
 
 本文主要是用如下方案进行部署：本地搭建 Hexo 博客，推送到 GitHub 上，使用 GitHub Actions 自动构建并部署至 GitHub Pages。
 
+<!-- more -->
+
 ## 安装 Node.js
 
 在搭建 Hexo 博客之前，需要先安装 [Node.js](https://nodejs.org/zh-cn/)，打开官网后下载长期维护版即可，目前最新的长期维护版为 `16.17.0`。

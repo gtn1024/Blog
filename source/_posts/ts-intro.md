@@ -9,6 +9,8 @@ tags:
 ---
 本系列主要是在学习方应杭老师的《TypeScript全解》所做笔记。该系列文章可能会结合 Java 上的知识对 TypeScript 进行理解。
 
+<!-- more -->
+
 ## TypeScript 是什么
 
 TypeScript 是添加了类型系统的 JavaScript，是 JavaScript 的超集。所有的 JavaScript 代码都是合法的 TypeScript 代码。
