@@ -1,15 +1,18 @@
 ---
-title: TypeScript 学习笔记——初识TS
+title: TypeScript 学习笔记 1——初识TS
 date: 2022-08-25 21:27:43
 categories:
 - [编程语言, TypeScript]
 tags:
 - TypeScript
-- 多线程
 ---
 本系列主要是在学习方应杭老师的《TypeScript全解》所做笔记。该系列文章可能会结合 Java 上的知识对 TypeScript 进行理解。
 
 <!-- more -->
+文章目录：
+
+- {% post_link ts-intro %}
+- {% post_link ts-datatype-1 %}
 
 ## TypeScript 是什么
 
