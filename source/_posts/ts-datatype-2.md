@@ -1,6 +1,6 @@
 ---
 title: TypeScript 学习笔记 3——类型（下）
-date: 2022-09-03 19:03:56
+date: 2022-09-06 22:36:56
 categories:
 - [编程语言, TypeScript]
 tags:
