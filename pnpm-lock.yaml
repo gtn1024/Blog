@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  hexo: 6.2.0
+  hexo: 6.3.0
   hexo-generator-archive: 1.0.0
   hexo-generator-category: 1.0.0
   hexo-generator-index: 2.0.0
@@ -17,7 +17,7 @@ specifiers:
   hexo-theme-next: 8.13.0
 
 dependencies:
-  hexo: 6.2.0
+  hexo: 6.3.0
   hexo-generator-archive: 1.0.0
   hexo-generator-category: 1.0.0
   hexo-generator-index: 2.0.0
@@ -1381,11 +1381,11 @@ packages:
       chalk: 4.1.2
     dev: false
 
-  /hexo-log/3.0.0:
-    resolution: {integrity: sha512-fd87qXYznpNTa8SLov+wjDsrPssk4yKSgdIQg1wJPcuthy8ngvbXYdqaJ4vWMSADZ+D257EmKXTJHJyaxJQhVw==}
+  /hexo-log/3.2.0:
+    resolution: {integrity: sha512-fk7jOW3hvKiAv4Q/d8UxaQlARwcv+5KjGcnxexUrqBqyWbMCLmw7jhMHTSRLNNQpaoTlF5ff+kQkPi4yhp9iag==}
     engines: {node: '>=12.4.0'}
     dependencies:
-      nanocolors: 0.2.13
+      picocolors: 1.0.0
     dev: false
 
   /hexo-neat/1.0.9:
@@ -1481,8 +1481,8 @@ packages:
       strip-indent: 3.0.0
     dev: false
 
-  /hexo/6.2.0:
-    resolution: {integrity: sha512-HOpt3vUOz/T0rWTDb/CtWuBJwYARPwbpvGwsaz0RPu/l5I6AmKE+UA0lJZf14iPS3JIt/HiOcTZ3Qz22A+PE8w==}
+  /hexo/6.3.0:
+    resolution: {integrity: sha512-4Jq+rWd8sYvR1YdIQyndN/9WboQ/Mqm6eax8CjrjO+ePFm2oMVafSOx9WEyJ42wcLOHjfyMfnlQhnUuNmJIpPg==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
@@ -1493,7 +1493,7 @@ packages:
       hexo-front-matter: 3.0.0
       hexo-fs: 3.1.0
       hexo-i18n: 1.0.0
-      hexo-log: 3.0.0
+      hexo-log: 3.2.0
       hexo-util: 2.7.0
       js-yaml: 4.1.0
       js-yaml-js-types: 1.0.0
@@ -2166,10 +2166,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /nanocolors/0.2.13:
-    resolution: {integrity: sha512-0n3mSAQLPpGLV9ORXT5+C/D4mwew7Ebws69Hx4E2sgz2ZA5+32Q80B9tL8PbL7XHnRDiAxH/pnrUJ9a4fkTNTA==}
-    dev: false
 
   /nanomatch/1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
@@ -3098,7 +3094,7 @@ packages:
       bluebird: 3.7.2
       cuid: 2.1.8
       graceful-fs: 4.2.9
-      hexo-log: 3.0.0
+      hexo-log: 3.2.0
       is-plain-object: 5.0.0
       jsonparse: 1.3.1
       rfdc: 1.3.0
