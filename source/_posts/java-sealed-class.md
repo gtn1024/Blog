@@ -80,8 +80,9 @@ final class D extends B { }
 
 ```java
 sealed interface Foo { }
-non-sealed interface Bar {}
-sealed class Tar implements Foo {}
-final class Car implements Foo {}
-class Par implements Bar {}
+non-sealed interface Bar extends Foo { }
+sealed class Tar implements Foo { }
+non-sealed class Mar extends Tar { }
+final class Car implements Foo { }
+class Par implements Bar { }
 ```
