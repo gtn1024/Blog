@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          submodules: recursive
       - name: Restore file modification time
         run: |
           git ls-files -z | while read -d '' path; do touch -d "$(git log -1 --format="@%ct" "$path")" "$path"; done
@@ -32,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
-          cache: 'pnpm'
+          cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
       - name: Build
