@@ -176,9 +176,6 @@ motion:
   enable: false
   async: false
 
-custom_file_path:
-  head: source/theme/head.swig
-
 # TagCloud settings for tags page.
 tagcloud:
   min: 12 # Minimum font size in px
