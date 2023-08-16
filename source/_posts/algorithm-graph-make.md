@@ -11,11 +11,57 @@ tags:
 
 <!-- more -->
 
-一般而言，图的存储方式有 3 种：
+一般而言，图的存储方式有 4 种：
 
+- 直接存边
 - 邻接矩阵
 - 邻接表
 - 链式前向星
+
+## 直接存边
+
+在某些算法中（如用于解决最小生成树问题的 Kruskal 算法），我们可以直接将边存在一个结构体中。这种方式的优势是编码快速，空间效率高，并且便于依据边权进行排序。
+
+结构体的定义如下：
+
+```cpp
+struct Edge {
+  int u;  // 起点
+  int v;  // 终点
+  int w;  // 边权
+};
+```
+
+| u | v | w |
+|---|---|---|
+| 0 | 1 | 3 |
+| 1 | 2 | 5 |
+| 2 | 1 | 4 |
+| 2 | 6 | 8 |
+| 4 | 5 | 9 |
+
+建立上表中图并排序的代码如下：
+
+```cpp
+vector<Edge> edges;
+edges.push_back({0, 1, 3});
+edges.push_back({1, 2, 5});
+edges.push_back({2, 1, 4});
+edges.push_back({2, 6, 8});
+edges.push_back({4, 5, 9});
+
+sort(edges.begin(), edges.end(), [&](Edge a, Edge b) {
+  return a.w > b.w;
+});
+for (Edge &edge : edges) {
+  printf("%d %d %d\n", edge.u, edge.v, edge.w);
+}
+// 4 5 9
+// 2 6 8
+// 1 2 5
+// 2 1 4
+// 0 1 3
+```
 
 ## 邻接矩阵
 
