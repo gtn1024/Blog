@@ -38,7 +38,7 @@ footer:
     # If you want to animate the icon, set it to true.
     animated: false
   beian:
-    enable: true
+    enable: false
     icp: 苏ICP备2022004206号-1
     gongan_id: 32080302000157
     gongan_num: 苏公网安备 32080302000157
