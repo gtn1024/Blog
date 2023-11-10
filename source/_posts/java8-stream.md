@@ -248,7 +248,7 @@ Stream<String> foo = Stream.of("Java", "Python", "Kotlin", "JavaScript");
 foo.forEach(System.out::println);
 ```
 
-以上代码创建了一个由 4 个编程语言组成的流，并使用`forEach()`方法将其打印出来（`forEach`方法的参数为`Consumer<T>`函数式接口，可直接使用 [Lambda 表达式](https://www.getaoning.com/archives/258) ）
+以上代码创建了一个由 4 个编程语言组成的流，并使用`forEach()`方法将其打印出来（`forEach`方法的参数为`Consumer<T>`函数式接口，可直接使用 [Lambda 表达式](/archives/java-functional-program/) ）
 
 #### 使用数组创建
 

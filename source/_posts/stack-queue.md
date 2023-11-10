@@ -12,7 +12,7 @@ tags:
 
 ## 栈
 
-栈是一种 FILO （先入后出）的数据结构。关于 **栈** 相关的知识参见 [本篇文章](https://getaoning.com/archives/data-structure-stack-queue/#栈-stack) 。
+栈是一种 FILO （先入后出）的数据结构。关于 **栈** 相关的知识参见 [本篇文章](/archives/data-structure-stack-queue/#栈-stack) 。
 
 ### 栈例 1
 
@@ -430,7 +430,7 @@ public class Main {
 
 ## 队列
 
-队列是一种 FIFO （先入先出）的数据结构。关于 **队列** 相关的知识参见 [本篇文章](https://getaoning.com/archives/data-structure-stack-queue/#%E9%98%9F%E5%88%97-queue) 。
+队列是一种 FIFO （先入先出）的数据结构。关于 **队列** 相关的知识参见 [本篇文章](/archives/data-structure-stack-queue/#%E9%98%9F%E5%88%97-queue) 。
 
 ### 队列例 1 —— [NOIP2004] 合并果子
 
