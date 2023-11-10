@@ -9,10 +9,10 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "7.0.0-rc2"
+    "version": "7.0.0"
   },
   "dependencies": {
-    "hexo": "7.0.0-rc2",
+    "hexo": "7.0.0",
     "hexo-generator-archive": "2.0.0",
     "hexo-generator-category": "2.0.0",
     "hexo-generator-index": "3.0.0",
@@ -25,6 +25,6 @@
     "hexo-renderer-stylus": "3.0.0",
     "hexo-server": "3.0.0",
     "hexo-theme-landscape": "1.0.0",
-    "hexo-theme-next": "8.17.1"
+    "hexo-theme-next": "8.18.2"
   }
 }
