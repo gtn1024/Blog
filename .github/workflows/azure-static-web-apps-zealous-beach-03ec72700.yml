@@ -25,8 +25,8 @@ jobs:
       - name: Install pandoc
         run: |
           cd /tmp
-          wget -c https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-1-amd64.deb
-          sudo dpkg -i pandoc-2.19.2-1-amd64.deb
+          wget -c https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-1-amd64.deb
+          sudo dpkg -i pandoc-3.1.13-1-amd64.deb
       - uses: pnpm/action-setup@v3
         with:
           version: 9
