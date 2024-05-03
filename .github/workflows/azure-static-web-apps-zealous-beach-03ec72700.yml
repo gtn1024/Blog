@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: recursive
@@ -25,14 +25,14 @@ jobs:
       - name: Install pandoc
         run: |
           cd /tmp
-          wget -c https://github.com/jgm/pandoc/releases/download/2.19/pandoc-2.19-1-amd64.deb
-          sudo dpkg -i pandoc-2.19-1-amd64.deb
-      - uses: pnpm/action-setup@v2.2.2
+          wget -c https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-1-amd64.deb
+          sudo dpkg -i pandoc-2.19.2-1-amd64.deb
+      - uses: pnpm/action-setup@v3
         with:
-          version: 7
-      - uses: actions/setup-node@v3
+          version: 9
+      - uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
