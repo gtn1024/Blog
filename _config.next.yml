@@ -10,7 +10,7 @@ minify: true
 scheme: Mist
 
 avatar:
-  url: /images/logo.jpg
+  url: https://github.com/gtn1024.png
   rounded: true
 
 site_state: true
