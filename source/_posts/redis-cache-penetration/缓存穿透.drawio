@@ -1,0 +1,77 @@
+<mxfile host="Electron" modified="2024-07-17T12:29:30.778Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="nVeT6ufqKbeVgwZun5nl" version="21.6.5" type="device">
+  <diagram name="Page-1" id="HeRvfCHfzPpLrxfYQObo">
+    <mxGraphModel dx="954" dy="620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="9-h-BT6nxuhcZvQLBPYP-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="273.75" y="200" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-6" value="客户端" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="258.75" y="110" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.14;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="9-h-BT6nxuhcZvQLBPYP-7" target="9-h-BT6nxuhcZvQLBPYP-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-7" value="Redis" style="whiteSpace=wrap;html=1;verticalAlign=middle;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="230" y="260" width="87.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="9-h-BT6nxuhcZvQLBPYP-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="298.75" y="140" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="354.75" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-14" value="返回空数据" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;" vertex="1" connectable="0" parent="9-h-BT6nxuhcZvQLBPYP-13">
+          <mxGeometry x="-0.2136" y="1" relative="1" as="geometry">
+            <mxPoint x="55" y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-9" value="数据库" style="whiteSpace=wrap;html=1;verticalAlign=middle;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="242.25" y="400" width="225" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.153;entryY=-0.02;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="9-h-BT6nxuhcZvQLBPYP-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="551.5" y="200" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-18" value="客户端" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="536.5" y="110" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.14;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="9-h-BT6nxuhcZvQLBPYP-20" target="9-h-BT6nxuhcZvQLBPYP-23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="551.75" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="9-h-BT6nxuhcZvQLBPYP-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="567.75" y="140" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="641.75" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-20" value="Redis" style="whiteSpace=wrap;html=1;verticalAlign=middle;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="528.75" y="260" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.693;entryY=1.02;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="9-h-BT6nxuhcZvQLBPYP-23" target="9-h-BT6nxuhcZvQLBPYP-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-25" value="缓存null" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;" vertex="1" connectable="0" parent="9-h-BT6nxuhcZvQLBPYP-24">
+          <mxGeometry x="0.0694" y="-3" relative="1" as="geometry">
+            <mxPoint x="35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9-h-BT6nxuhcZvQLBPYP-23" value="数据库" style="whiteSpace=wrap;html=1;verticalAlign=middle;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="520" y="400" width="225" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
