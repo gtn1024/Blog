@@ -397,17 +397,6 @@ Letcure 3 - Algorithms</a></li>
       </tags>
   </entry>
   <entry>
-    <title>Codeforces 退役指南</title>
-    <url>/archives/codeforces-retire-note/</url>
-    <content><![CDATA[<p>退役了，整点啥活呢？</p>
-<span id="more"></span>
-<p>不如把 Codeforces 往负分打吧！</p>
-<img src="/archives/codeforces-retire-note/cf.png" class="">
-<p>每场只给 A 交一发样例，然后下号！</p>
-<img src="/archives/codeforces-retire-note/cf2.png" class="">
-]]></content>
-  </entry>
-  <entry>
     <title>你一定看得懂的位运算</title>
     <url>/archives/bitwise-operation/</url>
     <content><![CDATA[<p><strong>位运算</strong>是直接对整数在内存中的二进制位进行操作。</p>
@@ -510,6 +499,17 @@ Java 讲义</a></li>
       <tags>
         <tag>位运算</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Codeforces 退役指南</title>
+    <url>/archives/codeforces-retire-note/</url>
+    <content><![CDATA[<p>退役了，整点啥活呢？</p>
+<span id="more"></span>
+<p>不如把 Codeforces 往负分打吧！</p>
+<img src="/archives/codeforces-retire-note/cf.png" class="">
+<p>每场只给 A 交一发样例，然后下号！</p>
+<img src="/archives/codeforces-retire-note/cf2.png" class="">
+]]></content>
   </entry>
   <entry>
     <title>「深入理解计算机系统」学习笔记（第一章）</title>
@@ -2843,46 +2843,6 @@ href="https://xiedaimala.com/tasks/1a1a8ea8-4c7a-4bb1-9337-b10296004f05/video_tu
       </tags>
   </entry>
   <entry>
-    <title>Redis - 缓存穿透</title>
-    <url>/archives/redis-cache-penetration/</url>
-    <content><![CDATA[<p>缓存穿透是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。最终造成服务宕机。</p>
-<p>例如，某位黑客故意制造了大量无效的 id
-发往服务端，使得大量请求落到数据库上，数据库也没有查到对应的数据，此操作对于数据库造成了大量的压力。</p>
-<span id="more"></span>
-<img src="/archives/redis-cache-penetration/20240717184945.png" class="">
-<p>主要有如下方法解决：</p>
-<ol type="1">
-<li>数据格式校验</li>
-<li>缓存空对象</li>
-<li>布隆过滤</li>
-<li>接口限流</li>
-</ol>
-<h2 id="数据格式校验">数据格式校验</h2>
-<p>例如，对于
-ID，检验是否为正整数；对于邮箱、手机号等数据，做好校验。</p>
-<h2 id="缓存空对象">缓存空对象</h2>
-<p>如果数据库访问到空值，将该空值也存到 redis 里。</p>
-<p>优点：实现简单，维护方便</p>
-<p>缺点： - 额外内存消耗（加入较短的 TTL 缓解） -
-可能造成短期的不一致（TTL 缓解，或主动失效缓存）</p>
-<img src="/archives/redis-cache-penetration/20240717195648.png" class="">
-<h2 id="布隆过滤">布隆过滤</h2>
-<img src="/archives/redis-cache-penetration/20240717195802.png" class="">
-<p>优点：内存占用少，没有多余的 key</p>
-<p>缺点：</p>
-<ul>
-<li>实现复杂</li>
-<li>存在误判可能</li>
-</ul>
-<h2 id="接口限流">接口限流</h2>
-<p>对用户或者 IP
-进行限流，对于恶意用户，可以采取黑名单的方式禁止访问接口。</p>
-]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JAX-RS 入门</title>
     <url>/archives/jaxrs-101/</url>
     <content><![CDATA[<p>JAX-RS 是 Jakarta RESTful Web Services 的缩写，是 Jakarta EE API
@@ -2922,6 +2882,46 @@ class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
       <tags>
         <tag>Java</tag>
         <tag>Jakarta EE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis - 缓存穿透</title>
+    <url>/archives/redis-cache-penetration/</url>
+    <content><![CDATA[<p>缓存穿透是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。最终造成服务宕机。</p>
+<p>例如，某位黑客故意制造了大量无效的 id
+发往服务端，使得大量请求落到数据库上，数据库也没有查到对应的数据，此操作对于数据库造成了大量的压力。</p>
+<span id="more"></span>
+<img src="/archives/redis-cache-penetration/20240717184945.png" class="">
+<p>主要有如下方法解决：</p>
+<ol type="1">
+<li>数据格式校验</li>
+<li>缓存空对象</li>
+<li>布隆过滤</li>
+<li>接口限流</li>
+</ol>
+<h2 id="数据格式校验">数据格式校验</h2>
+<p>例如，对于
+ID，检验是否为正整数；对于邮箱、手机号等数据，做好校验。</p>
+<h2 id="缓存空对象">缓存空对象</h2>
+<p>如果数据库访问到空值，将该空值也存到 redis 里。</p>
+<p>优点：实现简单，维护方便</p>
+<p>缺点： - 额外内存消耗（加入较短的 TTL 缓解） -
+可能造成短期的不一致（TTL 缓解，或主动失效缓存）</p>
+<img src="/archives/redis-cache-penetration/20240717195648.png" class="">
+<h2 id="布隆过滤">布隆过滤</h2>
+<img src="/archives/redis-cache-penetration/20240717195802.png" class="">
+<p>优点：内存占用少，没有多余的 key</p>
+<p>缺点：</p>
+<ul>
+<li>实现复杂</li>
+<li>存在误判可能</li>
+</ul>
+<h2 id="接口限流">接口限流</h2>
+<p>对用户或者 IP
+进行限流，对于恶意用户，可以采取黑名单的方式禁止访问接口。</p>
+]]></content>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -3425,6 +3425,46 @@ Queue</strong>）进行实现。</p>
       </tags>
   </entry>
   <entry>
+    <title>TypeScript 学习笔记 3——类型（下）</title>
+    <url>/archives/ts-datatype-2/</url>
+    <content><![CDATA[<p>本文主要介绍 TypeScript 种的枚举（<code>enum</code>）类型，以及
+<code>type</code> 和 <code>interface</code> 的区别。</p>
+<span id="more"></span>
+<h2 id="enum"><code>enum</code></h2>
+<p>一般在需要进行某种映射关系的时候，使用
+<code>enum</code>。例如，从后端获取到某个数据，前端对其进行判断的时候使用，使其更有语义化。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Status</span> &#123;</span><br><span class="line">  <span class="variable constant_">TODO</span> = <span class="number">1</span>, <span class="comment">// 1</span></span><br><span class="line">  <span class="variable constant_">DONE</span>,     <span class="comment">// 2</span></span><br><span class="line">  <span class="variable constant_">ARCHIVED</span>, <span class="comment">// 3</span></span><br><span class="line">  <span class="variable constant_">DELETED</span>,  <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设 st 是从后端服务器获取到的数据</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">st</span>: <span class="title class_">Status</span> = <span class="number">3</span></span><br><span class="line"><span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">TODO</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;TODO&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">DONE</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DONE&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">ARCHIVED</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ARCHIVED&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">DELETED</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DELETED&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">st = <span class="title class_">Status</span>.<span class="property">ARCHIVED</span></span><br></pre></td></tr></table></figure>
+<h2 id="type"><code>type</code></h2>
+<p><code>type</code>
+是指类型别名，用于给其他类型取个名字，而不是产生一个新的数据类型。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Name</span> = <span class="built_in">string</span>  <span class="comment">// 为 string 取个名叫 Name</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">FalseLike</span> = <span class="string">&#x27;&#x27;</span> | <span class="number">0</span> | <span class="literal">null</span> | <span class="literal">undefined</span> | <span class="literal">false</span> <span class="comment">// 代指所有类false的值</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Point</span> = &#123; <span class="attr">x</span>: <span class="built_in">number</span>; <span class="attr">y</span>: <span class="built_in">number</span> &#125; <span class="comment">// 对象</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Points</span> = <span class="title class_">Point</span>[]   <span class="comment">// 数组</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Line</span> = [<span class="title class_">Point</span>, <span class="title class_">Point</span>] <span class="comment">// 元组</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Circle</span> = &#123; <span class="attr">center</span>: <span class="title class_">Point</span>; <span class="attr">radius</span>: <span class="built_in">number</span> &#125; <span class="comment">// 复杂的对象</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Fn</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span> <span class="comment">// 函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 带有属性的函数</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">FnWithProps</span> = &#123;</span><br><span class="line">    (<span class="attr">a</span>: <span class="built_in">number</span>, <span class="attr">b</span>: <span class="built_in">number</span>): <span class="built_in">number</span></span><br><span class="line">    <span class="attr">prop1</span>: <span class="title class_">Name</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">fnWithProp</span>: <span class="title class_">FnWithProps</span> = <span class="function">(<span class="params">x, y</span>) =&gt;</span> x + y</span><br><span class="line">fnWithProp.<span class="property">prop1</span> = <span class="string">&#x27;Hi&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="interface"><code>interface</code></h2>
+<p><code>interface</code>
+用于声明一个接口，描述对象的属性。用于描述一个对象。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="variable constant_">TA</span> = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">b</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> IA &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">b</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">TB</span> = &#123;</span><br><span class="line">  [<span class="attr">k</span>: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> IB &#123;</span><br><span class="line">  [<span class="attr">k</span>: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="type-和-interface-的区别"><code>type</code> 和
+<code>interface</code> 的区别</h2>
+<ol type="1">
+<li><code>interface</code> 只
+<strong>描述对象</strong>，<code>type</code> 则描述所有数据。</li>
+<li><code>type</code> 仅仅是类型别名，<code>interface</code>
+则是类型声明。</li>
+<li><code>type</code> 不可以重新赋值，<code>interface</code>
+多次定义会合并。</li>
+</ol>
+<p><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">p</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;张三&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一般对外的 API 尽量使用 <code>interface</code>，以方便扩展。对内的
+API 使用 <code>type</code>，防止代码分散。</p>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TypeScript 学习笔记 1——初识TS</title>
     <url>/archives/ts-intro/</url>
     <content><![CDATA[<p>本系列主要是在学习方应杭老师的《TypeScript全解》所做笔记。该系列文章可能会结合
@@ -3499,46 +3539,6 @@ TypeScript 代码</h3>
 <p>同样使用 npm 安装工具：<code>npm i -g esno</code></p>
 <p>随后使用 <code>esno</code> 运行，效果与 <code>ts-node</code> 类似</p>
 <img src="/archives/ts-intro/20220825205515.png" class="">
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TypeScript 学习笔记 3——类型（下）</title>
-    <url>/archives/ts-datatype-2/</url>
-    <content><![CDATA[<p>本文主要介绍 TypeScript 种的枚举（<code>enum</code>）类型，以及
-<code>type</code> 和 <code>interface</code> 的区别。</p>
-<span id="more"></span>
-<h2 id="enum"><code>enum</code></h2>
-<p>一般在需要进行某种映射关系的时候，使用
-<code>enum</code>。例如，从后端获取到某个数据，前端对其进行判断的时候使用，使其更有语义化。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Status</span> &#123;</span><br><span class="line">  <span class="variable constant_">TODO</span> = <span class="number">1</span>, <span class="comment">// 1</span></span><br><span class="line">  <span class="variable constant_">DONE</span>,     <span class="comment">// 2</span></span><br><span class="line">  <span class="variable constant_">ARCHIVED</span>, <span class="comment">// 3</span></span><br><span class="line">  <span class="variable constant_">DELETED</span>,  <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设 st 是从后端服务器获取到的数据</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">st</span>: <span class="title class_">Status</span> = <span class="number">3</span></span><br><span class="line"><span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">TODO</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;TODO&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">DONE</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DONE&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">ARCHIVED</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ARCHIVED&#x27;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (st === <span class="title class_">Status</span>.<span class="property">DELETED</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DELETED&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">st = <span class="title class_">Status</span>.<span class="property">ARCHIVED</span></span><br></pre></td></tr></table></figure>
-<h2 id="type"><code>type</code></h2>
-<p><code>type</code>
-是指类型别名，用于给其他类型取个名字，而不是产生一个新的数据类型。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Name</span> = <span class="built_in">string</span>  <span class="comment">// 为 string 取个名叫 Name</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">FalseLike</span> = <span class="string">&#x27;&#x27;</span> | <span class="number">0</span> | <span class="literal">null</span> | <span class="literal">undefined</span> | <span class="literal">false</span> <span class="comment">// 代指所有类false的值</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Point</span> = &#123; <span class="attr">x</span>: <span class="built_in">number</span>; <span class="attr">y</span>: <span class="built_in">number</span> &#125; <span class="comment">// 对象</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Points</span> = <span class="title class_">Point</span>[]   <span class="comment">// 数组</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Line</span> = [<span class="title class_">Point</span>, <span class="title class_">Point</span>] <span class="comment">// 元组</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Circle</span> = &#123; <span class="attr">center</span>: <span class="title class_">Point</span>; <span class="attr">radius</span>: <span class="built_in">number</span> &#125; <span class="comment">// 复杂的对象</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Fn</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span> <span class="comment">// 函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 带有属性的函数</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">FnWithProps</span> = &#123;</span><br><span class="line">    (<span class="attr">a</span>: <span class="built_in">number</span>, <span class="attr">b</span>: <span class="built_in">number</span>): <span class="built_in">number</span></span><br><span class="line">    <span class="attr">prop1</span>: <span class="title class_">Name</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">fnWithProp</span>: <span class="title class_">FnWithProps</span> = <span class="function">(<span class="params">x, y</span>) =&gt;</span> x + y</span><br><span class="line">fnWithProp.<span class="property">prop1</span> = <span class="string">&#x27;Hi&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="interface"><code>interface</code></h2>
-<p><code>interface</code>
-用于声明一个接口，描述对象的属性。用于描述一个对象。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="variable constant_">TA</span> = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">b</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> IA &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">b</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">TB</span> = &#123;</span><br><span class="line">  [<span class="attr">k</span>: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> IB &#123;</span><br><span class="line">  [<span class="attr">k</span>: <span class="built_in">string</span>]: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="type-和-interface-的区别"><code>type</code> 和
-<code>interface</code> 的区别</h2>
-<ol type="1">
-<li><code>interface</code> 只
-<strong>描述对象</strong>，<code>type</code> 则描述所有数据。</li>
-<li><code>type</code> 仅仅是类型别名，<code>interface</code>
-则是类型声明。</li>
-<li><code>type</code> 不可以重新赋值，<code>interface</code>
-多次定义会合并。</li>
-</ol>
-<p><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">p</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;张三&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>一般对外的 API 尽量使用 <code>interface</code>，以方便扩展。对内的
-API 使用 <code>type</code>，防止代码分散。</p>
 ]]></content>
       <categories>
         <category>编程语言</category>
