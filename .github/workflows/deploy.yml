@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 env:
   # 设置时区
   TZ: Asia/Shanghai
