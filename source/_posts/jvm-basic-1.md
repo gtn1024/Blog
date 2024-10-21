@@ -1,5 +1,5 @@
 ---
-title: JVM 基础 - 初始 JVM
+title: JVM 基础 - 初识 JVM
 date: 2024-10-21 21:53:47
 tags:
 - Java
