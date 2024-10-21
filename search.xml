@@ -73,54 +73,6 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV15YAUIVAF9MRANLAj
       </tags>
   </entry>
   <entry>
-    <title>图论——拓扑排序</title>
-    <url>/archives/algorithm-graph-topo/</url>
-    <content><![CDATA[<p>在现实生活中，我们要做一系列的事情。而这些事情之间会存在顺序或依赖关系，即做一件事情之前，我们必须先做好另一件事。比如，在大学里学习的课程，通常都会有先后顺序。</p>
-<span id="more"></span>
-<img src="/archives/algorithm-graph-topo/topo.drawio.png" class="">
-<p>图中，“高等数学”、“线性代数”是“离散数学”的先修课程，“离散数学”、“高级语言程序设计”是“数据结构”的先修课程，“高级语言程序设计”是“面向对象程序设计”的先修课程，“数据结构”、“高级语言程序设计”是“算法分析与设计”的先修课程。而“大学生心理健康”、“劳动教育”则作为独立的课程存在，不作为先修课程。</p>
-<p>这张课程的关系图，我们可以将其课程名称由编号代替，进而形成一张图：</p>
-<img src="/archives/algorithm-graph-topo/topo-nodes.drawio.png" class="">
-<p>该图其中一个拓扑序列为
-<code>1 3 5 6 2 4 7 8 9</code>。（这里之所以说是其中的一个拓扑序列，是因为一张图可以有多个拓扑序列）</p>
-<p>继续使用课程举例，如果“课程1”依赖了“课程2”，“课程2”依赖了“课程3”，而“课程3”又依赖了课程“1”，那么无论如何我们都是无法学习的。</p>
-
-<p>这种现象按照图论的说法称为“回路”。一个图有拓扑排序的条件是不能构成回路。因此，拓扑排序同时可以判断是否存在环。</p>
-<h2 id="拓扑排序的概念">拓扑排序的概念</h2>
-<p>拓扑排序是指在一个 <strong>有向无环图</strong>（DAG，Directed Acyclic
-Graph）中，我们将定点以线性的方式进行排序，使得任意一对由 <span
-class="math inline">\(u\)</span> 指向 <span
-class="math inline">\(v\)</span> 的有向边 <span
-class="math inline">\((u,v)\)</span>，都有 <span
-class="math inline">\(u\)</span> 在 <span
-class="math inline">\(v\)</span> 的前面。</p>
-<p>拓扑排序的目标是将所有节点排序，使得排在前面的节点不能依赖于排在后面的节点。</p>
-<h2 id="kahn-算法基于-bfs-的拓扑排序">Kahn 算法（基于 BFS
-的拓扑排序）</h2>
-<p>Kahn 算法是求解拓扑排序的一个十分常见的算法。其算法流程如下：</p>
-<ol type="1">
-<li>找到所有入度为 0
-的点，放入队列。这些点没有先后关系，可任意输出。</li>
-<li>弹出队头元素 <span class="math inline">\(t\)</span>，将 <span
-class="math inline">\(t\)</span> 的所有邻接点的入度减
-1。如果有的点入度为 0，则将其加入队列。</li>
-<li>不断执行以上步骤，直至队列为空。如果队列为空后仍然有点没有入队，则该图不是一个
-<strong>有向无环图</strong>，不存在拓扑排序。</li>
-</ol>
-<p>上面课程表的一个拓扑序列为
-<code>1 -&gt; 3 -&gt; 5 -&gt; 6 -&gt; 2 -&gt; 4 -&gt; 7 -&gt; 8 -&gt; 9</code></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, k;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n + <span class="number">1</span>);  <span class="comment">// 邻接表</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ind</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;     <span class="comment">// 入度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; ++i) &#123;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">    ind[v]++;</span><br><span class="line">    a[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">      q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ord</span><span class="params">(n)</span></span>;  <span class="comment">// 存储拓扑排序</span></span><br><span class="line">  <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="type">int</span> tt = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    ord[idx++] = tt;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; i : a[tt]) &#123;</span><br><span class="line">      <span class="comment">// 为其邻接点入度减 1</span></span><br><span class="line">      ind[i]--;</span><br><span class="line">      <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (idx != n) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Circle!&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">      cout &lt;&lt; ord[i] &lt;&lt; <span class="string">&quot; \n&quot;</span>[i == n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-        <category>算法知识</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>图论</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>图论——存储图</title>
     <url>/archives/algorithm-graph-make/</url>
     <content><![CDATA[<p>图论算法是一个很大的专题，有很多的知识点。但是，在学习图论的各个知识点之前，首先需要对于图的存储有十分清楚的理解，了解各种方式的优劣。</p>
@@ -255,6 +207,54 @@ class="math inline">\(O(1)\)</span>；</li>
 <p>依然使用上面邻接表的例子。使用链式前向星，其空间存储如下图所示：</p>
 <img src="/archives/algorithm-graph-make/20230719233809.png" class="">
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>; <span class="comment">// 最多有 100,000 条边</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e6</span> + <span class="number">10</span>; <span class="comment">// 最多有 1,000,000 条边</span></span><br><span class="line"><span class="keyword">struct</span> &#123;</span><br><span class="line">  <span class="type">int</span> to, nxt, w;</span><br><span class="line">&#125; edges[M];</span><br><span class="line"><span class="type">int</span> head[N], cnt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v, <span class="type">int</span> w)</span> </span>&#123;</span><br><span class="line">  edges[cnt].to = v;        <span class="comment">// 指向 v 点</span></span><br><span class="line">  edges[cnt].w = w;         <span class="comment">// 边权为 w</span></span><br><span class="line">  edges[cnt].nxt = head[u]; <span class="comment">// 将 u 的邻接点向后顺延</span></span><br><span class="line">  head[u] = cnt++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; ~i; i = edges[i].nxt) &#123; <span class="comment">// ~i 相当于 i != -1</span></span><br><span class="line">    <span class="keyword">if</span> (edges[i].to == v) &#123;</span><br><span class="line">      <span class="keyword">return</span> edges[i].w;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">memset</span>(head, <span class="number">-1</span>, <span class="built_in">sizeof</span>(head));  <span class="comment">// 初始化</span></span><br><span class="line">  <span class="built_in">add</span>(<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> w1 = <span class="built_in">find</span>(<span class="number">1</span>, <span class="number">4</span>);  <span class="comment">// 找不到边，返回 0x3f3f3f3f</span></span><br><span class="line">  <span class="type">int</span> w2 = <span class="built_in">find</span>(<span class="number">0</span>, <span class="number">1</span>);  <span class="comment">// 找到该边，返回 3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+        <category>算法知识</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>图论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图论——拓扑排序</title>
+    <url>/archives/algorithm-graph-topo/</url>
+    <content><![CDATA[<p>在现实生活中，我们要做一系列的事情。而这些事情之间会存在顺序或依赖关系，即做一件事情之前，我们必须先做好另一件事。比如，在大学里学习的课程，通常都会有先后顺序。</p>
+<span id="more"></span>
+<img src="/archives/algorithm-graph-topo/topo.drawio.png" class="">
+<p>图中，“高等数学”、“线性代数”是“离散数学”的先修课程，“离散数学”、“高级语言程序设计”是“数据结构”的先修课程，“高级语言程序设计”是“面向对象程序设计”的先修课程，“数据结构”、“高级语言程序设计”是“算法分析与设计”的先修课程。而“大学生心理健康”、“劳动教育”则作为独立的课程存在，不作为先修课程。</p>
+<p>这张课程的关系图，我们可以将其课程名称由编号代替，进而形成一张图：</p>
+<img src="/archives/algorithm-graph-topo/topo-nodes.drawio.png" class="">
+<p>该图其中一个拓扑序列为
+<code>1 3 5 6 2 4 7 8 9</code>。（这里之所以说是其中的一个拓扑序列，是因为一张图可以有多个拓扑序列）</p>
+<p>继续使用课程举例，如果“课程1”依赖了“课程2”，“课程2”依赖了“课程3”，而“课程3”又依赖了课程“1”，那么无论如何我们都是无法学习的。</p>
+
+<p>这种现象按照图论的说法称为“回路”。一个图有拓扑排序的条件是不能构成回路。因此，拓扑排序同时可以判断是否存在环。</p>
+<h2 id="拓扑排序的概念">拓扑排序的概念</h2>
+<p>拓扑排序是指在一个 <strong>有向无环图</strong>（DAG，Directed Acyclic
+Graph）中，我们将定点以线性的方式进行排序，使得任意一对由 <span
+class="math inline">\(u\)</span> 指向 <span
+class="math inline">\(v\)</span> 的有向边 <span
+class="math inline">\((u,v)\)</span>，都有 <span
+class="math inline">\(u\)</span> 在 <span
+class="math inline">\(v\)</span> 的前面。</p>
+<p>拓扑排序的目标是将所有节点排序，使得排在前面的节点不能依赖于排在后面的节点。</p>
+<h2 id="kahn-算法基于-bfs-的拓扑排序">Kahn 算法（基于 BFS
+的拓扑排序）</h2>
+<p>Kahn 算法是求解拓扑排序的一个十分常见的算法。其算法流程如下：</p>
+<ol type="1">
+<li>找到所有入度为 0
+的点，放入队列。这些点没有先后关系，可任意输出。</li>
+<li>弹出队头元素 <span class="math inline">\(t\)</span>，将 <span
+class="math inline">\(t\)</span> 的所有邻接点的入度减
+1。如果有的点入度为 0，则将其加入队列。</li>
+<li>不断执行以上步骤，直至队列为空。如果队列为空后仍然有点没有入队，则该图不是一个
+<strong>有向无环图</strong>，不存在拓扑排序。</li>
+</ol>
+<p>上面课程表的一个拓扑序列为
+<code>1 -&gt; 3 -&gt; 5 -&gt; 6 -&gt; 2 -&gt; 4 -&gt; 7 -&gt; 8 -&gt; 9</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, k;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n + <span class="number">1</span>);  <span class="comment">// 邻接表</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ind</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;     <span class="comment">// 入度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; ++i) &#123;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">    ind[v]++;</span><br><span class="line">    a[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">      q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ord</span><span class="params">(n)</span></span>;  <span class="comment">// 存储拓扑排序</span></span><br><span class="line">  <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="type">int</span> tt = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    ord[idx++] = tt;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; i : a[tt]) &#123;</span><br><span class="line">      <span class="comment">// 为其邻接点入度减 1</span></span><br><span class="line">      ind[i]--;</span><br><span class="line">      <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (idx != n) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Circle!&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">      cout &lt;&lt; ord[i] &lt;&lt; <span class="string">&quot; \n&quot;</span>[i == n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -1924,62 +1924,6 @@ Java 内部格式来记录数据的，因此 <code>DataOutputStream</code>
       </tags>
   </entry>
   <entry>
-    <title>Java 17新特性：密封类</title>
-    <url>/archives/java-sealed-class/</url>
-    <content><![CDATA[<p>在 Java 17 之前，一个 Java 类只有两种状态：可派生和不可派生（即
-<code>final</code>
-类），这导致如果需要对类进行派生的时候，我们无法将其设置为
-<code>final</code> 类，也就无法限制其他人对于该类的派生。</p>
-<p>Java 17
-带来的密封类解决了这个问题，可以限制父类只能派生预先指定的子类，不允许再派生其他子类。</p>
-<span id="more"></span>
-<h2 id="密封类语法">密封类语法</h2>
-<p>密封类的语法如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[修饰符] <span class="keyword">sealed</span> class 类名 <span class="keyword">permits</span> 子类列表 &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用密封类时没必须满足以下要求：</p>
-<ul>
-<li>子类和密封类要么处于同一个模块，要么术语同一个类。如果在未命名的模块中，则必须位于同一个包中。</li>
-<li>密封类允许派生的子类必须直接继承密封类。</li>
-<li>密封类的子类必须使用 <code>final</code>、<code>sealed</code> 或
-<code>non-sealed</code> 修饰。
-<ul>
-<li><code>final</code>：无法再次派生子类。</li>
-<li><code>sealed</code>：子类仍然为密封类。</li>
-<li><code>non-sealed</code>：非密封类，可以自由派生子类。</li>
-</ul></li>
-</ul>
-<h2 id="密封类例子">密封类例子</h2>
-<p>密封类 A 允许派生 B 和 C</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> <span class="keyword">permits</span> B, C &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>B 同样为密封类，允许派生出 D</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> <span class="keyword">permits</span> D &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>D 为 <code>final</code> 类，即无法再进行派生子类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>C 为非密封类，允许进行任意派生</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>对应的继承关系图如下：</p>
-<img src="/archives/java-sealed-class/image-20221225180518140.png" class="">
-<p>特别地，如果密封类和子类均位于同一个文件中，<code>permits</code>
-可以省略。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="密封接口">密封接口</h2>
-<p>密封接口与密封类类似，密封接口的实现类也必须使用
-<code>sealed</code>、<code>non-sealed</code>、<code>final</code>
-修饰，而密封接口下的子接口也必须为
-<code>sealed</code>、<code>non-sealed</code> 修饰（接口不可能为
-<code>final</code> 修饰）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">interface</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">interface</span> <span class="title class_">Bar</span> <span class="keyword">extends</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Tar</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">Mar</span> <span class="keyword">extends</span> <span class="title class_">Tar</span> &#123; &#125;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Car</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Par</span> <span class="keyword">implements</span> <span class="title class_">Bar</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 面向对象知识详解</title>
     <url>/archives/java-oop/</url>
     <content><![CDATA[<p>Java
@@ -2392,6 +2336,62 @@ Java 讲义 · 第 5 版》</a></li>
 <li><a href="https://bfw.h5.xeknow.com/s/1YClVz">跟着李刚老师学
 Java（视频）</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 17新特性：密封类</title>
+    <url>/archives/java-sealed-class/</url>
+    <content><![CDATA[<p>在 Java 17 之前，一个 Java 类只有两种状态：可派生和不可派生（即
+<code>final</code>
+类），这导致如果需要对类进行派生的时候，我们无法将其设置为
+<code>final</code> 类，也就无法限制其他人对于该类的派生。</p>
+<p>Java 17
+带来的密封类解决了这个问题，可以限制父类只能派生预先指定的子类，不允许再派生其他子类。</p>
+<span id="more"></span>
+<h2 id="密封类语法">密封类语法</h2>
+<p>密封类的语法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[修饰符] <span class="keyword">sealed</span> class 类名 <span class="keyword">permits</span> 子类列表 &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用密封类时没必须满足以下要求：</p>
+<ul>
+<li>子类和密封类要么处于同一个模块，要么术语同一个类。如果在未命名的模块中，则必须位于同一个包中。</li>
+<li>密封类允许派生的子类必须直接继承密封类。</li>
+<li>密封类的子类必须使用 <code>final</code>、<code>sealed</code> 或
+<code>non-sealed</code> 修饰。
+<ul>
+<li><code>final</code>：无法再次派生子类。</li>
+<li><code>sealed</code>：子类仍然为密封类。</li>
+<li><code>non-sealed</code>：非密封类，可以自由派生子类。</li>
+</ul></li>
+</ul>
+<h2 id="密封类例子">密封类例子</h2>
+<p>密封类 A 允许派生 B 和 C</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> <span class="keyword">permits</span> B, C &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>B 同样为密封类，允许派生出 D</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> <span class="keyword">permits</span> D &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>D 为 <code>final</code> 类，即无法再进行派生子类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>C 为非密封类，允许进行任意派生</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>对应的继承关系图如下：</p>
+<img src="/archives/java-sealed-class/image-20221225180518140.png" class="">
+<p>特别地，如果密封类和子类均位于同一个文件中，<code>permits</code>
+可以省略。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="密封接口">密封接口</h2>
+<p>密封接口与密封类类似，密封接口的实现类也必须使用
+<code>sealed</code>、<code>non-sealed</code>、<code>final</code>
+修饰，而密封接口下的子接口也必须为
+<code>sealed</code>、<code>non-sealed</code> 修饰（接口不可能为
+<code>final</code> 修饰）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">interface</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">interface</span> <span class="title class_">Bar</span> <span class="keyword">extends</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Tar</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">Mar</span> <span class="keyword">extends</span> <span class="title class_">Tar</span> &#123; &#125;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Car</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Par</span> <span class="keyword">implements</span> <span class="title class_">Bar</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>编程语言</category>
