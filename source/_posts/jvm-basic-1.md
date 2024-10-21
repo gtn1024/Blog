@@ -5,6 +5,11 @@ tags:
 - Java
 - JVM
 ---
+
+本文主要讲解 Java 虚拟机的基础，以及字节码相关知识。
+
+<!-- more -->
+
 ## JVM 是什么
 
 JVM 全称是 Java Virtual Machine，中文名为 Java 虚拟机，是一个运行在计算机上的程序，他的职责是运行 Java 字节码文件。
