@@ -1234,6 +1234,71 @@ key 和 value。</p>
       </tags>
   </entry>
   <entry>
+    <title>Go 语言简介及安装</title>
+    <url>/archives/go-intro-and-install/</url>
+    <content><![CDATA[<p>本文主要介绍 Go 语言，以及 Go 语言的安装及环境搭建。</p>
+<span id="more"></span>
+<h2 id="什么是-go-语言">什么是 Go 语言</h2>
+<p>Go 语言是由 Google 开发的一门跨平台的编程语言，最早在2009年发布。</p>
+<p>Go 语言具有如下特点：</p>
+<ul>
+<li>高性能、高并发。在编程语言的层面上实现了高并发，十分容易就可以写出高并发的程序。</li>
+<li>语法简单，学习曲线平缓。Go 语言的语法类似
+C，同时语法风格较为简洁。</li>
+<li>丰富的标准库。Go 语言提供了大量高质量的标准库。</li>
+<li>完善的工具链。在编译、格式化、质量检查、包管理、测试等方面拥有完善的工具链。</li>
+<li>静态链接。在代码编译之后以单个可执行文件作为构件，可将该可执行文件直接部署。</li>
+<li>快速编译。编译速度较快，同时支持增量编译。</li>
+<li>跨平台。可以在几乎所有的平台、架构下运行。同时自带交叉编译。</li>
+<li>垃圾回收。无需考虑内存管理。</li>
+</ul>
+<h2 id="go-语言环境配置">Go 语言环境配置</h2>
+<h3 id="go-语言安装及配置">Go 语言安装及配置</h3>
+<p>进入 <a href="https://go.dev/">Go
+语言官网</a>，下载安装最新版即可。</p>
+<p>安装完成后，在国内因为某些原因，常常需要配置 proxy 使用。可使用七牛的
+<a href="https://goproxy.cn/">goproxy</a> 服务对于 Go 进行加速。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on  # 开启 Go 1.11 module功能</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct # 使用 goproxy 进行加速</span><br></pre></td></tr></table></figure>
+<h3 id="使用-vscode-进行-go-开发">使用 VSCode 进行 Go 开发</h3>
+<p>安装 <a href="https://code.visualstudio.com">Visual Studio
+Code</a>，并安装 <a
+href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go
+语言插件</a>，即可进行 Go 语言开发。</p>
+<h2 id="第一行-go-代码">第一行 Go 代码</h2>
+<p>使用 <code>go mod init github.com/gtn1024/helloworld</code>
+命令，即可创建一个新的项目，随后创建
+<code>main.go</code>，输入如下代码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> fmt.Println(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在项目目录中执行 <code>go run .</code> 即可运行该程序。</p>
+<img src="/archives/go-intro-and-install/20230115165947.png" class="">
+<p>在如上代码中，将包名设置为
+<code>main</code>，代表该文件是一个程序的入口文件。Go 语言的程序由
+<code>main</code> 包中的 <code>main()</code>
+函数启动。<code>import "fmt"</code> 则代表需要导入 <code>fmt</code>
+包，该包主要用于程序的字符串和输入输出。<code>fmt.Println("Hello, world!")</code>
+则代表输出 <code>Hello, world!</code> 语句。</p>
+<h2 id="编译-go-程序">编译 Go 程序</h2>
+<h3 id="编译为当前平台可执行程序">编译为当前平台可执行程序</h3>
+<p>运行 <code>go build .</code>
+即可将当前项目编译成当前平台的可执行文件，该文件可以独立执行而无需任何的依赖。</p>
+<img src="/archives/go-intro-and-install/20230115170829.png" class="">
+<h3 id="交叉编译其他平台程序">交叉编译其他平台程序</h3>
+<p>Go 编译程序可以通过环境变量的方式来切换目标平台。本文使用的是
+<code>Git Bash</code>，所以可以直接在命令前面添加环境变量。</p>
+<img src="/archives/go-intro-and-install/20230115172126.png" class="">
+<p>Go 语言可交叉编译的平台可以由 <code>go tool dist list</code>
+命令查看：</p>
+<img src="/archives/go-intro-and-install/20230115171820.png" class="">
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Go 语言入门 —— 基础语法</title>
     <url>/archives/go-basic-syntax/</url>
     <content><![CDATA[<p>本文主要对于 Go 语言的类型系统、变量常量及流程控制进行介绍。</p>
@@ -1298,71 +1363,6 @@ key 和 value。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line">arr := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;正在遍历第 %v 个元素，值为 %v\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 正在遍历第 0 个元素，值为 1</span></span><br><span class="line"><span class="comment">// 正在遍历第 1 个元素，值为 2</span></span><br><span class="line"><span class="comment">// 正在遍历第 2 个元素，值为 3</span></span><br></pre></td></tr></table></figure>
 <p>遍历一个哈希表：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mp := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> mp &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;k = %v, v = %v\n&quot;</span>, k, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// k = three, v = 3</span></span><br><span class="line"><span class="comment">// k = one, v = 1</span></span><br><span class="line"><span class="comment">// k = two, v = 2</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>Go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Go 语言简介及安装</title>
-    <url>/archives/go-intro-and-install/</url>
-    <content><![CDATA[<p>本文主要介绍 Go 语言，以及 Go 语言的安装及环境搭建。</p>
-<span id="more"></span>
-<h2 id="什么是-go-语言">什么是 Go 语言</h2>
-<p>Go 语言是由 Google 开发的一门跨平台的编程语言，最早在2009年发布。</p>
-<p>Go 语言具有如下特点：</p>
-<ul>
-<li>高性能、高并发。在编程语言的层面上实现了高并发，十分容易就可以写出高并发的程序。</li>
-<li>语法简单，学习曲线平缓。Go 语言的语法类似
-C，同时语法风格较为简洁。</li>
-<li>丰富的标准库。Go 语言提供了大量高质量的标准库。</li>
-<li>完善的工具链。在编译、格式化、质量检查、包管理、测试等方面拥有完善的工具链。</li>
-<li>静态链接。在代码编译之后以单个可执行文件作为构件，可将该可执行文件直接部署。</li>
-<li>快速编译。编译速度较快，同时支持增量编译。</li>
-<li>跨平台。可以在几乎所有的平台、架构下运行。同时自带交叉编译。</li>
-<li>垃圾回收。无需考虑内存管理。</li>
-</ul>
-<h2 id="go-语言环境配置">Go 语言环境配置</h2>
-<h3 id="go-语言安装及配置">Go 语言安装及配置</h3>
-<p>进入 <a href="https://go.dev/">Go
-语言官网</a>，下载安装最新版即可。</p>
-<p>安装完成后，在国内因为某些原因，常常需要配置 proxy 使用。可使用七牛的
-<a href="https://goproxy.cn/">goproxy</a> 服务对于 Go 进行加速。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on  # 开启 Go 1.11 module功能</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct # 使用 goproxy 进行加速</span><br></pre></td></tr></table></figure>
-<h3 id="使用-vscode-进行-go-开发">使用 VSCode 进行 Go 开发</h3>
-<p>安装 <a href="https://code.visualstudio.com">Visual Studio
-Code</a>，并安装 <a
-href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go
-语言插件</a>，即可进行 Go 语言开发。</p>
-<h2 id="第一行-go-代码">第一行 Go 代码</h2>
-<p>使用 <code>go mod init github.com/gtn1024/helloworld</code>
-命令，即可创建一个新的项目，随后创建
-<code>main.go</code>，输入如下代码：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> fmt.Println(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在项目目录中执行 <code>go run .</code> 即可运行该程序。</p>
-<img src="/archives/go-intro-and-install/20230115165947.png" class="">
-<p>在如上代码中，将包名设置为
-<code>main</code>，代表该文件是一个程序的入口文件。Go 语言的程序由
-<code>main</code> 包中的 <code>main()</code>
-函数启动。<code>import "fmt"</code> 则代表需要导入 <code>fmt</code>
-包，该包主要用于程序的字符串和输入输出。<code>fmt.Println("Hello, world!")</code>
-则代表输出 <code>Hello, world!</code> 语句。</p>
-<h2 id="编译-go-程序">编译 Go 程序</h2>
-<h3 id="编译为当前平台可执行程序">编译为当前平台可执行程序</h3>
-<p>运行 <code>go build .</code>
-即可将当前项目编译成当前平台的可执行文件，该文件可以独立执行而无需任何的依赖。</p>
-<img src="/archives/go-intro-and-install/20230115170829.png" class="">
-<h3 id="交叉编译其他平台程序">交叉编译其他平台程序</h3>
-<p>Go 编译程序可以通过环境变量的方式来切换目标平台。本文使用的是
-<code>Git Bash</code>，所以可以直接在命令前面添加环境变量。</p>
-<img src="/archives/go-intro-and-install/20230115172126.png" class="">
-<p>Go 语言可交叉编译的平台可以由 <code>go tool dist list</code>
-命令查看：</p>
-<img src="/archives/go-intro-and-install/20230115171820.png" class="">
 ]]></content>
       <categories>
         <category>编程语言</category>
@@ -2885,6 +2885,38 @@ class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
       </tags>
   </entry>
   <entry>
+    <title>JVM 基础 - 初始 JVM</title>
+    <url>/archives/jvm-basic-1/</url>
+    <content><![CDATA[<h2 id="jvm-是什么">JVM 是什么</h2>
+<p>JVM 全称是 Java Virtual Machine，中文名为 Java
+虚拟机，是一个运行在计算机上的程序，他的职责是运行 Java 字节码文件。</p>
+<h2 id="jvm-的功能">JVM 的功能</h2>
+<ol type="1">
+<li><p>解释和运行</p>
+<ul>
+<li>对字节码文件中的指令，实时的解释成机器码，让计算机执行</li>
+</ul></li>
+<li><p>内存管理</p>
+<ul>
+<li>自动为对象、方法等奉陪内存</li>
+<li>自动的垃圾回收机制，回收不再使用的内存</li>
+</ul></li>
+<li><p>即时编译</p>
+<ul>
+<li>对热点代码进行优化，提升执行效率</li>
+</ul></li>
+</ol>
+<h3 id="即时编译">即时编译</h3>
+<img src="/archives/jvm-basic-1/20241021213823.png" class="">
+<p>JVM 提供了 即时编译（JIT）进行性能优化。最终能达到接近 C/C++
+语言的运行性能。在特定场景下甚至实现超越。</p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis - 缓存穿透</title>
     <url>/archives/redis-cache-penetration/</url>
     <content><![CDATA[<p>缓存穿透是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。最终造成服务宕机。</p>
@@ -3160,105 +3192,6 @@ Windows</a></li>
       </tags>
   </entry>
   <entry>
-    <title>TypeScript 学习笔记 2——类型（上）</title>
-    <url>/archives/ts-datatype-1/</url>
-    <content><![CDATA[<p>本文主要介绍如何在 TypeScript 中描述不同类型的对象。</p>
-<span id="more"></span>
-<p>文章目录：</p>
-<ul>
-<li><a href="/archives/ts-intro/" title="TypeScript 学习笔记 1——初识TS">TypeScript 学习笔记 1——初识TS</a></li>
-<li><a href="/archives/ts-datatype-1/" title="TypeScript 学习笔记 2——类型（上）">TypeScript 学习笔记 2——类型（上）</a></li>
-</ul>
-<h2 id="数据类型">数据类型</h2>
-<p>在 JavaScript 中有如下数据类型：</p>
-<ul>
-<li><code>null</code></li>
-<li><code>undefined</code></li>
-<li><code>string</code></li>
-<li><code>number</code></li>
-<li><code>boolean</code></li>
-<li><code>bigint</code></li>
-<li><code>symbol</code></li>
-<li><code>object</code> (包括
-<code>Array</code>、<code>Function</code>、<code>Date</code> 等)</li>
-</ul>
-<p>而 TypeScript 有如下类型</p>
-<ul>
-<li>JavaScript 中所有数据类型</li>
-<li><code>void</code></li>
-<li><code>never</code></li>
-<li><code>enum</code></li>
-<li><code>unknown</code></li>
-<li><code>any</code></li>
-<li>自定义类型 <code>type</code> (类型别名)、<code>interface</code></li>
-</ul>
-<h2 id="理解类型">理解类型</h2>
-<p>值：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="literal">null</span> <span class="literal">undefined</span></span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">1.1</span> <span class="number">1.2</span> <span class="number">3.1415926</span></span><br><span class="line">a b c d abc</span><br><span class="line"><span class="literal">true</span> <span class="literal">false</span></span><br><span class="line">------------</span><br><span class="line">&#123; &#125;</span><br><span class="line">&#123; <span class="attr">name</span>: <span class="string">&#x27;js&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Date</span>()</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">String</span>()</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Number</span>()</span><br></pre></td></tr></table></figure>
-<p>通过集合的思想，对应类型如下：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="literal">null</span> <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">type</span> <span class="built_in">number</span> = <span class="number">1</span> | <span class="number">1.1</span> | <span class="number">1.11</span> | ... | <span class="number">2</span> | ...</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">string</span> = <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;b&#x27;</span> | <span class="string">&#x27;ab&#x27;</span> | ...</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">boolean</span> = <span class="literal">true</span> | <span class="literal">false</span></span><br><span class="line">------------</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Object</span> = &#123; ? &#125; | <span class="title class_">Any</span> | <span class="title class_">Function</span> | <span class="title class_">String</span> | <span class="title class_">Number</span> | <span class="title class_">Boolean</span> | <span class="title class_">RegExp</span> | ...</span><br></pre></td></tr></table></figure>
-<p>在开发的过程中，通常不使用包装类型（如
-<code>number</code>-<code>Number</code>、<code>boolean</code>-<code>Boolean</code>、<code>string</code>-<code>String</code>）。同时，<code>Object</code>
-通常也不使用，因为其表示范围过大。例如，使用 <code>Object</code>
-类型可以表示一个数字、数组、函数、正则表达式……</p>
-<h2 id="描述对象的数据类型">描述对象的数据类型</h2>
-<p>因为在 TypeScript 中使用 <code>Object</code>
-类型表示对象，其范围过大。我们通常不用 <code>Object</code>
-类型，而是定义特定的类型来描述一个对象。</p>
-<h3 id="用-class-constructor-描述">用 class / constructor 描述</h3>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">d</span>: <span class="title class_">Date</span> = <span class="keyword">new</span> <span class="title class_">Date</span>(); <span class="comment">// d 只能为 Date 类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">f</span>: <span class="title class_">Function</span> = <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a&#x27;</span>); <span class="comment">// f 只能为函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">arr</span>: <span class="title class_">Array</span> = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="string">&#x27;a&#x27;</span>]; <span class="comment">// arr 只能为数组</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">brr</span>: <span class="title class_">Array</span>&lt;<span class="built_in">number</span>&gt; = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]; <span class="comment">// brr 只能为元素为 number 类型的数组</span></span><br></pre></td></tr></table></figure>
-<h3 id="用-type-或-interface-描述">用 <code>type</code> 或
-<code>interface</code> 描述</h3>
-<h4 id="定义固定格式的类型">定义固定格式的类型</h4>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">p1</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，缺少 age</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">p2</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，多了 gender</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">p2</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  <span class="attr">gender</span>: <span class="string">&#x27;男&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="定义可变类型">定义可变类型</h4>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = &#123;</span><br><span class="line">  [<span class="attr">k</span>: <span class="built_in">string</span>]: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: A = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="number">456</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，value 只能为 number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: A = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="string">&#x27;字符串&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>除了使用该方法，我们还可以使用 <code>Record</code> 来定义类型</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> B = <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: B = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="number">456</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，value 只能为 number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: B = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="string">&#x27;字符串&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="描述各种对象">描述各种对象</h2>
-<h3 id="数组对象">数组对象</h3>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = <span class="built_in">string</span>[]</span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">AA</span> = <span class="title class_">Array</span>&lt;<span class="built_in">string</span>&gt;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = [<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">aa</span>: <span class="variable constant_">AA</span> = [<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B = <span class="built_in">number</span>[]</span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">BB</span> = <span class="title class_">Array</span>&lt;<span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = [<span class="number">1</span>, <span class="number">0.6</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bb</span>: <span class="variable constant_">BB</span> = [<span class="number">1</span>, <span class="number">0.6</span>]</span><br></pre></td></tr></table></figure>
-<p>元组：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = [<span class="built_in">string</span>, <span class="built_in">string</span>, <span class="built_in">string</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = [<span class="string">&#x27;hi1&#x27;</span>, <span class="string">&#x27;hi2&#x27;</span>, <span class="string">&#x27;hi3&#x27;</span>]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a[<span class="number">1</span>]) <span class="comment">// hi2</span></span><br><span class="line"><span class="comment">// 错误，缺少一个元素</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">err</span>: A = [<span class="string">&#x27;hi1&#x27;</span>, <span class="string">&#x27;hi2&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B = [<span class="built_in">string</span>, <span class="built_in">number</span>, <span class="built_in">boolean</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = [<span class="string">&#x27;张三&#x27;</span>, <span class="number">18</span>, <span class="literal">true</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> C = [<span class="built_in">string</span>[], <span class="built_in">number</span>[]]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: C = [[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>], [<span class="number">1</span>, <span class="number">3.14</span>, <span class="number">10086</span>]]</span><br></pre></td></tr></table></figure>
-<p>思考题：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment">// a只能为 [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
-<h3 id="函数对象">函数对象</h3>
-<p>函数类型的定义格式如下：<code>(参数列表) =&gt; 返回值类型</code></p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FnA</span> = <span class="function">() =&gt;</span> <span class="built_in">void</span> </span><br><span class="line"><span class="keyword">const</span> <span class="attr">fnA</span>: <span class="title class_">FnA</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fnA&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AddTwoNum</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">addTwoNum</span>: <span class="title class_">AddTwoNum</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">addTwoNum</span>(<span class="number">1</span>,<span class="number">2</span>)) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<p>在定义函数时，形参列表可以根据实际的使用情况进行删除（即没用的参数可以不用添加上去），如果前面的参数没有使用到可以使用
-<code>_</code>
-作为占位符，但是在调用函数的时候要将参数列表写全。同时，形参类型可以省略（类型推导）。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FnB</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">aFnB</span>: <span class="title class_">FnB</span> = <span class="function">() =&gt;</span> <span class="number">1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">aFnB</span>(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// 参数不能省略，返回 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">bFnB</span>: <span class="title class_">FnB</span> = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b <span class="comment">// a、b的参数类型可以省略</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">bFnB</span>(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// 返回 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">cFnB</span>: <span class="title class_">FnB</span> = <span class="function">(<span class="params">_, b</span>) =&gt;</span> b</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">cFnB</span>(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// 返回 2</span></span><br></pre></td></tr></table></figure>
-<p>==如果函数使用了
-<code>this</code>，则只能使用普通函数，而不能使用箭头函数。==</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">sayHi</span>: <span class="title class_">SayHi</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">SayHi</span> = <span class="function">(<span class="params"><span class="variable language_">this</span>: Person, name: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">sayHi</span>: <span class="title class_">SayHi</span> = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> says hi to <span class="subst">$&#123;name&#125;</span>!`</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">p</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">sayHi</span>: sayHi,</span><br><span class="line">&#125;</span><br><span class="line">p.<span class="title function_">sayHi</span>(<span class="string">&#x27;法外狂徒&#x27;</span>)</span><br><span class="line">sayHi.<span class="title function_">call</span>(p, <span class="string">&#x27;法外狂徒&#x27;</span>)</span><br><span class="line">sayHi.<span class="title function_">apply</span>(p, [<span class="string">&#x27;法外狂徒&#x27;</span>])</span><br></pre></td></tr></table></figure>
-<h3 id="其他对象">其他对象</h3>
-<p>除了普通对象、数组对象、函数对象以外的对象通常使用 <code>class</code>
-来描述。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const d: Date = new Date()</span><br><span class="line">const r1: RegExp = /ab+c/</span><br><span class="line">const r2: RegExp = new RegExp(&quot;ab+c&quot;)</span><br><span class="line">const map: Map&lt;string, number&gt; = new Map()</span><br><span class="line">map.set(&#x27;张三&#x27;, 1)</span><br><span class="line">const set: Set&lt;string&gt; = new Set()</span><br><span class="line">set.add(&#x27;1&#x27;)</span><br><span class="line">set.add(&#x27;2&#x27;)</span><br><span class="line">set.add(&#x27;1&#x27;)</span><br></pre></td></tr></table></figure>
-<p>事实上，TypeScript 可以根据赋值的类型进行推导：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> d = <span class="keyword">new</span> <span class="title class_">Date</span>() <span class="comment">// Date</span></span><br><span class="line"><span class="keyword">const</span> r1 = <span class="regexp">/ab+c/</span>    <span class="comment">// RegExp </span></span><br><span class="line"><span class="keyword">const</span> r2 = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;ab+c&quot;</span>) <span class="comment">// RegExp</span></span><br><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>&lt;<span class="built_in">string</span>, <span class="built_in">number</span>&gt;() <span class="comment">// Map&lt;string, number&gt;</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>&lt;<span class="built_in">string</span>&gt;() <span class="comment">// Set&lt;string&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="any-和-unknown"><code>any</code> 和 <code>unknown</code></h2>
-<p><code>any</code> 指可以赋值为任何类型的类型，其不受 TypeScript
-类型系统的控制。</p>
-<p><code>unknown</code>
-指并不知道该对象为什么类型，通常用于从远端返回来的数据。对其进行操作时，需要对其进行类型断言。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: <span class="built_in">any</span> = <span class="string">&#x27;1,2,3&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: <span class="built_in">unknown</span> = <span class="string">&#x27;1,2,3&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>((b <span class="keyword">as</span> <span class="built_in">string</span>).<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: <span class="built_in">any</span> = <span class="number">123</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>)); <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
-<h2 id="never-类型"><code>never</code> 类型</h2>
-<p><code>any</code> 指在 TypeScript 中所有的类型，<code>never</code>
-则代表除 <code>any</code> 之外的类型（即其为空集）。出现
-<code>never</code> 时通常为错误。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A 的类型为 never</span></span><br><span class="line"><span class="keyword">type</span> A = <span class="built_in">string</span> &amp; <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B = <span class="built_in">string</span> | <span class="built_in">number</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = (<span class="string">&#x27;hello&#x27;</span> <span class="keyword">as</span> <span class="built_in">any</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> b === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// b 为 string</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> b === <span class="string">&#x27;number&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// b 为 number</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// b 为 never</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>栈、队列例题分析</title>
     <url>/archives/stack-queue/</url>
     <content><![CDATA[<p><strong>栈</strong>、<strong>队列</strong>
@@ -3422,6 +3355,105 @@ Queue</strong>）进行实现。</p>
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TypeScript 学习笔记 2——类型（上）</title>
+    <url>/archives/ts-datatype-1/</url>
+    <content><![CDATA[<p>本文主要介绍如何在 TypeScript 中描述不同类型的对象。</p>
+<span id="more"></span>
+<p>文章目录：</p>
+<ul>
+<li><a href="/archives/ts-intro/" title="TypeScript 学习笔记 1——初识TS">TypeScript 学习笔记 1——初识TS</a></li>
+<li><a href="/archives/ts-datatype-1/" title="TypeScript 学习笔记 2——类型（上）">TypeScript 学习笔记 2——类型（上）</a></li>
+</ul>
+<h2 id="数据类型">数据类型</h2>
+<p>在 JavaScript 中有如下数据类型：</p>
+<ul>
+<li><code>null</code></li>
+<li><code>undefined</code></li>
+<li><code>string</code></li>
+<li><code>number</code></li>
+<li><code>boolean</code></li>
+<li><code>bigint</code></li>
+<li><code>symbol</code></li>
+<li><code>object</code> (包括
+<code>Array</code>、<code>Function</code>、<code>Date</code> 等)</li>
+</ul>
+<p>而 TypeScript 有如下类型</p>
+<ul>
+<li>JavaScript 中所有数据类型</li>
+<li><code>void</code></li>
+<li><code>never</code></li>
+<li><code>enum</code></li>
+<li><code>unknown</code></li>
+<li><code>any</code></li>
+<li>自定义类型 <code>type</code> (类型别名)、<code>interface</code></li>
+</ul>
+<h2 id="理解类型">理解类型</h2>
+<p>值：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="literal">null</span> <span class="literal">undefined</span></span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">1.1</span> <span class="number">1.2</span> <span class="number">3.1415926</span></span><br><span class="line">a b c d abc</span><br><span class="line"><span class="literal">true</span> <span class="literal">false</span></span><br><span class="line">------------</span><br><span class="line">&#123; &#125;</span><br><span class="line">&#123; <span class="attr">name</span>: <span class="string">&#x27;js&#x27;</span> &#125;</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Date</span>()</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">String</span>()</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Number</span>()</span><br></pre></td></tr></table></figure>
+<p>通过集合的思想，对应类型如下：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="literal">null</span> <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">type</span> <span class="built_in">number</span> = <span class="number">1</span> | <span class="number">1.1</span> | <span class="number">1.11</span> | ... | <span class="number">2</span> | ...</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">string</span> = <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;b&#x27;</span> | <span class="string">&#x27;ab&#x27;</span> | ...</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">boolean</span> = <span class="literal">true</span> | <span class="literal">false</span></span><br><span class="line">------------</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Object</span> = &#123; ? &#125; | <span class="title class_">Any</span> | <span class="title class_">Function</span> | <span class="title class_">String</span> | <span class="title class_">Number</span> | <span class="title class_">Boolean</span> | <span class="title class_">RegExp</span> | ...</span><br></pre></td></tr></table></figure>
+<p>在开发的过程中，通常不使用包装类型（如
+<code>number</code>-<code>Number</code>、<code>boolean</code>-<code>Boolean</code>、<code>string</code>-<code>String</code>）。同时，<code>Object</code>
+通常也不使用，因为其表示范围过大。例如，使用 <code>Object</code>
+类型可以表示一个数字、数组、函数、正则表达式……</p>
+<h2 id="描述对象的数据类型">描述对象的数据类型</h2>
+<p>因为在 TypeScript 中使用 <code>Object</code>
+类型表示对象，其范围过大。我们通常不用 <code>Object</code>
+类型，而是定义特定的类型来描述一个对象。</p>
+<h3 id="用-class-constructor-描述">用 class / constructor 描述</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">d</span>: <span class="title class_">Date</span> = <span class="keyword">new</span> <span class="title class_">Date</span>(); <span class="comment">// d 只能为 Date 类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">f</span>: <span class="title class_">Function</span> = <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;a&#x27;</span>); <span class="comment">// f 只能为函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">arr</span>: <span class="title class_">Array</span> = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="string">&#x27;a&#x27;</span>]; <span class="comment">// arr 只能为数组</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">brr</span>: <span class="title class_">Array</span>&lt;<span class="built_in">number</span>&gt; = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]; <span class="comment">// brr 只能为元素为 number 类型的数组</span></span><br></pre></td></tr></table></figure>
+<h3 id="用-type-或-interface-描述">用 <code>type</code> 或
+<code>interface</code> 描述</h3>
+<h4 id="定义固定格式的类型">定义固定格式的类型</h4>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">p1</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，缺少 age</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">p2</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，多了 gender</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">p2</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">number</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  <span class="attr">gender</span>: <span class="string">&#x27;男&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="定义可变类型">定义可变类型</h4>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = &#123;</span><br><span class="line">  [<span class="attr">k</span>: <span class="built_in">string</span>]: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: A = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="number">456</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，value 只能为 number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: A = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="string">&#x27;字符串&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了使用该方法，我们还可以使用 <code>Record</code> 来定义类型</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> B = <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: B = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="number">456</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误，value 只能为 number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: B = &#123;</span><br><span class="line"> <span class="attr">a</span>: <span class="number">123</span>,</span><br><span class="line"> <span class="attr">b</span>: <span class="string">&#x27;字符串&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="描述各种对象">描述各种对象</h2>
+<h3 id="数组对象">数组对象</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = <span class="built_in">string</span>[]</span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">AA</span> = <span class="title class_">Array</span>&lt;<span class="built_in">string</span>&gt;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = [<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">aa</span>: <span class="variable constant_">AA</span> = [<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B = <span class="built_in">number</span>[]</span><br><span class="line"><span class="comment">// 等价于：</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">BB</span> = <span class="title class_">Array</span>&lt;<span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = [<span class="number">1</span>, <span class="number">0.6</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bb</span>: <span class="variable constant_">BB</span> = [<span class="number">1</span>, <span class="number">0.6</span>]</span><br></pre></td></tr></table></figure>
+<p>元组：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = [<span class="built_in">string</span>, <span class="built_in">string</span>, <span class="built_in">string</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = [<span class="string">&#x27;hi1&#x27;</span>, <span class="string">&#x27;hi2&#x27;</span>, <span class="string">&#x27;hi3&#x27;</span>]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a[<span class="number">1</span>]) <span class="comment">// hi2</span></span><br><span class="line"><span class="comment">// 错误，缺少一个元素</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">err</span>: A = [<span class="string">&#x27;hi1&#x27;</span>, <span class="string">&#x27;hi2&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B = [<span class="built_in">string</span>, <span class="built_in">number</span>, <span class="built_in">boolean</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = [<span class="string">&#x27;张三&#x27;</span>, <span class="number">18</span>, <span class="literal">true</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> C = [<span class="built_in">string</span>[], <span class="built_in">number</span>[]]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: C = [[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>], [<span class="number">1</span>, <span class="number">3.14</span>, <span class="number">10086</span>]]</span><br></pre></td></tr></table></figure>
+<p>思考题：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> A = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment">// a只能为 [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数对象">函数对象</h3>
+<p>函数类型的定义格式如下：<code>(参数列表) =&gt; 返回值类型</code></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FnA</span> = <span class="function">() =&gt;</span> <span class="built_in">void</span> </span><br><span class="line"><span class="keyword">const</span> <span class="attr">fnA</span>: <span class="title class_">FnA</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;fnA&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AddTwoNum</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">addTwoNum</span>: <span class="title class_">AddTwoNum</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">addTwoNum</span>(<span class="number">1</span>,<span class="number">2</span>)) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>在定义函数时，形参列表可以根据实际的使用情况进行删除（即没用的参数可以不用添加上去），如果前面的参数没有使用到可以使用
+<code>_</code>
+作为占位符，但是在调用函数的时候要将参数列表写全。同时，形参类型可以省略（类型推导）。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FnB</span> = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">number</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">aFnB</span>: <span class="title class_">FnB</span> = <span class="function">() =&gt;</span> <span class="number">1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">aFnB</span>(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// 参数不能省略，返回 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">bFnB</span>: <span class="title class_">FnB</span> = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b <span class="comment">// a、b的参数类型可以省略</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">bFnB</span>(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// 返回 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">cFnB</span>: <span class="title class_">FnB</span> = <span class="function">(<span class="params">_, b</span>) =&gt;</span> b</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">cFnB</span>(<span class="number">1</span>, <span class="number">2</span>)) <span class="comment">// 返回 2</span></span><br></pre></td></tr></table></figure>
+<p>==如果函数使用了
+<code>this</code>，则只能使用普通函数，而不能使用箭头函数。==</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">sayHi</span>: <span class="title class_">SayHi</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">SayHi</span> = <span class="function">(<span class="params"><span class="variable language_">this</span>: Person, name: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">sayHi</span>: <span class="title class_">SayHi</span> = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> says hi to <span class="subst">$&#123;name&#125;</span>!`</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">p</span>: <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">  <span class="attr">sayHi</span>: sayHi,</span><br><span class="line">&#125;</span><br><span class="line">p.<span class="title function_">sayHi</span>(<span class="string">&#x27;法外狂徒&#x27;</span>)</span><br><span class="line">sayHi.<span class="title function_">call</span>(p, <span class="string">&#x27;法外狂徒&#x27;</span>)</span><br><span class="line">sayHi.<span class="title function_">apply</span>(p, [<span class="string">&#x27;法外狂徒&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="其他对象">其他对象</h3>
+<p>除了普通对象、数组对象、函数对象以外的对象通常使用 <code>class</code>
+来描述。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const d: Date = new Date()</span><br><span class="line">const r1: RegExp = /ab+c/</span><br><span class="line">const r2: RegExp = new RegExp(&quot;ab+c&quot;)</span><br><span class="line">const map: Map&lt;string, number&gt; = new Map()</span><br><span class="line">map.set(&#x27;张三&#x27;, 1)</span><br><span class="line">const set: Set&lt;string&gt; = new Set()</span><br><span class="line">set.add(&#x27;1&#x27;)</span><br><span class="line">set.add(&#x27;2&#x27;)</span><br><span class="line">set.add(&#x27;1&#x27;)</span><br></pre></td></tr></table></figure>
+<p>事实上，TypeScript 可以根据赋值的类型进行推导：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> d = <span class="keyword">new</span> <span class="title class_">Date</span>() <span class="comment">// Date</span></span><br><span class="line"><span class="keyword">const</span> r1 = <span class="regexp">/ab+c/</span>    <span class="comment">// RegExp </span></span><br><span class="line"><span class="keyword">const</span> r2 = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;ab+c&quot;</span>) <span class="comment">// RegExp</span></span><br><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>&lt;<span class="built_in">string</span>, <span class="built_in">number</span>&gt;() <span class="comment">// Map&lt;string, number&gt;</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>&lt;<span class="built_in">string</span>&gt;() <span class="comment">// Set&lt;string&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="any-和-unknown"><code>any</code> 和 <code>unknown</code></h2>
+<p><code>any</code> 指可以赋值为任何类型的类型，其不受 TypeScript
+类型系统的控制。</p>
+<p><code>unknown</code>
+指并不知道该对象为什么类型，通常用于从远端返回来的数据。对其进行操作时，需要对其进行类型断言。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: <span class="built_in">any</span> = <span class="string">&#x27;1,2,3&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: <span class="built_in">unknown</span> = <span class="string">&#x27;1,2,3&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>((b <span class="keyword">as</span> <span class="built_in">string</span>).<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">c</span>: <span class="built_in">any</span> = <span class="number">123</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>)); <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<h2 id="never-类型"><code>never</code> 类型</h2>
+<p><code>any</code> 指在 TypeScript 中所有的类型，<code>never</code>
+则代表除 <code>any</code> 之外的类型（即其为空集）。出现
+<code>never</code> 时通常为错误。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A 的类型为 never</span></span><br><span class="line"><span class="keyword">type</span> A = <span class="built_in">string</span> &amp; <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> B = <span class="built_in">string</span> | <span class="built_in">number</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">b</span>: B = (<span class="string">&#x27;hello&#x27;</span> <span class="keyword">as</span> <span class="built_in">any</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> b === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// b 为 string</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> b === <span class="string">&#x27;number&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// b 为 number</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// b 为 never</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>TypeScript</tag>
       </tags>
   </entry>
   <entry>
