@@ -1234,71 +1234,6 @@ key 和 value。</p>
       </tags>
   </entry>
   <entry>
-    <title>Go 语言简介及安装</title>
-    <url>/archives/go-intro-and-install/</url>
-    <content><![CDATA[<p>本文主要介绍 Go 语言，以及 Go 语言的安装及环境搭建。</p>
-<span id="more"></span>
-<h2 id="什么是-go-语言">什么是 Go 语言</h2>
-<p>Go 语言是由 Google 开发的一门跨平台的编程语言，最早在2009年发布。</p>
-<p>Go 语言具有如下特点：</p>
-<ul>
-<li>高性能、高并发。在编程语言的层面上实现了高并发，十分容易就可以写出高并发的程序。</li>
-<li>语法简单，学习曲线平缓。Go 语言的语法类似
-C，同时语法风格较为简洁。</li>
-<li>丰富的标准库。Go 语言提供了大量高质量的标准库。</li>
-<li>完善的工具链。在编译、格式化、质量检查、包管理、测试等方面拥有完善的工具链。</li>
-<li>静态链接。在代码编译之后以单个可执行文件作为构件，可将该可执行文件直接部署。</li>
-<li>快速编译。编译速度较快，同时支持增量编译。</li>
-<li>跨平台。可以在几乎所有的平台、架构下运行。同时自带交叉编译。</li>
-<li>垃圾回收。无需考虑内存管理。</li>
-</ul>
-<h2 id="go-语言环境配置">Go 语言环境配置</h2>
-<h3 id="go-语言安装及配置">Go 语言安装及配置</h3>
-<p>进入 <a href="https://go.dev/">Go
-语言官网</a>，下载安装最新版即可。</p>
-<p>安装完成后，在国内因为某些原因，常常需要配置 proxy 使用。可使用七牛的
-<a href="https://goproxy.cn/">goproxy</a> 服务对于 Go 进行加速。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on  # 开启 Go 1.11 module功能</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct # 使用 goproxy 进行加速</span><br></pre></td></tr></table></figure>
-<h3 id="使用-vscode-进行-go-开发">使用 VSCode 进行 Go 开发</h3>
-<p>安装 <a href="https://code.visualstudio.com">Visual Studio
-Code</a>，并安装 <a
-href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go
-语言插件</a>，即可进行 Go 语言开发。</p>
-<h2 id="第一行-go-代码">第一行 Go 代码</h2>
-<p>使用 <code>go mod init github.com/gtn1024/helloworld</code>
-命令，即可创建一个新的项目，随后创建
-<code>main.go</code>，输入如下代码：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> fmt.Println(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在项目目录中执行 <code>go run .</code> 即可运行该程序。</p>
-<img src="/archives/go-intro-and-install/20230115165947.png" class="">
-<p>在如上代码中，将包名设置为
-<code>main</code>，代表该文件是一个程序的入口文件。Go 语言的程序由
-<code>main</code> 包中的 <code>main()</code>
-函数启动。<code>import "fmt"</code> 则代表需要导入 <code>fmt</code>
-包，该包主要用于程序的字符串和输入输出。<code>fmt.Println("Hello, world!")</code>
-则代表输出 <code>Hello, world!</code> 语句。</p>
-<h2 id="编译-go-程序">编译 Go 程序</h2>
-<h3 id="编译为当前平台可执行程序">编译为当前平台可执行程序</h3>
-<p>运行 <code>go build .</code>
-即可将当前项目编译成当前平台的可执行文件，该文件可以独立执行而无需任何的依赖。</p>
-<img src="/archives/go-intro-and-install/20230115170829.png" class="">
-<h3 id="交叉编译其他平台程序">交叉编译其他平台程序</h3>
-<p>Go 编译程序可以通过环境变量的方式来切换目标平台。本文使用的是
-<code>Git Bash</code>，所以可以直接在命令前面添加环境变量。</p>
-<img src="/archives/go-intro-and-install/20230115172126.png" class="">
-<p>Go 语言可交叉编译的平台可以由 <code>go tool dist list</code>
-命令查看：</p>
-<img src="/archives/go-intro-and-install/20230115171820.png" class="">
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>Go</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Go 语言入门 —— 基础语法</title>
     <url>/archives/go-basic-syntax/</url>
     <content><![CDATA[<p>本文主要对于 Go 语言的类型系统、变量常量及流程控制进行介绍。</p>
@@ -1363,6 +1298,71 @@ href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line">arr := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;正在遍历第 %v 个元素，值为 %v\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 正在遍历第 0 个元素，值为 1</span></span><br><span class="line"><span class="comment">// 正在遍历第 1 个元素，值为 2</span></span><br><span class="line"><span class="comment">// 正在遍历第 2 个元素，值为 3</span></span><br></pre></td></tr></table></figure>
 <p>遍历一个哈希表：</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mp := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> mp &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;k = %v, v = %v\n&quot;</span>, k, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// k = three, v = 3</span></span><br><span class="line"><span class="comment">// k = one, v = 1</span></span><br><span class="line"><span class="comment">// k = two, v = 2</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go 语言简介及安装</title>
+    <url>/archives/go-intro-and-install/</url>
+    <content><![CDATA[<p>本文主要介绍 Go 语言，以及 Go 语言的安装及环境搭建。</p>
+<span id="more"></span>
+<h2 id="什么是-go-语言">什么是 Go 语言</h2>
+<p>Go 语言是由 Google 开发的一门跨平台的编程语言，最早在2009年发布。</p>
+<p>Go 语言具有如下特点：</p>
+<ul>
+<li>高性能、高并发。在编程语言的层面上实现了高并发，十分容易就可以写出高并发的程序。</li>
+<li>语法简单，学习曲线平缓。Go 语言的语法类似
+C，同时语法风格较为简洁。</li>
+<li>丰富的标准库。Go 语言提供了大量高质量的标准库。</li>
+<li>完善的工具链。在编译、格式化、质量检查、包管理、测试等方面拥有完善的工具链。</li>
+<li>静态链接。在代码编译之后以单个可执行文件作为构件，可将该可执行文件直接部署。</li>
+<li>快速编译。编译速度较快，同时支持增量编译。</li>
+<li>跨平台。可以在几乎所有的平台、架构下运行。同时自带交叉编译。</li>
+<li>垃圾回收。无需考虑内存管理。</li>
+</ul>
+<h2 id="go-语言环境配置">Go 语言环境配置</h2>
+<h3 id="go-语言安装及配置">Go 语言安装及配置</h3>
+<p>进入 <a href="https://go.dev/">Go
+语言官网</a>，下载安装最新版即可。</p>
+<p>安装完成后，在国内因为某些原因，常常需要配置 proxy 使用。可使用七牛的
+<a href="https://goproxy.cn/">goproxy</a> 服务对于 Go 进行加速。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on  # 开启 Go 1.11 module功能</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct # 使用 goproxy 进行加速</span><br></pre></td></tr></table></figure>
+<h3 id="使用-vscode-进行-go-开发">使用 VSCode 进行 Go 开发</h3>
+<p>安装 <a href="https://code.visualstudio.com">Visual Studio
+Code</a>，并安装 <a
+href="https://marketplace.visualstudio.com/items?itemName=golang.Go">Go
+语言插件</a>，即可进行 Go 语言开发。</p>
+<h2 id="第一行-go-代码">第一行 Go 代码</h2>
+<p>使用 <code>go mod init github.com/gtn1024/helloworld</code>
+命令，即可创建一个新的项目，随后创建
+<code>main.go</code>，输入如下代码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"> fmt.Println(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在项目目录中执行 <code>go run .</code> 即可运行该程序。</p>
+<img src="/archives/go-intro-and-install/20230115165947.png" class="">
+<p>在如上代码中，将包名设置为
+<code>main</code>，代表该文件是一个程序的入口文件。Go 语言的程序由
+<code>main</code> 包中的 <code>main()</code>
+函数启动。<code>import "fmt"</code> 则代表需要导入 <code>fmt</code>
+包，该包主要用于程序的字符串和输入输出。<code>fmt.Println("Hello, world!")</code>
+则代表输出 <code>Hello, world!</code> 语句。</p>
+<h2 id="编译-go-程序">编译 Go 程序</h2>
+<h3 id="编译为当前平台可执行程序">编译为当前平台可执行程序</h3>
+<p>运行 <code>go build .</code>
+即可将当前项目编译成当前平台的可执行文件，该文件可以独立执行而无需任何的依赖。</p>
+<img src="/archives/go-intro-and-install/20230115170829.png" class="">
+<h3 id="交叉编译其他平台程序">交叉编译其他平台程序</h3>
+<p>Go 编译程序可以通过环境变量的方式来切换目标平台。本文使用的是
+<code>Git Bash</code>，所以可以直接在命令前面添加环境变量。</p>
+<img src="/archives/go-intro-and-install/20230115172126.png" class="">
+<p>Go 语言可交叉编译的平台可以由 <code>go tool dist list</code>
+命令查看：</p>
+<img src="/archives/go-intro-and-install/20230115171820.png" class="">
 ]]></content>
       <categories>
         <category>编程语言</category>
@@ -2843,49 +2843,7 @@ href="https://xiedaimala.com/tasks/1a1a8ea8-4c7a-4bb1-9337-b10296004f05/video_tu
       </tags>
   </entry>
   <entry>
-    <title>JAX-RS 入门</title>
-    <url>/archives/jaxrs-101/</url>
-    <content><![CDATA[<p>JAX-RS 是 Jakarta RESTful Web Services 的缩写，是 Jakarta EE API
-规范，用于构建 RESTful 风格的 Web 服务。</p>
-<p>本文通过一个简单的内存版的用户管理系统，介绍 JAX-RS 的基本用法。</p>
-<span id="more"></span>
-<h2 id="使用-quarkus-rest-创建-jax-rs-服务">使用 Quarkus REST 创建
-JAX-RS 服务</h2>
-<p>为了便于演示，我们使用 Quarkus REST 来创建 JAX-RS 服务。</p>
-<img src="/archives/jaxrs-101/quarkus-create.png" class="">
-<h2 id="jax-rs-常用注解">JAX-RS 常用注解</h2>
-<ul>
-<li><code>@Path</code>：指定资源类或方法的路径。</li>
-<li><code>@GET</code>：指定方法可以通过 GET 方法访问。</li>
-<li><code>@POST</code>：指定方法可以通过 POST 方法访问。</li>
-<li><code>@PUT</code>：指定方法可以通过 PUT 方法访问。</li>
-<li><code>@DELETE</code>：指定方法可以通过 DELETE 方法访问。</li>
-<li><code>@PATCH</code>：指定方法可以通过 PATCH 方法访问。</li>
-<li><code>@Consumes</code>：指定方法可以接受的 MIME 类型。</li>
-<li><code>@Produces</code>：指定方法可以生成的 MIME 类型。</li>
-</ul>
-<h2 id="用户实体类">用户实体类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// constructor, getter and setter...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="dao-类">DAO 类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    User <span class="title function_">addUser</span><span class="params">(User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    User <span class="title function_">getUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此处我们使用一个 <code>List</code> 来模拟数据库。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;User&gt; users = <span class="keyword">new</span> <span class="title class_">CopyOnWriteArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (users.stream().anyMatch(u -&gt; u.getId().equals(user.getId()))) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        users.add(user);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">var</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; users.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (users.get(i).getId().equals(id)) &#123;</span><br><span class="line">                users.set(i, user);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.removeIf(u -&gt; u.getId().equals(id));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.stream().filter(u -&gt; u.getId().equals(id)).findFirst().orElse(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(users);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="userresource-类"><code>UserResource</code> 类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Path(&quot;/user&quot;)</span></span><br><span class="line"><span class="meta">@Produces(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="meta">@Consumes(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResource</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserResource</span><span class="params">(UserDao userDao)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userDao = userDao;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(userDao.getUsers()).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userDao.getUser(id);</span><br><span class="line">        <span class="keyword">if</span> (user == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(user).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">u</span> <span class="operator">=</span> userDao.addUser(user);</span><br><span class="line">        <span class="keyword">if</span> (u == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.CONFLICT).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(u).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PUT</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">updateUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.updateUser(id, user)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DELETE</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">deleteUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.deleteUser(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码仓库：<a href="https://github.com/gtn1024/jaxrs-demo"
-class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Jakarta EE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JVM 基础 - 初始 JVM</title>
+    <title>JVM 基础 - 初识 JVM</title>
     <url>/archives/jvm-basic-1/</url>
     <content><![CDATA[<h2 id="jvm-是什么">JVM 是什么</h2>
 <p>JVM 全称是 Java Virtual Machine，中文名为 Java
@@ -2954,6 +2912,48 @@ ID，检验是否为正整数；对于邮箱、手机号等数据，做好校验
 ]]></content>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JAX-RS 入门</title>
+    <url>/archives/jaxrs-101/</url>
+    <content><![CDATA[<p>JAX-RS 是 Jakarta RESTful Web Services 的缩写，是 Jakarta EE API
+规范，用于构建 RESTful 风格的 Web 服务。</p>
+<p>本文通过一个简单的内存版的用户管理系统，介绍 JAX-RS 的基本用法。</p>
+<span id="more"></span>
+<h2 id="使用-quarkus-rest-创建-jax-rs-服务">使用 Quarkus REST 创建
+JAX-RS 服务</h2>
+<p>为了便于演示，我们使用 Quarkus REST 来创建 JAX-RS 服务。</p>
+<img src="/archives/jaxrs-101/quarkus-create.png" class="">
+<h2 id="jax-rs-常用注解">JAX-RS 常用注解</h2>
+<ul>
+<li><code>@Path</code>：指定资源类或方法的路径。</li>
+<li><code>@GET</code>：指定方法可以通过 GET 方法访问。</li>
+<li><code>@POST</code>：指定方法可以通过 POST 方法访问。</li>
+<li><code>@PUT</code>：指定方法可以通过 PUT 方法访问。</li>
+<li><code>@DELETE</code>：指定方法可以通过 DELETE 方法访问。</li>
+<li><code>@PATCH</code>：指定方法可以通过 PATCH 方法访问。</li>
+<li><code>@Consumes</code>：指定方法可以接受的 MIME 类型。</li>
+<li><code>@Produces</code>：指定方法可以生成的 MIME 类型。</li>
+</ul>
+<h2 id="用户实体类">用户实体类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// constructor, getter and setter...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="dao-类">DAO 类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    User <span class="title function_">addUser</span><span class="params">(User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    User <span class="title function_">getUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处我们使用一个 <code>List</code> 来模拟数据库。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;User&gt; users = <span class="keyword">new</span> <span class="title class_">CopyOnWriteArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (users.stream().anyMatch(u -&gt; u.getId().equals(user.getId()))) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        users.add(user);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">var</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; users.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (users.get(i).getId().equals(id)) &#123;</span><br><span class="line">                users.set(i, user);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.removeIf(u -&gt; u.getId().equals(id));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.stream().filter(u -&gt; u.getId().equals(id)).findFirst().orElse(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(users);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="userresource-类"><code>UserResource</code> 类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Path(&quot;/user&quot;)</span></span><br><span class="line"><span class="meta">@Produces(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="meta">@Consumes(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResource</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserResource</span><span class="params">(UserDao userDao)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userDao = userDao;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(userDao.getUsers()).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userDao.getUser(id);</span><br><span class="line">        <span class="keyword">if</span> (user == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(user).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">u</span> <span class="operator">=</span> userDao.addUser(user);</span><br><span class="line">        <span class="keyword">if</span> (u == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.CONFLICT).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(u).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PUT</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">updateUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.updateUser(id, user)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DELETE</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">deleteUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.deleteUser(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码仓库：<a href="https://github.com/gtn1024/jaxrs-demo"
+class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Jakarta EE</tag>
       </tags>
   </entry>
   <entry>
