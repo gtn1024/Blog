@@ -73,6 +73,54 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV15YAUIVAF9MRANLAj
       </tags>
   </entry>
   <entry>
+    <title>图论——拓扑排序</title>
+    <url>/archives/algorithm-graph-topo/</url>
+    <content><![CDATA[<p>在现实生活中，我们要做一系列的事情。而这些事情之间会存在顺序或依赖关系，即做一件事情之前，我们必须先做好另一件事。比如，在大学里学习的课程，通常都会有先后顺序。</p>
+<span id="more"></span>
+<img src="/archives/algorithm-graph-topo/topo.drawio.png" class="">
+<p>图中，“高等数学”、“线性代数”是“离散数学”的先修课程，“离散数学”、“高级语言程序设计”是“数据结构”的先修课程，“高级语言程序设计”是“面向对象程序设计”的先修课程，“数据结构”、“高级语言程序设计”是“算法分析与设计”的先修课程。而“大学生心理健康”、“劳动教育”则作为独立的课程存在，不作为先修课程。</p>
+<p>这张课程的关系图，我们可以将其课程名称由编号代替，进而形成一张图：</p>
+<img src="/archives/algorithm-graph-topo/topo-nodes.drawio.png" class="">
+<p>该图其中一个拓扑序列为
+<code>1 3 5 6 2 4 7 8 9</code>。（这里之所以说是其中的一个拓扑序列，是因为一张图可以有多个拓扑序列）</p>
+<p>继续使用课程举例，如果“课程1”依赖了“课程2”，“课程2”依赖了“课程3”，而“课程3”又依赖了课程“1”，那么无论如何我们都是无法学习的。</p>
+
+<p>这种现象按照图论的说法称为“回路”。一个图有拓扑排序的条件是不能构成回路。因此，拓扑排序同时可以判断是否存在环。</p>
+<h2 id="拓扑排序的概念">拓扑排序的概念</h2>
+<p>拓扑排序是指在一个 <strong>有向无环图</strong>（DAG，Directed Acyclic
+Graph）中，我们将定点以线性的方式进行排序，使得任意一对由 <span
+class="math inline">\(u\)</span> 指向 <span
+class="math inline">\(v\)</span> 的有向边 <span
+class="math inline">\((u,v)\)</span>，都有 <span
+class="math inline">\(u\)</span> 在 <span
+class="math inline">\(v\)</span> 的前面。</p>
+<p>拓扑排序的目标是将所有节点排序，使得排在前面的节点不能依赖于排在后面的节点。</p>
+<h2 id="kahn-算法基于-bfs-的拓扑排序">Kahn 算法（基于 BFS
+的拓扑排序）</h2>
+<p>Kahn 算法是求解拓扑排序的一个十分常见的算法。其算法流程如下：</p>
+<ol type="1">
+<li>找到所有入度为 0
+的点，放入队列。这些点没有先后关系，可任意输出。</li>
+<li>弹出队头元素 <span class="math inline">\(t\)</span>，将 <span
+class="math inline">\(t\)</span> 的所有邻接点的入度减
+1。如果有的点入度为 0，则将其加入队列。</li>
+<li>不断执行以上步骤，直至队列为空。如果队列为空后仍然有点没有入队，则该图不是一个
+<strong>有向无环图</strong>，不存在拓扑排序。</li>
+</ol>
+<p>上面课程表的一个拓扑序列为
+<code>1 -&gt; 3 -&gt; 5 -&gt; 6 -&gt; 2 -&gt; 4 -&gt; 7 -&gt; 8 -&gt; 9</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, k;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n + <span class="number">1</span>);  <span class="comment">// 邻接表</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ind</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;     <span class="comment">// 入度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; ++i) &#123;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">    ind[v]++;</span><br><span class="line">    a[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">      q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ord</span><span class="params">(n)</span></span>;  <span class="comment">// 存储拓扑排序</span></span><br><span class="line">  <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="type">int</span> tt = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    ord[idx++] = tt;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; i : a[tt]) &#123;</span><br><span class="line">      <span class="comment">// 为其邻接点入度减 1</span></span><br><span class="line">      ind[i]--;</span><br><span class="line">      <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (idx != n) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Circle!&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">      cout &lt;&lt; ord[i] &lt;&lt; <span class="string">&quot; \n&quot;</span>[i == n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+        <category>算法知识</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>图论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>图论——存储图</title>
     <url>/archives/algorithm-graph-make/</url>
     <content><![CDATA[<p>图论算法是一个很大的专题，有很多的知识点。但是，在学习图论的各个知识点之前，首先需要对于图的存储有十分清楚的理解，了解各种方式的优劣。</p>
@@ -207,54 +255,6 @@ class="math inline">\(O(1)\)</span>；</li>
 <p>依然使用上面邻接表的例子。使用链式前向星，其空间存储如下图所示：</p>
 <img src="/archives/algorithm-graph-make/20230719233809.png" class="">
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>; <span class="comment">// 最多有 100,000 条边</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e6</span> + <span class="number">10</span>; <span class="comment">// 最多有 1,000,000 条边</span></span><br><span class="line"><span class="keyword">struct</span> &#123;</span><br><span class="line">  <span class="type">int</span> to, nxt, w;</span><br><span class="line">&#125; edges[M];</span><br><span class="line"><span class="type">int</span> head[N], cnt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v, <span class="type">int</span> w)</span> </span>&#123;</span><br><span class="line">  edges[cnt].to = v;        <span class="comment">// 指向 v 点</span></span><br><span class="line">  edges[cnt].w = w;         <span class="comment">// 边权为 w</span></span><br><span class="line">  edges[cnt].nxt = head[u]; <span class="comment">// 将 u 的邻接点向后顺延</span></span><br><span class="line">  head[u] = cnt++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = head[u]; ~i; i = edges[i].nxt) &#123; <span class="comment">// ~i 相当于 i != -1</span></span><br><span class="line">    <span class="keyword">if</span> (edges[i].to == v) &#123;</span><br><span class="line">      <span class="keyword">return</span> edges[i].w;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">memset</span>(head, <span class="number">-1</span>, <span class="built_in">sizeof</span>(head));  <span class="comment">// 初始化</span></span><br><span class="line">  <span class="built_in">add</span>(<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>);</span><br><span class="line">  <span class="built_in">add</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> w1 = <span class="built_in">find</span>(<span class="number">1</span>, <span class="number">4</span>);  <span class="comment">// 找不到边，返回 0x3f3f3f3f</span></span><br><span class="line">  <span class="type">int</span> w2 = <span class="built_in">find</span>(<span class="number">0</span>, <span class="number">1</span>);  <span class="comment">// 找到该边，返回 3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-        <category>算法知识</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>图论</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>图论——拓扑排序</title>
-    <url>/archives/algorithm-graph-topo/</url>
-    <content><![CDATA[<p>在现实生活中，我们要做一系列的事情。而这些事情之间会存在顺序或依赖关系，即做一件事情之前，我们必须先做好另一件事。比如，在大学里学习的课程，通常都会有先后顺序。</p>
-<span id="more"></span>
-<img src="/archives/algorithm-graph-topo/topo.drawio.png" class="">
-<p>图中，“高等数学”、“线性代数”是“离散数学”的先修课程，“离散数学”、“高级语言程序设计”是“数据结构”的先修课程，“高级语言程序设计”是“面向对象程序设计”的先修课程，“数据结构”、“高级语言程序设计”是“算法分析与设计”的先修课程。而“大学生心理健康”、“劳动教育”则作为独立的课程存在，不作为先修课程。</p>
-<p>这张课程的关系图，我们可以将其课程名称由编号代替，进而形成一张图：</p>
-<img src="/archives/algorithm-graph-topo/topo-nodes.drawio.png" class="">
-<p>该图其中一个拓扑序列为
-<code>1 3 5 6 2 4 7 8 9</code>。（这里之所以说是其中的一个拓扑序列，是因为一张图可以有多个拓扑序列）</p>
-<p>继续使用课程举例，如果“课程1”依赖了“课程2”，“课程2”依赖了“课程3”，而“课程3”又依赖了课程“1”，那么无论如何我们都是无法学习的。</p>
-
-<p>这种现象按照图论的说法称为“回路”。一个图有拓扑排序的条件是不能构成回路。因此，拓扑排序同时可以判断是否存在环。</p>
-<h2 id="拓扑排序的概念">拓扑排序的概念</h2>
-<p>拓扑排序是指在一个 <strong>有向无环图</strong>（DAG，Directed Acyclic
-Graph）中，我们将定点以线性的方式进行排序，使得任意一对由 <span
-class="math inline">\(u\)</span> 指向 <span
-class="math inline">\(v\)</span> 的有向边 <span
-class="math inline">\((u,v)\)</span>，都有 <span
-class="math inline">\(u\)</span> 在 <span
-class="math inline">\(v\)</span> 的前面。</p>
-<p>拓扑排序的目标是将所有节点排序，使得排在前面的节点不能依赖于排在后面的节点。</p>
-<h2 id="kahn-算法基于-bfs-的拓扑排序">Kahn 算法（基于 BFS
-的拓扑排序）</h2>
-<p>Kahn 算法是求解拓扑排序的一个十分常见的算法。其算法流程如下：</p>
-<ol type="1">
-<li>找到所有入度为 0
-的点，放入队列。这些点没有先后关系，可任意输出。</li>
-<li>弹出队头元素 <span class="math inline">\(t\)</span>，将 <span
-class="math inline">\(t\)</span> 的所有邻接点的入度减
-1。如果有的点入度为 0，则将其加入队列。</li>
-<li>不断执行以上步骤，直至队列为空。如果队列为空后仍然有点没有入队，则该图不是一个
-<strong>有向无环图</strong>，不存在拓扑排序。</li>
-</ol>
-<p>上面课程表的一个拓扑序列为
-<code>1 -&gt; 3 -&gt; 5 -&gt; 6 -&gt; 2 -&gt; 4 -&gt; 7 -&gt; 8 -&gt; 9</code></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, k;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n + <span class="number">1</span>);  <span class="comment">// 邻接表</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ind</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;     <span class="comment">// 入度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; ++i) &#123;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">    ind[v]++;</span><br><span class="line">    a[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">      q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ord</span><span class="params">(n)</span></span>;  <span class="comment">// 存储拓扑排序</span></span><br><span class="line">  <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="type">int</span> tt = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    ord[idx++] = tt;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; i : a[tt]) &#123;</span><br><span class="line">      <span class="comment">// 为其邻接点入度减 1</span></span><br><span class="line">      ind[i]--;</span><br><span class="line">      <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (idx != n) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Circle!&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">      cout &lt;&lt; ord[i] &lt;&lt; <span class="string">&quot; \n&quot;</span>[i == n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -1121,62 +1121,6 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV1pdCk0TA19MRANLAj
       </tags>
   </entry>
   <entry>
-    <title>Go 语言入门 —— 数据结构</title>
-    <url>/archives/go-basic-data-struct/</url>
-    <content><![CDATA[<p>本文主要介绍 Go 语言中的一些基本的数据结构。</p>
-<span id="more"></span>
-<h2 id="数组">数组</h2>
-<p>与其他语言类似，Go 语言的数组是长度不可变的。数组的定义如下：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">[长度]数据类型</span><br></pre></td></tr></table></figure>
-<p>如下为数组的定义及赋值操作：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a [<span class="number">10</span>]<span class="type">int</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line"> a[i] = i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在定义数组的时候，可以为数组赋初始值。此时，当数组元素确定时，数组的长度可以自动推导出来。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a []<span class="type">int</span> = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line">c := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="切片">切片</h2>
-<p>Go
-语言中的切片（slice）就相当于其他编程语言中可以自动扩容的动态数组，如
-C++ 中的 <code>vector</code>、Java 中的 <code>ArrayList</code> 等。</p>
-<p>定义切片的语法如下：<code>make(切片类型, 长度, 容量)</code>。其中，容量可以省略，如果被省略，则容量和切片的长度一致。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">slc1 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>)</span><br><span class="line">fmt.Println(slc1, <span class="built_in">len</span>(slc1), <span class="built_in">cap</span>(slc1))</span><br><span class="line"><span class="comment">// [0 0 0] 3 3</span></span><br><span class="line"></span><br><span class="line">slc2 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">fmt.Println(slc2, <span class="built_in">len</span>(slc2), <span class="built_in">cap</span>(slc2))</span><br><span class="line"><span class="comment">// [0 0 0] 3 5</span></span><br></pre></td></tr></table></figure>
-<h3 id="添加元素">添加元素</h3>
-<p>在切片的末尾添加元素，可以使用 <code>append</code>
-函数进行操作。<code>append</code>
-函数在添加元素时，会自动根据切片的容量对切片进行扩容。同时，函数将返回新的切片。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%v\n&quot;</span>, s) <span class="comment">// [1 2]</span></span><br></pre></td></tr></table></figure>
-<h3 id="获取切片某一范围">获取切片某一范围</h3>
-<p>在 Go 语言中，如果需要获取切片的某个范围，可以使用
-<code>s[a : b]</code>
-的语法。其取出来的范围区间是左闭右开（<code>[a, b)</code>，即
-<code>b</code> 取不到）的。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;...)</span><br><span class="line">fmt.Println(s) <span class="comment">// [1 2 3 4 5 6 7 8 9 10]</span></span><br><span class="line"></span><br><span class="line">fmt.Println(s[<span class="number">1</span>:<span class="number">6</span>]) <span class="comment">// [2 3 4 5 6]</span></span><br></pre></td></tr></table></figure>
-<h2 id="哈希">哈希</h2>
-<p>在 Go 语言中，定义哈希的格式是 <code>map[K]V</code>，其中
-<code>K</code> 为 key 的类型，<code>V</code> 为 value
-的类型。如下演示了两种哈希的定义方式：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">hsh1 := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line">hsh1[<span class="string">&quot;four&quot;</span>] = <span class="number">4</span></span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;one&quot;</span>]) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">hsh2 := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)</span><br><span class="line">hsh2[<span class="string">&quot;one&quot;</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>如果需要删除一个 key，可以直接使用 <code>delete</code> 函数。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="built_in">delete</span>(hsh1, <span class="string">&quot;two&quot;</span>)</span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;two&quot;</span>]) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
-<h2 id="range"><code>range</code></h2>
-<p>在 <a href="/archives/go-basic-syntax/">上一篇</a> 中，已经提了
-<code>for-range</code> 循环。<code>range</code>
-可以迭代容器中的元素。对于数组、切片等类型，其返回元素所在的下标以及元素值。对于哈希，其返回
-key 和 value。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">a := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v := <span class="keyword">range</span> a &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;i = %v, v = %v\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i = 0, v = 1</span></span><br><span class="line"><span class="comment">// i = 1, v = 2</span></span><br><span class="line"><span class="comment">// i = 2, v = 3</span></span><br><span class="line"></span><br><span class="line">m := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;k = %v, v = %v\n&quot;</span>, k, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// k = one, v = 1</span></span><br><span class="line"><span class="comment">// k = two, v = 2</span></span><br><span class="line"><span class="comment">// k = three, v = 3</span></span><br></pre></td></tr></table></figure>
-<h2 id="结构体">结构体</h2>
-<p>Go 语言中，定义结构体的语法如下：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> 结构体名 <span class="keyword">struct</span> &#123;</span><br><span class="line"> <span class="comment">// 成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如下为结构体最基本使用示例：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Point <span class="keyword">struct</span> &#123;</span><br><span class="line"> x <span class="type">int</span></span><br><span class="line"> y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line">p1 := Point&#123;<span class="number">1</span>, <span class="number">1</span>&#125;</span><br><span class="line">p2 := Point&#123;x: <span class="number">2</span>, y: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p1) <span class="comment">// main.Point&#123;x:1, y:1&#125;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p2) <span class="comment">// main.Point&#123;x:2, y:2&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>Go</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>菜狗学数据结构——栈和队列</title>
     <url>/archives/data-structure-stack-queue/</url>
     <content><![CDATA[<p>栈和队列是十分基础的数据结构，分别实现了 <strong>FILO</strong> 和
@@ -1231,6 +1175,62 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV1pdCk0TA19MRANLAj
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go 语言入门 —— 数据结构</title>
+    <url>/archives/go-basic-data-struct/</url>
+    <content><![CDATA[<p>本文主要介绍 Go 语言中的一些基本的数据结构。</p>
+<span id="more"></span>
+<h2 id="数组">数组</h2>
+<p>与其他语言类似，Go 语言的数组是长度不可变的。数组的定义如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">[长度]数据类型</span><br></pre></td></tr></table></figure>
+<p>如下为数组的定义及赋值操作：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a [<span class="number">10</span>]<span class="type">int</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line"> a[i] = i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在定义数组的时候，可以为数组赋初始值。此时，当数组元素确定时，数组的长度可以自动推导出来。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a []<span class="type">int</span> = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line">c := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="切片">切片</h2>
+<p>Go
+语言中的切片（slice）就相当于其他编程语言中可以自动扩容的动态数组，如
+C++ 中的 <code>vector</code>、Java 中的 <code>ArrayList</code> 等。</p>
+<p>定义切片的语法如下：<code>make(切片类型, 长度, 容量)</code>。其中，容量可以省略，如果被省略，则容量和切片的长度一致。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">slc1 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>)</span><br><span class="line">fmt.Println(slc1, <span class="built_in">len</span>(slc1), <span class="built_in">cap</span>(slc1))</span><br><span class="line"><span class="comment">// [0 0 0] 3 3</span></span><br><span class="line"></span><br><span class="line">slc2 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">fmt.Println(slc2, <span class="built_in">len</span>(slc2), <span class="built_in">cap</span>(slc2))</span><br><span class="line"><span class="comment">// [0 0 0] 3 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加元素">添加元素</h3>
+<p>在切片的末尾添加元素，可以使用 <code>append</code>
+函数进行操作。<code>append</code>
+函数在添加元素时，会自动根据切片的容量对切片进行扩容。同时，函数将返回新的切片。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%v\n&quot;</span>, s) <span class="comment">// [1 2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="获取切片某一范围">获取切片某一范围</h3>
+<p>在 Go 语言中，如果需要获取切片的某个范围，可以使用
+<code>s[a : b]</code>
+的语法。其取出来的范围区间是左闭右开（<code>[a, b)</code>，即
+<code>b</code> 取不到）的。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;...)</span><br><span class="line">fmt.Println(s) <span class="comment">// [1 2 3 4 5 6 7 8 9 10]</span></span><br><span class="line"></span><br><span class="line">fmt.Println(s[<span class="number">1</span>:<span class="number">6</span>]) <span class="comment">// [2 3 4 5 6]</span></span><br></pre></td></tr></table></figure>
+<h2 id="哈希">哈希</h2>
+<p>在 Go 语言中，定义哈希的格式是 <code>map[K]V</code>，其中
+<code>K</code> 为 key 的类型，<code>V</code> 为 value
+的类型。如下演示了两种哈希的定义方式：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">hsh1 := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line">hsh1[<span class="string">&quot;four&quot;</span>] = <span class="number">4</span></span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;one&quot;</span>]) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">hsh2 := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)</span><br><span class="line">hsh2[<span class="string">&quot;one&quot;</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>如果需要删除一个 key，可以直接使用 <code>delete</code> 函数。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="built_in">delete</span>(hsh1, <span class="string">&quot;two&quot;</span>)</span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;two&quot;</span>]) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<h2 id="range"><code>range</code></h2>
+<p>在 <a href="/archives/go-basic-syntax/">上一篇</a> 中，已经提了
+<code>for-range</code> 循环。<code>range</code>
+可以迭代容器中的元素。对于数组、切片等类型，其返回元素所在的下标以及元素值。对于哈希，其返回
+key 和 value。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">a := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v := <span class="keyword">range</span> a &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;i = %v, v = %v\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i = 0, v = 1</span></span><br><span class="line"><span class="comment">// i = 1, v = 2</span></span><br><span class="line"><span class="comment">// i = 2, v = 3</span></span><br><span class="line"></span><br><span class="line">m := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;k = %v, v = %v\n&quot;</span>, k, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// k = one, v = 1</span></span><br><span class="line"><span class="comment">// k = two, v = 2</span></span><br><span class="line"><span class="comment">// k = three, v = 3</span></span><br></pre></td></tr></table></figure>
+<h2 id="结构体">结构体</h2>
+<p>Go 语言中，定义结构体的语法如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> 结构体名 <span class="keyword">struct</span> &#123;</span><br><span class="line"> <span class="comment">// 成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如下为结构体最基本使用示例：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Point <span class="keyword">struct</span> &#123;</span><br><span class="line"> x <span class="type">int</span></span><br><span class="line"> y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line">p1 := Point&#123;<span class="number">1</span>, <span class="number">1</span>&#125;</span><br><span class="line">p2 := Point&#123;x: <span class="number">2</span>, y: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p1) <span class="comment">// main.Point&#123;x:1, y:1&#125;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p2) <span class="comment">// main.Point&#123;x:2, y:2&#125;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
       </tags>
   </entry>
   <entry>
@@ -2912,6 +2912,29 @@ class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
 <img src="/archives/jvm-basic-1/20241021213823.png" class="">
 <p>JVM 提供了 即时编译（JIT）进行性能优化。最终能达到接近 C/C++
 语言的运行性能。在特定场景下甚至实现超越。</p>
+<h2 id="jvm-的组成">JVM 的组成</h2>
+<img src="/archives/jvm-basic-1/jvm-container.drawio.png" class="">
+<h2 id="字节码文件的组成">字节码文件的组成</h2>
+<p>字节码文件主要由如下 5 个部分组成：</p>
+<ul>
+<li>基本信息：魔数、字节码文件对应的 Java
+版本号、访问标识、父类和接口</li>
+<li>常量池：保存了字符串常量、类或接口名、字段名，主要在字节码指令中使用</li>
+<li>字段：当前类或接口声明的字段信息</li>
+<li>方法：当前类或接口声明的方法信息、字节码指令</li>
+<li>属性：类的属性，比如源码的文件名、内部类的列表等</li>
+</ul>
+<h3 id="基本信息">基本信息</h3>
+<p><strong>魔数</strong>：4 字节，用于标识文件类型，固定值
+<code>0xCAFEBABE</code></p>
+<img src="/archives/jvm-basic-1/class-magic-num.png" class="">
+<p><strong>主副版本号</strong>：主副版本号是指编译字节码文件的 JDK
+版本号。比如 JDK 1.8 编译的字节码文件，主版本号是 52，副版本号是 0；JDK
+21 的主版本号是 65，副版本号是 0。一般只需要关心主版本号。在 JDK 1.2
+之后大版本的计算方法是
+<code>主版本号 - 44</code>。其主要作用是用来判断当前字节码的版本和运行时的
+JDK 是否兼容。</p>
+<img src="/archives/jvm-basic-1/jclasslib.png" class="">
 ]]></content>
       <tags>
         <tag>Java</tag>

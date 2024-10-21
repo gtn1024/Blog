@@ -1,0 +1,74 @@
+<mxfile host="Electron" modified="2024-10-21T14:06:19.236Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="Jy1FRNp964t-1Zse5Mig" version="21.6.5" type="device">
+  <diagram name="第 1 页" id="rLQX7ZT1VSWm-D4_eEGE">
+    <mxGraphModel dx="763" dy="499" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-16" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="20" width="620" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-15" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="390" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-1" value="JVM 的组成" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="110" y="50" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-2" value="字节码文件" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="110" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-3" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="139.74" as="sourcePoint" />
+            <mxPoint x="270" y="139.74" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-4" value="加载" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="TZ7Pd46q4QdiRdIKndiJ-3">
+          <mxGeometry x="-0.2915" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-6" value="类加载器&lt;br&gt;ClassLoader" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="90" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-7" value="运行时数据区（JVM 管理的内存）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="250" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-8" value="执行引擎&lt;br&gt;（即时编译器、解释器、垃圾回收器等）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="414" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-9" value="本地接口" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="414" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-10" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="379.6" y="403.5" as="sourcePoint" />
+            <mxPoint x="380" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-11" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="559.6" y="403.5" as="sourcePoint" />
+            <mxPoint x="560" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-12" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="443.6" as="sourcePoint" />
+            <mxPoint x="500" y="443.6" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-13" value="执行" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="TZ7Pd46q4QdiRdIKndiJ-12">
+          <mxGeometry x="-0.2333" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TZ7Pd46q4QdiRdIKndiJ-14" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="380" y="243.5" as="sourcePoint" />
+            <mxPoint x="380.4" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
