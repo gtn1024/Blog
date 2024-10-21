@@ -1121,6 +1121,62 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV1pdCk0TA19MRANLAj
       </tags>
   </entry>
   <entry>
+    <title>Go 语言入门 —— 数据结构</title>
+    <url>/archives/go-basic-data-struct/</url>
+    <content><![CDATA[<p>本文主要介绍 Go 语言中的一些基本的数据结构。</p>
+<span id="more"></span>
+<h2 id="数组">数组</h2>
+<p>与其他语言类似，Go 语言的数组是长度不可变的。数组的定义如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">[长度]数据类型</span><br></pre></td></tr></table></figure>
+<p>如下为数组的定义及赋值操作：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a [<span class="number">10</span>]<span class="type">int</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line"> a[i] = i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在定义数组的时候，可以为数组赋初始值。此时，当数组元素确定时，数组的长度可以自动推导出来。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a []<span class="type">int</span> = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line">c := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="切片">切片</h2>
+<p>Go
+语言中的切片（slice）就相当于其他编程语言中可以自动扩容的动态数组，如
+C++ 中的 <code>vector</code>、Java 中的 <code>ArrayList</code> 等。</p>
+<p>定义切片的语法如下：<code>make(切片类型, 长度, 容量)</code>。其中，容量可以省略，如果被省略，则容量和切片的长度一致。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">slc1 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>)</span><br><span class="line">fmt.Println(slc1, <span class="built_in">len</span>(slc1), <span class="built_in">cap</span>(slc1))</span><br><span class="line"><span class="comment">// [0 0 0] 3 3</span></span><br><span class="line"></span><br><span class="line">slc2 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">fmt.Println(slc2, <span class="built_in">len</span>(slc2), <span class="built_in">cap</span>(slc2))</span><br><span class="line"><span class="comment">// [0 0 0] 3 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加元素">添加元素</h3>
+<p>在切片的末尾添加元素，可以使用 <code>append</code>
+函数进行操作。<code>append</code>
+函数在添加元素时，会自动根据切片的容量对切片进行扩容。同时，函数将返回新的切片。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%v\n&quot;</span>, s) <span class="comment">// [1 2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="获取切片某一范围">获取切片某一范围</h3>
+<p>在 Go 语言中，如果需要获取切片的某个范围，可以使用
+<code>s[a : b]</code>
+的语法。其取出来的范围区间是左闭右开（<code>[a, b)</code>，即
+<code>b</code> 取不到）的。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;...)</span><br><span class="line">fmt.Println(s) <span class="comment">// [1 2 3 4 5 6 7 8 9 10]</span></span><br><span class="line"></span><br><span class="line">fmt.Println(s[<span class="number">1</span>:<span class="number">6</span>]) <span class="comment">// [2 3 4 5 6]</span></span><br></pre></td></tr></table></figure>
+<h2 id="哈希">哈希</h2>
+<p>在 Go 语言中，定义哈希的格式是 <code>map[K]V</code>，其中
+<code>K</code> 为 key 的类型，<code>V</code> 为 value
+的类型。如下演示了两种哈希的定义方式：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">hsh1 := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line">hsh1[<span class="string">&quot;four&quot;</span>] = <span class="number">4</span></span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;one&quot;</span>]) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">hsh2 := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)</span><br><span class="line">hsh2[<span class="string">&quot;one&quot;</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>如果需要删除一个 key，可以直接使用 <code>delete</code> 函数。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="built_in">delete</span>(hsh1, <span class="string">&quot;two&quot;</span>)</span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;two&quot;</span>]) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<h2 id="range"><code>range</code></h2>
+<p>在 <a href="/archives/go-basic-syntax/">上一篇</a> 中，已经提了
+<code>for-range</code> 循环。<code>range</code>
+可以迭代容器中的元素。对于数组、切片等类型，其返回元素所在的下标以及元素值。对于哈希，其返回
+key 和 value。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">a := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v := <span class="keyword">range</span> a &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;i = %v, v = %v\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i = 0, v = 1</span></span><br><span class="line"><span class="comment">// i = 1, v = 2</span></span><br><span class="line"><span class="comment">// i = 2, v = 3</span></span><br><span class="line"></span><br><span class="line">m := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;k = %v, v = %v\n&quot;</span>, k, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// k = one, v = 1</span></span><br><span class="line"><span class="comment">// k = two, v = 2</span></span><br><span class="line"><span class="comment">// k = three, v = 3</span></span><br></pre></td></tr></table></figure>
+<h2 id="结构体">结构体</h2>
+<p>Go 语言中，定义结构体的语法如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> 结构体名 <span class="keyword">struct</span> &#123;</span><br><span class="line"> <span class="comment">// 成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如下为结构体最基本使用示例：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Point <span class="keyword">struct</span> &#123;</span><br><span class="line"> x <span class="type">int</span></span><br><span class="line"> y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line">p1 := Point&#123;<span class="number">1</span>, <span class="number">1</span>&#125;</span><br><span class="line">p2 := Point&#123;x: <span class="number">2</span>, y: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p1) <span class="comment">// main.Point&#123;x:1, y:1&#125;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p2) <span class="comment">// main.Point&#123;x:2, y:2&#125;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>菜狗学数据结构——栈和队列</title>
     <url>/archives/data-structure-stack-queue/</url>
     <content><![CDATA[<p>栈和队列是十分基础的数据结构，分别实现了 <strong>FILO</strong> 和
@@ -1175,62 +1231,6 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV1pdCk0TA19MRANLAj
       </categories>
       <tags>
         <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Go 语言入门 —— 数据结构</title>
-    <url>/archives/go-basic-data-struct/</url>
-    <content><![CDATA[<p>本文主要介绍 Go 语言中的一些基本的数据结构。</p>
-<span id="more"></span>
-<h2 id="数组">数组</h2>
-<p>与其他语言类似，Go 语言的数组是长度不可变的。数组的定义如下：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">[长度]数据类型</span><br></pre></td></tr></table></figure>
-<p>如下为数组的定义及赋值操作：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a [<span class="number">10</span>]<span class="type">int</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line"> a[i] = i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在定义数组的时候，可以为数组赋初始值。此时，当数组元素确定时，数组的长度可以自动推导出来。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a []<span class="type">int</span> = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br><span class="line">c := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="切片">切片</h2>
-<p>Go
-语言中的切片（slice）就相当于其他编程语言中可以自动扩容的动态数组，如
-C++ 中的 <code>vector</code>、Java 中的 <code>ArrayList</code> 等。</p>
-<p>定义切片的语法如下：<code>make(切片类型, 长度, 容量)</code>。其中，容量可以省略，如果被省略，则容量和切片的长度一致。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">slc1 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>)</span><br><span class="line">fmt.Println(slc1, <span class="built_in">len</span>(slc1), <span class="built_in">cap</span>(slc1))</span><br><span class="line"><span class="comment">// [0 0 0] 3 3</span></span><br><span class="line"></span><br><span class="line">slc2 := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">fmt.Println(slc2, <span class="built_in">len</span>(slc2), <span class="built_in">cap</span>(slc2))</span><br><span class="line"><span class="comment">// [0 0 0] 3 5</span></span><br></pre></td></tr></table></figure>
-<h3 id="添加元素">添加元素</h3>
-<p>在切片的末尾添加元素，可以使用 <code>append</code>
-函数进行操作。<code>append</code>
-函数在添加元素时，会自动根据切片的容量对切片进行扩容。同时，函数将返回新的切片。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%v\n&quot;</span>, s) <span class="comment">// [1 2]</span></span><br></pre></td></tr></table></figure>
-<h3 id="获取切片某一范围">获取切片某一范围</h3>
-<p>在 Go 语言中，如果需要获取切片的某个范围，可以使用
-<code>s[a : b]</code>
-的语法。其取出来的范围区间是左闭右开（<code>[a, b)</code>，即
-<code>b</code> 取不到）的。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">s := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">s = <span class="built_in">append</span>(s, []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;...)</span><br><span class="line">fmt.Println(s) <span class="comment">// [1 2 3 4 5 6 7 8 9 10]</span></span><br><span class="line"></span><br><span class="line">fmt.Println(s[<span class="number">1</span>:<span class="number">6</span>]) <span class="comment">// [2 3 4 5 6]</span></span><br></pre></td></tr></table></figure>
-<h2 id="哈希">哈希</h2>
-<p>在 Go 语言中，定义哈希的格式是 <code>map[K]V</code>，其中
-<code>K</code> 为 key 的类型，<code>V</code> 为 value
-的类型。如下演示了两种哈希的定义方式：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">hsh1 := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line">hsh1[<span class="string">&quot;four&quot;</span>] = <span class="number">4</span></span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;one&quot;</span>]) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">hsh2 := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)</span><br><span class="line">hsh2[<span class="string">&quot;one&quot;</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>如果需要删除一个 key，可以直接使用 <code>delete</code> 函数。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="built_in">delete</span>(hsh1, <span class="string">&quot;two&quot;</span>)</span><br><span class="line">fmt.Println(hsh1[<span class="string">&quot;two&quot;</span>]) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
-<h2 id="range"><code>range</code></h2>
-<p>在 <a href="/archives/go-basic-syntax/">上一篇</a> 中，已经提了
-<code>for-range</code> 循环。<code>range</code>
-可以迭代容器中的元素。对于数组、切片等类型，其返回元素所在的下标以及元素值。对于哈希，其返回
-key 和 value。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">a := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v := <span class="keyword">range</span> a &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;i = %v, v = %v\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i = 0, v = 1</span></span><br><span class="line"><span class="comment">// i = 1, v = 2</span></span><br><span class="line"><span class="comment">// i = 2, v = 3</span></span><br><span class="line"></span><br><span class="line">m := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line"> <span class="string">&quot;one&quot;</span>:   <span class="number">1</span>,</span><br><span class="line"> <span class="string">&quot;two&quot;</span>:   <span class="number">2</span>,</span><br><span class="line"> <span class="string">&quot;three&quot;</span>: <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line"> fmt.Printf(<span class="string">&quot;k = %v, v = %v\n&quot;</span>, k, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// k = one, v = 1</span></span><br><span class="line"><span class="comment">// k = two, v = 2</span></span><br><span class="line"><span class="comment">// k = three, v = 3</span></span><br></pre></td></tr></table></figure>
-<h2 id="结构体">结构体</h2>
-<p>Go 语言中，定义结构体的语法如下：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> 结构体名 <span class="keyword">struct</span> &#123;</span><br><span class="line"> <span class="comment">// 成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如下为结构体最基本使用示例：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Point <span class="keyword">struct</span> &#123;</span><br><span class="line"> x <span class="type">int</span></span><br><span class="line"> y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line">p1 := Point&#123;<span class="number">1</span>, <span class="number">1</span>&#125;</span><br><span class="line">p2 := Point&#123;x: <span class="number">2</span>, y: <span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p1) <span class="comment">// main.Point&#123;x:1, y:1&#125;</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v\n&quot;</span>, p2) <span class="comment">// main.Point&#123;x:2, y:2&#125;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>Go</tag>
       </tags>
   </entry>
   <entry>
@@ -1924,6 +1924,62 @@ Java 内部格式来记录数据的，因此 <code>DataOutputStream</code>
       </tags>
   </entry>
   <entry>
+    <title>Java 17新特性：密封类</title>
+    <url>/archives/java-sealed-class/</url>
+    <content><![CDATA[<p>在 Java 17 之前，一个 Java 类只有两种状态：可派生和不可派生（即
+<code>final</code>
+类），这导致如果需要对类进行派生的时候，我们无法将其设置为
+<code>final</code> 类，也就无法限制其他人对于该类的派生。</p>
+<p>Java 17
+带来的密封类解决了这个问题，可以限制父类只能派生预先指定的子类，不允许再派生其他子类。</p>
+<span id="more"></span>
+<h2 id="密封类语法">密封类语法</h2>
+<p>密封类的语法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[修饰符] <span class="keyword">sealed</span> class 类名 <span class="keyword">permits</span> 子类列表 &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用密封类时没必须满足以下要求：</p>
+<ul>
+<li>子类和密封类要么处于同一个模块，要么术语同一个类。如果在未命名的模块中，则必须位于同一个包中。</li>
+<li>密封类允许派生的子类必须直接继承密封类。</li>
+<li>密封类的子类必须使用 <code>final</code>、<code>sealed</code> 或
+<code>non-sealed</code> 修饰。
+<ul>
+<li><code>final</code>：无法再次派生子类。</li>
+<li><code>sealed</code>：子类仍然为密封类。</li>
+<li><code>non-sealed</code>：非密封类，可以自由派生子类。</li>
+</ul></li>
+</ul>
+<h2 id="密封类例子">密封类例子</h2>
+<p>密封类 A 允许派生 B 和 C</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> <span class="keyword">permits</span> B, C &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>B 同样为密封类，允许派生出 D</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> <span class="keyword">permits</span> D &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>D 为 <code>final</code> 类，即无法再进行派生子类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>C 为非密封类，允许进行任意派生</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>对应的继承关系图如下：</p>
+<img src="/archives/java-sealed-class/image-20221225180518140.png" class="">
+<p>特别地，如果密封类和子类均位于同一个文件中，<code>permits</code>
+可以省略。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="密封接口">密封接口</h2>
+<p>密封接口与密封类类似，密封接口的实现类也必须使用
+<code>sealed</code>、<code>non-sealed</code>、<code>final</code>
+修饰，而密封接口下的子接口也必须为
+<code>sealed</code>、<code>non-sealed</code> 修饰（接口不可能为
+<code>final</code> 修饰）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">interface</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">interface</span> <span class="title class_">Bar</span> <span class="keyword">extends</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Tar</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">Mar</span> <span class="keyword">extends</span> <span class="title class_">Tar</span> &#123; &#125;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Car</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Par</span> <span class="keyword">implements</span> <span class="title class_">Bar</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 面向对象知识详解</title>
     <url>/archives/java-oop/</url>
     <content><![CDATA[<p>Java
@@ -2336,62 +2392,6 @@ Java 讲义 · 第 5 版》</a></li>
 <li><a href="https://bfw.h5.xeknow.com/s/1YClVz">跟着李刚老师学
 Java（视频）</a></li>
 </ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 17新特性：密封类</title>
-    <url>/archives/java-sealed-class/</url>
-    <content><![CDATA[<p>在 Java 17 之前，一个 Java 类只有两种状态：可派生和不可派生（即
-<code>final</code>
-类），这导致如果需要对类进行派生的时候，我们无法将其设置为
-<code>final</code> 类，也就无法限制其他人对于该类的派生。</p>
-<p>Java 17
-带来的密封类解决了这个问题，可以限制父类只能派生预先指定的子类，不允许再派生其他子类。</p>
-<span id="more"></span>
-<h2 id="密封类语法">密封类语法</h2>
-<p>密封类的语法如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[修饰符] <span class="keyword">sealed</span> class 类名 <span class="keyword">permits</span> 子类列表 &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用密封类时没必须满足以下要求：</p>
-<ul>
-<li>子类和密封类要么处于同一个模块，要么术语同一个类。如果在未命名的模块中，则必须位于同一个包中。</li>
-<li>密封类允许派生的子类必须直接继承密封类。</li>
-<li>密封类的子类必须使用 <code>final</code>、<code>sealed</code> 或
-<code>non-sealed</code> 修饰。
-<ul>
-<li><code>final</code>：无法再次派生子类。</li>
-<li><code>sealed</code>：子类仍然为密封类。</li>
-<li><code>non-sealed</code>：非密封类，可以自由派生子类。</li>
-</ul></li>
-</ul>
-<h2 id="密封类例子">密封类例子</h2>
-<p>密封类 A 允许派生 B 和 C</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> <span class="keyword">permits</span> B, C &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>B 同样为密封类，允许派生出 D</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> <span class="keyword">permits</span> D &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>D 为 <code>final</code> 类，即无法再进行派生子类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>C 为非密封类，允许进行任意派生</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>对应的继承关系图如下：</p>
-<img src="/archives/java-sealed-class/image-20221225180518140.png" class="">
-<p>特别地，如果密封类和子类均位于同一个文件中，<code>permits</code>
-可以省略。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_">A</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">D</span> <span class="keyword">extends</span> <span class="title class_">B</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="密封接口">密封接口</h2>
-<p>密封接口与密封类类似，密封接口的实现类也必须使用
-<code>sealed</code>、<code>non-sealed</code>、<code>final</code>
-修饰，而密封接口下的子接口也必须为
-<code>sealed</code>、<code>non-sealed</code> 修饰（接口不可能为
-<code>final</code> 修饰）</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sealed</span> <span class="keyword">interface</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">interface</span> <span class="title class_">Bar</span> <span class="keyword">extends</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Tar</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">Mar</span> <span class="keyword">extends</span> <span class="title class_">Tar</span> &#123; &#125;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Car</span> <span class="keyword">implements</span> <span class="title class_">Foo</span> &#123; &#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Par</span> <span class="keyword">implements</span> <span class="title class_">Bar</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>编程语言</category>
@@ -2843,9 +2843,53 @@ href="https://xiedaimala.com/tasks/1a1a8ea8-4c7a-4bb1-9337-b10296004f05/video_tu
       </tags>
   </entry>
   <entry>
+    <title>JAX-RS 入门</title>
+    <url>/archives/jaxrs-101/</url>
+    <content><![CDATA[<p>JAX-RS 是 Jakarta RESTful Web Services 的缩写，是 Jakarta EE API
+规范，用于构建 RESTful 风格的 Web 服务。</p>
+<p>本文通过一个简单的内存版的用户管理系统，介绍 JAX-RS 的基本用法。</p>
+<span id="more"></span>
+<h2 id="使用-quarkus-rest-创建-jax-rs-服务">使用 Quarkus REST 创建
+JAX-RS 服务</h2>
+<p>为了便于演示，我们使用 Quarkus REST 来创建 JAX-RS 服务。</p>
+<img src="/archives/jaxrs-101/quarkus-create.png" class="">
+<h2 id="jax-rs-常用注解">JAX-RS 常用注解</h2>
+<ul>
+<li><code>@Path</code>：指定资源类或方法的路径。</li>
+<li><code>@GET</code>：指定方法可以通过 GET 方法访问。</li>
+<li><code>@POST</code>：指定方法可以通过 POST 方法访问。</li>
+<li><code>@PUT</code>：指定方法可以通过 PUT 方法访问。</li>
+<li><code>@DELETE</code>：指定方法可以通过 DELETE 方法访问。</li>
+<li><code>@PATCH</code>：指定方法可以通过 PATCH 方法访问。</li>
+<li><code>@Consumes</code>：指定方法可以接受的 MIME 类型。</li>
+<li><code>@Produces</code>：指定方法可以生成的 MIME 类型。</li>
+</ul>
+<h2 id="用户实体类">用户实体类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// constructor, getter and setter...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="dao-类">DAO 类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    User <span class="title function_">addUser</span><span class="params">(User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    User <span class="title function_">getUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处我们使用一个 <code>List</code> 来模拟数据库。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;User&gt; users = <span class="keyword">new</span> <span class="title class_">CopyOnWriteArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (users.stream().anyMatch(u -&gt; u.getId().equals(user.getId()))) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        users.add(user);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">var</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; users.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (users.get(i).getId().equals(id)) &#123;</span><br><span class="line">                users.set(i, user);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.removeIf(u -&gt; u.getId().equals(id));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.stream().filter(u -&gt; u.getId().equals(id)).findFirst().orElse(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(users);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="userresource-类"><code>UserResource</code> 类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Path(&quot;/user&quot;)</span></span><br><span class="line"><span class="meta">@Produces(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="meta">@Consumes(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResource</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserResource</span><span class="params">(UserDao userDao)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userDao = userDao;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(userDao.getUsers()).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userDao.getUser(id);</span><br><span class="line">        <span class="keyword">if</span> (user == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(user).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">u</span> <span class="operator">=</span> userDao.addUser(user);</span><br><span class="line">        <span class="keyword">if</span> (u == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.CONFLICT).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(u).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PUT</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">updateUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.updateUser(id, user)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DELETE</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">deleteUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.deleteUser(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码仓库：<a href="https://github.com/gtn1024/jaxrs-demo"
+class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Jakarta EE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JVM 基础 - 初识 JVM</title>
     <url>/archives/jvm-basic-1/</url>
-    <content><![CDATA[<h2 id="jvm-是什么">JVM 是什么</h2>
+    <content><![CDATA[<p>本文主要讲解 Java 虚拟机的基础，以及字节码相关知识。</p>
+<span id="more"></span>
+<h2 id="jvm-是什么">JVM 是什么</h2>
 <p>JVM 全称是 Java Virtual Machine，中文名为 Java
 虚拟机，是一个运行在计算机上的程序，他的职责是运行 Java 字节码文件。</p>
 <h2 id="jvm-的功能">JVM 的功能</h2>
@@ -2912,48 +2956,6 @@ ID，检验是否为正整数；对于邮箱、手机号等数据，做好校验
 ]]></content>
       <tags>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JAX-RS 入门</title>
-    <url>/archives/jaxrs-101/</url>
-    <content><![CDATA[<p>JAX-RS 是 Jakarta RESTful Web Services 的缩写，是 Jakarta EE API
-规范，用于构建 RESTful 风格的 Web 服务。</p>
-<p>本文通过一个简单的内存版的用户管理系统，介绍 JAX-RS 的基本用法。</p>
-<span id="more"></span>
-<h2 id="使用-quarkus-rest-创建-jax-rs-服务">使用 Quarkus REST 创建
-JAX-RS 服务</h2>
-<p>为了便于演示，我们使用 Quarkus REST 来创建 JAX-RS 服务。</p>
-<img src="/archives/jaxrs-101/quarkus-create.png" class="">
-<h2 id="jax-rs-常用注解">JAX-RS 常用注解</h2>
-<ul>
-<li><code>@Path</code>：指定资源类或方法的路径。</li>
-<li><code>@GET</code>：指定方法可以通过 GET 方法访问。</li>
-<li><code>@POST</code>：指定方法可以通过 POST 方法访问。</li>
-<li><code>@PUT</code>：指定方法可以通过 PUT 方法访问。</li>
-<li><code>@DELETE</code>：指定方法可以通过 DELETE 方法访问。</li>
-<li><code>@PATCH</code>：指定方法可以通过 PATCH 方法访问。</li>
-<li><code>@Consumes</code>：指定方法可以接受的 MIME 类型。</li>
-<li><code>@Produces</code>：指定方法可以生成的 MIME 类型。</li>
-</ul>
-<h2 id="用户实体类">用户实体类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// constructor, getter and setter...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="dao-类">DAO 类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    User <span class="title function_">addUser</span><span class="params">(User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    User <span class="title function_">getUser</span><span class="params">(Integer id)</span>;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此处我们使用一个 <code>List</code> 来模拟数据库。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;User&gt; users = <span class="keyword">new</span> <span class="title class_">CopyOnWriteArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (users.stream().anyMatch(u -&gt; u.getId().equals(user.getId()))) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        users.add(user);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">updateUser</span><span class="params">(Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">var</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; users.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (users.get(i).getId().equals(id)) &#123;</span><br><span class="line">                users.set(i, user);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">deleteUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.removeIf(u -&gt; u.getId().equals(id));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> users.stream().filter(u -&gt; u.getId().equals(id)).findFirst().orElse(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;User&gt; <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(users);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="userresource-类"><code>UserResource</code> 类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Path(&quot;/user&quot;)</span></span><br><span class="line"><span class="meta">@Produces(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="meta">@Consumes(MediaType.APPLICATION_JSON)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResource</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserResource</span><span class="params">(UserDao userDao)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userDao = userDao;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUsers</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(userDao.getUsers()).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">getUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userDao.getUser(id);</span><br><span class="line">        <span class="keyword">if</span> (user == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(user).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">u</span> <span class="operator">=</span> userDao.addUser(user);</span><br><span class="line">        <span class="keyword">if</span> (u == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.CONFLICT).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok(u).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PUT</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">updateUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id, User user)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.updateUser(id, user)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DELETE</span></span><br><span class="line">    <span class="meta">@Path(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Response <span class="title function_">deleteUser</span><span class="params">(<span class="meta">@PathParam(&quot;id&quot;)</span> Integer id)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!userDao.deleteUser(id)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Response.status(Response.Status.NOT_FOUND).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response.ok().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码仓库：<a href="https://github.com/gtn1024/jaxrs-demo"
-class="uri">https://github.com/gtn1024/jaxrs-demo</a></p>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Jakarta EE</tag>
       </tags>
   </entry>
   <entry>
