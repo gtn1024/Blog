@@ -266,6 +266,110 @@ class="math inline">\(t\)</span> 的所有邻接点的入度减
       </tags>
   </entry>
   <entry>
+    <title>你一定看得懂的位运算</title>
+    <url>/archives/bitwise-operation/</url>
+    <content><![CDATA[<p><strong>位运算</strong>是直接对整数在内存中的二进制位进行操作。</p>
+<span id="more"></span>
+<p>阅读本章时，可以打开计算机上的计算器，并将其设置为<strong>程序员模式</strong>。</p>
+<img src="/archives/bitwise-operation/16306388392067.jpg" class="">
+<h2 id="了解位">了解位</h2>
+<p>在计算机内部，数据以<strong>二进制</strong>来存储，每一个<strong>二进制数</strong>称为一个<strong>位</strong>(<strong>Bit</strong>)。</p>
+<h2 id="位运算">位运算</h2>
+<p><strong>位运算</strong>通常有如下几个操作：</p>
+<ul>
+<li>位与(&amp;, and)，当两位同时为 1 时才返回 1。</li>
+<li>位或(|, or)，只要有一位为 1 就返回 1。</li>
+<li>异或(^, xor)，当两位相同时返回 0，不相同时返回 1。</li>
+<li>位非(~,
+not)，将操作数的每个位（包括<strong>符号位</strong>）全部取反。</li>
+<li>左移(&lt;&lt;, lsh)</li>
+<li>右移(&gt;&gt;, rsh)</li>
+</ul>
+<p>其中，Java
+语言还多一个<strong>无符号右移</strong>(&gt;&gt;&gt;)。</p>
+<p><strong>位与</strong>、<strong>位或</strong>、<strong>异或</strong>的运算法则如下：</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>操作数 1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>操作数 2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>位与</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>位或</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>异或</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="位与">位与</h3>
+<p>举个例子，<code>5 &amp; 9 = 1</code>，为什么呢？</p>
+<p>首先将这两个数转换成二进制</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">&amp;: 0000 0000 0000 0000 0000 0000 0000 0001 = 1</span><br></pre></td></tr></table></figure>
+<h3 id="位或">位或</h3>
+<p><code>5 | 9 = 13</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">|: 0000 0000 0000 0000 0000 0000 0000 1101 = 13</span><br></pre></td></tr></table></figure>
+<h3 id="异或">异或</h3>
+<p><code>5 ^ 9 = 12</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">^: 0000 0000 0000 0000 0000 0000 0000 1100 = 12</span><br></pre></td></tr></table></figure>
+<h3 id="位非">位非</h3>
+<p><code>~-5 = 4</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"> -5: 1111 1111 1111 1111 1111 1111 1111 1011 (计算机内部负数以补码形式表示)</span><br><span class="line">~-5: 0000 0000 0000 0000 0000 0000 0000 0100</span><br></pre></td></tr></table></figure>
+<h3 id="左移">左移</h3>
+<p><strong>左移</strong>是将操作数二进制码整体向左移动制定的位数，左移后右边空出来的地方用
+<code>0</code> 来填充。</p>
+<p><code>5&lt;&lt;2 = 20</code>，<code>-5&lt;&lt;2 = -20</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">      5:    0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">   5&lt;&lt;2: 00 0000 0000 0000 0000 0000 0000 0001 0100</span><br><span class="line">-&gt;          0000 0000 0000 0000 0000 0000 0001 0100 = 20</span><br><span class="line">--------------------------------------------------------</span><br><span class="line">     -5:    1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line">  -5&lt;&lt;2: 11 1111 1111 1111 1111 1111 1111 1110 1100</span><br><span class="line">-&gt;          1111 1111 1111 1111 1111 1111 1110 1100 = -20</span><br></pre></td></tr></table></figure>
+<h3 id="右移">右移</h3>
+<p><strong>右移</strong>是将操作数的二进制码向右移动指定位数，右移后左边空出来的地方以原来的符号为来填充。若原来为正数，则在左边补
+0，若为负数，则补 1。</p>
+<p><code>5&gt;&gt;2 = 1</code>，<code>-5&gt;&gt;2 = -2</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">  5&gt;&gt;2:   00 0000 0000 0000 0000 0000 0000 0001 01</span><br><span class="line">-&gt;      0000 0000 0000 0000 0000 0000 0000 0001    = 1</span><br><span class="line">------------------------------------------------------</span><br><span class="line">    -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;      1111 1111 1111 1111 1111 1111 1111 1110    = -2</span><br></pre></td></tr></table></figure>
+<h3 id="java-中的无符号右移">Java 中的无符号右移</h3>
+<p>与<strong>右移</strong>不同，<strong>无符号右移</strong>无论操作数为正数还是负数都将在左侧补
+0。</p>
+<p><code>-5&gt;&gt;&gt;2 = 1073741822</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;       0011 1111 1111 1111 1111 1111 1111 1110    = 1073741822</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a
+href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAM4JK1olXgALUV9YC04TAl8IGVodXAULV24ZVxNJXF9RXh5UHw0cSgYYXBcIWDoXSQVJQwYAVVZcC0IUHDZNRwYlOVsHFhoOYSJ0BBl1QQ9VGl90CDVZeEcbM244G1oUXgMAUlpUD3snA2g4TTUVXAcDVV9YCE4UM244G1wXXAEGXVxaDk8SBl8PG1IlBlNsIjUeSzBSVxBWfQZ1bTYyV25tOEsnAF9KdQkdVFIAUwsICh8RVmpdHV9FDwNXXApVCEhFBm4IHg4VbQQDVVpUOA">疯狂
+Java 讲义</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>知识科普</category>
+      </categories>
+      <tags>
+        <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>菜狗学算法——排序</title>
     <url>/archives/algorithm-sort/</url>
     <content><![CDATA[<p>排序在生活中随处可见，在程序中也是如此。</p>
@@ -394,110 +498,6 @@ Letcure 3 - Algorithms</a></li>
       </categories>
       <tags>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你一定看得懂的位运算</title>
-    <url>/archives/bitwise-operation/</url>
-    <content><![CDATA[<p><strong>位运算</strong>是直接对整数在内存中的二进制位进行操作。</p>
-<span id="more"></span>
-<p>阅读本章时，可以打开计算机上的计算器，并将其设置为<strong>程序员模式</strong>。</p>
-<img src="/archives/bitwise-operation/16306388392067.jpg" class="">
-<h2 id="了解位">了解位</h2>
-<p>在计算机内部，数据以<strong>二进制</strong>来存储，每一个<strong>二进制数</strong>称为一个<strong>位</strong>(<strong>Bit</strong>)。</p>
-<h2 id="位运算">位运算</h2>
-<p><strong>位运算</strong>通常有如下几个操作：</p>
-<ul>
-<li>位与(&amp;, and)，当两位同时为 1 时才返回 1。</li>
-<li>位或(|, or)，只要有一位为 1 就返回 1。</li>
-<li>异或(^, xor)，当两位相同时返回 0，不相同时返回 1。</li>
-<li>位非(~,
-not)，将操作数的每个位（包括<strong>符号位</strong>）全部取反。</li>
-<li>左移(&lt;&lt;, lsh)</li>
-<li>右移(&gt;&gt;, rsh)</li>
-</ul>
-<p>其中，Java
-语言还多一个<strong>无符号右移</strong>(&gt;&gt;&gt;)。</p>
-<p><strong>位与</strong>、<strong>位或</strong>、<strong>异或</strong>的运算法则如下：</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>操作数 1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>操作数 2</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>位与</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>位或</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>异或</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<h3 id="位与">位与</h3>
-<p>举个例子，<code>5 &amp; 9 = 1</code>，为什么呢？</p>
-<p>首先将这两个数转换成二进制</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">&amp;: 0000 0000 0000 0000 0000 0000 0000 0001 = 1</span><br></pre></td></tr></table></figure>
-<h3 id="位或">位或</h3>
-<p><code>5 | 9 = 13</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">|: 0000 0000 0000 0000 0000 0000 0000 1101 = 13</span><br></pre></td></tr></table></figure>
-<h3 id="异或">异或</h3>
-<p><code>5 ^ 9 = 12</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">^: 0000 0000 0000 0000 0000 0000 0000 1100 = 12</span><br></pre></td></tr></table></figure>
-<h3 id="位非">位非</h3>
-<p><code>~-5 = 4</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"> -5: 1111 1111 1111 1111 1111 1111 1111 1011 (计算机内部负数以补码形式表示)</span><br><span class="line">~-5: 0000 0000 0000 0000 0000 0000 0000 0100</span><br></pre></td></tr></table></figure>
-<h3 id="左移">左移</h3>
-<p><strong>左移</strong>是将操作数二进制码整体向左移动制定的位数，左移后右边空出来的地方用
-<code>0</code> 来填充。</p>
-<p><code>5&lt;&lt;2 = 20</code>，<code>-5&lt;&lt;2 = -20</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">      5:    0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">   5&lt;&lt;2: 00 0000 0000 0000 0000 0000 0000 0001 0100</span><br><span class="line">-&gt;          0000 0000 0000 0000 0000 0000 0001 0100 = 20</span><br><span class="line">--------------------------------------------------------</span><br><span class="line">     -5:    1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line">  -5&lt;&lt;2: 11 1111 1111 1111 1111 1111 1111 1110 1100</span><br><span class="line">-&gt;          1111 1111 1111 1111 1111 1111 1110 1100 = -20</span><br></pre></td></tr></table></figure>
-<h3 id="右移">右移</h3>
-<p><strong>右移</strong>是将操作数的二进制码向右移动指定位数，右移后左边空出来的地方以原来的符号为来填充。若原来为正数，则在左边补
-0，若为负数，则补 1。</p>
-<p><code>5&gt;&gt;2 = 1</code>，<code>-5&gt;&gt;2 = -2</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">  5&gt;&gt;2:   00 0000 0000 0000 0000 0000 0000 0001 01</span><br><span class="line">-&gt;      0000 0000 0000 0000 0000 0000 0000 0001    = 1</span><br><span class="line">------------------------------------------------------</span><br><span class="line">    -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;      1111 1111 1111 1111 1111 1111 1111 1110    = -2</span><br></pre></td></tr></table></figure>
-<h3 id="java-中的无符号右移">Java 中的无符号右移</h3>
-<p>与<strong>右移</strong>不同，<strong>无符号右移</strong>无论操作数为正数还是负数都将在左侧补
-0。</p>
-<p><code>-5&gt;&gt;&gt;2 = 1073741822</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;       0011 1111 1111 1111 1111 1111 1111 1110    = 1073741822</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料">参考资料</h2>
-<ul>
-<li><a
-href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAM4JK1olXgALUV9YC04TAl8IGVodXAULV24ZVxNJXF9RXh5UHw0cSgYYXBcIWDoXSQVJQwYAVVZcC0IUHDZNRwYlOVsHFhoOYSJ0BBl1QQ9VGl90CDVZeEcbM244G1oUXgMAUlpUD3snA2g4TTUVXAcDVV9YCE4UM244G1wXXAEGXVxaDk8SBl8PG1IlBlNsIjUeSzBSVxBWfQZ1bTYyV25tOEsnAF9KdQkdVFIAUwsICh8RVmpdHV9FDwNXXApVCEhFBm4IHg4VbQQDVVpUOA">疯狂
-Java 讲义</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>知识科普</category>
-      </categories>
-      <tags>
-        <tag>位运算</tag>
       </tags>
   </entry>
   <entry>
