@@ -73,6 +73,54 @@ href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMQJK1olXDYCV15YAUIVAF9MRANLAj
       </tags>
   </entry>
   <entry>
+    <title>图论——拓扑排序</title>
+    <url>/archives/algorithm-graph-topo/</url>
+    <content><![CDATA[<p>在现实生活中，我们要做一系列的事情。而这些事情之间会存在顺序或依赖关系，即做一件事情之前，我们必须先做好另一件事。比如，在大学里学习的课程，通常都会有先后顺序。</p>
+<span id="more"></span>
+<img src="/archives/algorithm-graph-topo/topo.drawio.png" class="">
+<p>图中，“高等数学”、“线性代数”是“离散数学”的先修课程，“离散数学”、“高级语言程序设计”是“数据结构”的先修课程，“高级语言程序设计”是“面向对象程序设计”的先修课程，“数据结构”、“高级语言程序设计”是“算法分析与设计”的先修课程。而“大学生心理健康”、“劳动教育”则作为独立的课程存在，不作为先修课程。</p>
+<p>这张课程的关系图，我们可以将其课程名称由编号代替，进而形成一张图：</p>
+<img src="/archives/algorithm-graph-topo/topo-nodes.drawio.png" class="">
+<p>该图其中一个拓扑序列为
+<code>1 3 5 6 2 4 7 8 9</code>。（这里之所以说是其中的一个拓扑序列，是因为一张图可以有多个拓扑序列）</p>
+<p>继续使用课程举例，如果“课程1”依赖了“课程2”，“课程2”依赖了“课程3”，而“课程3”又依赖了课程“1”，那么无论如何我们都是无法学习的。</p>
+
+<p>这种现象按照图论的说法称为“回路”。一个图有拓扑排序的条件是不能构成回路。因此，拓扑排序同时可以判断是否存在环。</p>
+<h2 id="拓扑排序的概念">拓扑排序的概念</h2>
+<p>拓扑排序是指在一个 <strong>有向无环图</strong>（DAG，Directed Acyclic
+Graph）中，我们将定点以线性的方式进行排序，使得任意一对由 <span
+class="math inline">\(u\)</span> 指向 <span
+class="math inline">\(v\)</span> 的有向边 <span
+class="math inline">\((u,v)\)</span>，都有 <span
+class="math inline">\(u\)</span> 在 <span
+class="math inline">\(v\)</span> 的前面。</p>
+<p>拓扑排序的目标是将所有节点排序，使得排在前面的节点不能依赖于排在后面的节点。</p>
+<h2 id="kahn-算法基于-bfs-的拓扑排序">Kahn 算法（基于 BFS
+的拓扑排序）</h2>
+<p>Kahn 算法是求解拓扑排序的一个十分常见的算法。其算法流程如下：</p>
+<ol type="1">
+<li>找到所有入度为 0
+的点，放入队列。这些点没有先后关系，可任意输出。</li>
+<li>弹出队头元素 <span class="math inline">\(t\)</span>，将 <span
+class="math inline">\(t\)</span> 的所有邻接点的入度减
+1。如果有的点入度为 0，则将其加入队列。</li>
+<li>不断执行以上步骤，直至队列为空。如果队列为空后仍然有点没有入队，则该图不是一个
+<strong>有向无环图</strong>，不存在拓扑排序。</li>
+</ol>
+<p>上面课程表的一个拓扑序列为
+<code>1 -&gt; 3 -&gt; 5 -&gt; 6 -&gt; 2 -&gt; 4 -&gt; 7 -&gt; 8 -&gt; 9</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, k;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n + <span class="number">1</span>);  <span class="comment">// 邻接表</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ind</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;     <span class="comment">// 入度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; ++i) &#123;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">    ind[v]++;</span><br><span class="line">    a[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">      q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ord</span><span class="params">(n)</span></span>;  <span class="comment">// 存储拓扑排序</span></span><br><span class="line">  <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="type">int</span> tt = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    ord[idx++] = tt;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; i : a[tt]) &#123;</span><br><span class="line">      <span class="comment">// 为其邻接点入度减 1</span></span><br><span class="line">      ind[i]--;</span><br><span class="line">      <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (idx != n) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Circle!&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">      cout &lt;&lt; ord[i] &lt;&lt; <span class="string">&quot; \n&quot;</span>[i == n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+        <category>算法知识</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>图论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>图论——存储图</title>
     <url>/archives/algorithm-graph-make/</url>
     <content><![CDATA[<p>图论算法是一个很大的专题，有很多的知识点。但是，在学习图论的各个知识点之前，首先需要对于图的存储有十分清楚的理解，了解各种方式的优劣。</p>
@@ -218,158 +266,6 @@ class="math inline">\(O(1)\)</span>；</li>
       </tags>
   </entry>
   <entry>
-    <title>图论——拓扑排序</title>
-    <url>/archives/algorithm-graph-topo/</url>
-    <content><![CDATA[<p>在现实生活中，我们要做一系列的事情。而这些事情之间会存在顺序或依赖关系，即做一件事情之前，我们必须先做好另一件事。比如，在大学里学习的课程，通常都会有先后顺序。</p>
-<span id="more"></span>
-<img src="/archives/algorithm-graph-topo/topo.drawio.png" class="">
-<p>图中，“高等数学”、“线性代数”是“离散数学”的先修课程，“离散数学”、“高级语言程序设计”是“数据结构”的先修课程，“高级语言程序设计”是“面向对象程序设计”的先修课程，“数据结构”、“高级语言程序设计”是“算法分析与设计”的先修课程。而“大学生心理健康”、“劳动教育”则作为独立的课程存在，不作为先修课程。</p>
-<p>这张课程的关系图，我们可以将其课程名称由编号代替，进而形成一张图：</p>
-<img src="/archives/algorithm-graph-topo/topo-nodes.drawio.png" class="">
-<p>该图其中一个拓扑序列为
-<code>1 3 5 6 2 4 7 8 9</code>。（这里之所以说是其中的一个拓扑序列，是因为一张图可以有多个拓扑序列）</p>
-<p>继续使用课程举例，如果“课程1”依赖了“课程2”，“课程2”依赖了“课程3”，而“课程3”又依赖了课程“1”，那么无论如何我们都是无法学习的。</p>
-
-<p>这种现象按照图论的说法称为“回路”。一个图有拓扑排序的条件是不能构成回路。因此，拓扑排序同时可以判断是否存在环。</p>
-<h2 id="拓扑排序的概念">拓扑排序的概念</h2>
-<p>拓扑排序是指在一个 <strong>有向无环图</strong>（DAG，Directed Acyclic
-Graph）中，我们将定点以线性的方式进行排序，使得任意一对由 <span
-class="math inline">\(u\)</span> 指向 <span
-class="math inline">\(v\)</span> 的有向边 <span
-class="math inline">\((u,v)\)</span>，都有 <span
-class="math inline">\(u\)</span> 在 <span
-class="math inline">\(v\)</span> 的前面。</p>
-<p>拓扑排序的目标是将所有节点排序，使得排在前面的节点不能依赖于排在后面的节点。</p>
-<h2 id="kahn-算法基于-bfs-的拓扑排序">Kahn 算法（基于 BFS
-的拓扑排序）</h2>
-<p>Kahn 算法是求解拓扑排序的一个十分常见的算法。其算法流程如下：</p>
-<ol type="1">
-<li>找到所有入度为 0
-的点，放入队列。这些点没有先后关系，可任意输出。</li>
-<li>弹出队头元素 <span class="math inline">\(t\)</span>，将 <span
-class="math inline">\(t\)</span> 的所有邻接点的入度减
-1。如果有的点入度为 0，则将其加入队列。</li>
-<li>不断执行以上步骤，直至队列为空。如果队列为空后仍然有点没有入队，则该图不是一个
-<strong>有向无环图</strong>，不存在拓扑排序。</li>
-</ol>
-<p>上面课程表的一个拓扑序列为
-<code>1 -&gt; 3 -&gt; 5 -&gt; 6 -&gt; 2 -&gt; 4 -&gt; 7 -&gt; 8 -&gt; 9</code></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n, k;</span><br><span class="line">  cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">  vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">a</span>(n + <span class="number">1</span>);  <span class="comment">// 邻接表</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ind</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;     <span class="comment">// 入度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; ++i) &#123;</span><br><span class="line">    <span class="type">int</span> u, v;</span><br><span class="line">    cin &gt;&gt; u &gt;&gt; v;</span><br><span class="line">    ind[v]++;</span><br><span class="line">    a[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">  &#125;</span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">      q.<span class="built_in">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ord</span><span class="params">(n)</span></span>;  <span class="comment">// 存储拓扑排序</span></span><br><span class="line">  <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (q.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="type">int</span> tt = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    ord[idx++] = tt;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; i : a[tt]) &#123;</span><br><span class="line">      <span class="comment">// 为其邻接点入度减 1</span></span><br><span class="line">      ind[i]--;</span><br><span class="line">      <span class="keyword">if</span> (!ind[i]) &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (idx != n) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Circle!&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">      cout &lt;&lt; ord[i] &lt;&lt; <span class="string">&quot; \n&quot;</span>[i == n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-        <category>算法知识</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>图论</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你一定看得懂的位运算</title>
-    <url>/archives/bitwise-operation/</url>
-    <content><![CDATA[<p><strong>位运算</strong>是直接对整数在内存中的二进制位进行操作。</p>
-<span id="more"></span>
-<p>阅读本章时，可以打开计算机上的计算器，并将其设置为<strong>程序员模式</strong>。</p>
-<img src="/archives/bitwise-operation/16306388392067.jpg" class="">
-<h2 id="了解位">了解位</h2>
-<p>在计算机内部，数据以<strong>二进制</strong>来存储，每一个<strong>二进制数</strong>称为一个<strong>位</strong>(<strong>Bit</strong>)。</p>
-<h2 id="位运算">位运算</h2>
-<p><strong>位运算</strong>通常有如下几个操作：</p>
-<ul>
-<li>位与(&amp;, and)，当两位同时为 1 时才返回 1。</li>
-<li>位或(|, or)，只要有一位为 1 就返回 1。</li>
-<li>异或(^, xor)，当两位相同时返回 0，不相同时返回 1。</li>
-<li>位非(~,
-not)，将操作数的每个位（包括<strong>符号位</strong>）全部取反。</li>
-<li>左移(&lt;&lt;, lsh)</li>
-<li>右移(&gt;&gt;, rsh)</li>
-</ul>
-<p>其中，Java
-语言还多一个<strong>无符号右移</strong>(&gt;&gt;&gt;)。</p>
-<p><strong>位与</strong>、<strong>位或</strong>、<strong>异或</strong>的运算法则如下：</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>操作数 1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>操作数 2</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>位与</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>位或</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>异或</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<h3 id="位与">位与</h3>
-<p>举个例子，<code>5 &amp; 9 = 1</code>，为什么呢？</p>
-<p>首先将这两个数转换成二进制</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">&amp;: 0000 0000 0000 0000 0000 0000 0000 0001 = 1</span><br></pre></td></tr></table></figure>
-<h3 id="位或">位或</h3>
-<p><code>5 | 9 = 13</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">|: 0000 0000 0000 0000 0000 0000 0000 1101 = 13</span><br></pre></td></tr></table></figure>
-<h3 id="异或">异或</h3>
-<p><code>5 ^ 9 = 12</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">^: 0000 0000 0000 0000 0000 0000 0000 1100 = 12</span><br></pre></td></tr></table></figure>
-<h3 id="位非">位非</h3>
-<p><code>~-5 = 4</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"> -5: 1111 1111 1111 1111 1111 1111 1111 1011 (计算机内部负数以补码形式表示)</span><br><span class="line">~-5: 0000 0000 0000 0000 0000 0000 0000 0100</span><br></pre></td></tr></table></figure>
-<h3 id="左移">左移</h3>
-<p><strong>左移</strong>是将操作数二进制码整体向左移动制定的位数，左移后右边空出来的地方用
-<code>0</code> 来填充。</p>
-<p><code>5&lt;&lt;2 = 20</code>，<code>-5&lt;&lt;2 = -20</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">      5:    0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">   5&lt;&lt;2: 00 0000 0000 0000 0000 0000 0000 0001 0100</span><br><span class="line">-&gt;          0000 0000 0000 0000 0000 0000 0001 0100 = 20</span><br><span class="line">--------------------------------------------------------</span><br><span class="line">     -5:    1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line">  -5&lt;&lt;2: 11 1111 1111 1111 1111 1111 1111 1110 1100</span><br><span class="line">-&gt;          1111 1111 1111 1111 1111 1111 1110 1100 = -20</span><br></pre></td></tr></table></figure>
-<h3 id="右移">右移</h3>
-<p><strong>右移</strong>是将操作数的二进制码向右移动指定位数，右移后左边空出来的地方以原来的符号为来填充。若原来为正数，则在左边补
-0，若为负数，则补 1。</p>
-<p><code>5&gt;&gt;2 = 1</code>，<code>-5&gt;&gt;2 = -2</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">  5&gt;&gt;2:   00 0000 0000 0000 0000 0000 0000 0001 01</span><br><span class="line">-&gt;      0000 0000 0000 0000 0000 0000 0000 0001    = 1</span><br><span class="line">------------------------------------------------------</span><br><span class="line">    -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;      1111 1111 1111 1111 1111 1111 1111 1110    = -2</span><br></pre></td></tr></table></figure>
-<h3 id="java-中的无符号右移">Java 中的无符号右移</h3>
-<p>与<strong>右移</strong>不同，<strong>无符号右移</strong>无论操作数为正数还是负数都将在左侧补
-0。</p>
-<p><code>-5&gt;&gt;&gt;2 = 1073741822</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;       0011 1111 1111 1111 1111 1111 1111 1110    = 1073741822</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料">参考资料</h2>
-<ul>
-<li><a
-href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAM4JK1olXgALUV9YC04TAl8IGVodXAULV24ZVxNJXF9RXh5UHw0cSgYYXBcIWDoXSQVJQwYAVVZcC0IUHDZNRwYlOVsHFhoOYSJ0BBl1QQ9VGl90CDVZeEcbM244G1oUXgMAUlpUD3snA2g4TTUVXAcDVV9YCE4UM244G1wXXAEGXVxaDk8SBl8PG1IlBlNsIjUeSzBSVxBWfQZ1bTYyV25tOEsnAF9KdQkdVFIAUwsICh8RVmpdHV9FDwNXXApVCEhFBm4IHg4VbQQDVVpUOA">疯狂
-Java 讲义</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>知识科普</category>
-      </categories>
-      <tags>
-        <tag>位运算</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>菜狗学算法——排序</title>
     <url>/archives/algorithm-sort/</url>
     <content><![CDATA[<p>排序在生活中随处可见，在程序中也是如此。</p>
@@ -498,6 +394,110 @@ Letcure 3 - Algorithms</a></li>
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>你一定看得懂的位运算</title>
+    <url>/archives/bitwise-operation/</url>
+    <content><![CDATA[<p><strong>位运算</strong>是直接对整数在内存中的二进制位进行操作。</p>
+<span id="more"></span>
+<p>阅读本章时，可以打开计算机上的计算器，并将其设置为<strong>程序员模式</strong>。</p>
+<img src="/archives/bitwise-operation/16306388392067.jpg" class="">
+<h2 id="了解位">了解位</h2>
+<p>在计算机内部，数据以<strong>二进制</strong>来存储，每一个<strong>二进制数</strong>称为一个<strong>位</strong>(<strong>Bit</strong>)。</p>
+<h2 id="位运算">位运算</h2>
+<p><strong>位运算</strong>通常有如下几个操作：</p>
+<ul>
+<li>位与(&amp;, and)，当两位同时为 1 时才返回 1。</li>
+<li>位或(|, or)，只要有一位为 1 就返回 1。</li>
+<li>异或(^, xor)，当两位相同时返回 0，不相同时返回 1。</li>
+<li>位非(~,
+not)，将操作数的每个位（包括<strong>符号位</strong>）全部取反。</li>
+<li>左移(&lt;&lt;, lsh)</li>
+<li>右移(&gt;&gt;, rsh)</li>
+</ul>
+<p>其中，Java
+语言还多一个<strong>无符号右移</strong>(&gt;&gt;&gt;)。</p>
+<p><strong>位与</strong>、<strong>位或</strong>、<strong>异或</strong>的运算法则如下：</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>操作数 1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>操作数 2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>位与</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>位或</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>异或</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="位与">位与</h3>
+<p>举个例子，<code>5 &amp; 9 = 1</code>，为什么呢？</p>
+<p>首先将这两个数转换成二进制</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">&amp;: 0000 0000 0000 0000 0000 0000 0000 0001 = 1</span><br></pre></td></tr></table></figure>
+<h3 id="位或">位或</h3>
+<p><code>5 | 9 = 13</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">|: 0000 0000 0000 0000 0000 0000 0000 1101 = 13</span><br></pre></td></tr></table></figure>
+<h3 id="异或">异或</h3>
+<p><code>5 ^ 9 = 12</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">9: 0000 0000 0000 0000 0000 0000 0000 1001</span><br><span class="line">------------------------------------------</span><br><span class="line">^: 0000 0000 0000 0000 0000 0000 0000 1100 = 12</span><br></pre></td></tr></table></figure>
+<h3 id="位非">位非</h3>
+<p><code>~-5 = 4</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"> -5: 1111 1111 1111 1111 1111 1111 1111 1011 (计算机内部负数以补码形式表示)</span><br><span class="line">~-5: 0000 0000 0000 0000 0000 0000 0000 0100</span><br></pre></td></tr></table></figure>
+<h3 id="左移">左移</h3>
+<p><strong>左移</strong>是将操作数二进制码整体向左移动制定的位数，左移后右边空出来的地方用
+<code>0</code> 来填充。</p>
+<p><code>5&lt;&lt;2 = 20</code>，<code>-5&lt;&lt;2 = -20</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">      5:    0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">   5&lt;&lt;2: 00 0000 0000 0000 0000 0000 0000 0001 0100</span><br><span class="line">-&gt;          0000 0000 0000 0000 0000 0000 0001 0100 = 20</span><br><span class="line">--------------------------------------------------------</span><br><span class="line">     -5:    1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line">  -5&lt;&lt;2: 11 1111 1111 1111 1111 1111 1111 1110 1100</span><br><span class="line">-&gt;          1111 1111 1111 1111 1111 1111 1110 1100 = -20</span><br></pre></td></tr></table></figure>
+<h3 id="右移">右移</h3>
+<p><strong>右移</strong>是将操作数的二进制码向右移动指定位数，右移后左边空出来的地方以原来的符号为来填充。若原来为正数，则在左边补
+0，若为负数，则补 1。</p>
+<p><code>5&gt;&gt;2 = 1</code>，<code>-5&gt;&gt;2 = -2</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     5: 0000 0000 0000 0000 0000 0000 0000 0101</span><br><span class="line">  5&gt;&gt;2:   00 0000 0000 0000 0000 0000 0000 0001 01</span><br><span class="line">-&gt;      0000 0000 0000 0000 0000 0000 0000 0001    = 1</span><br><span class="line">------------------------------------------------------</span><br><span class="line">    -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;      1111 1111 1111 1111 1111 1111 1111 1110    = -2</span><br></pre></td></tr></table></figure>
+<h3 id="java-中的无符号右移">Java 中的无符号右移</h3>
+<p>与<strong>右移</strong>不同，<strong>无符号右移</strong>无论操作数为正数还是负数都将在左侧补
+0。</p>
+<p><code>-5&gt;&gt;&gt;2 = 1073741822</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     -5: 1111 1111 1111 1111 1111 1111 1111 1011</span><br><span class="line"> -5&gt;&gt;&gt;2:   11 1111 1111 1111 1111 1111 1111 1110 11</span><br><span class="line">-&gt;       0011 1111 1111 1111 1111 1111 1111 1110    = 1073741822</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a
+href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAM4JK1olXgALUV9YC04TAl8IGVodXAULV24ZVxNJXF9RXh5UHw0cSgYYXBcIWDoXSQVJQwYAVVZcC0IUHDZNRwYlOVsHFhoOYSJ0BBl1QQ9VGl90CDVZeEcbM244G1oUXgMAUlpUD3snA2g4TTUVXAcDVV9YCE4UM244G1wXXAEGXVxaDk8SBl8PG1IlBlNsIjUeSzBSVxBWfQZ1bTYyV25tOEsnAF9KdQkdVFIAUwsICh8RVmpdHV9FDwNXXApVCEhFBm4IHg4VbQQDVVpUOA">疯狂
+Java 讲义</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>知识科普</category>
+      </categories>
+      <tags>
+        <tag>位运算</tag>
       </tags>
   </entry>
   <entry>
@@ -1517,6 +1517,70 @@ Hexo 页面、创建 Hexo 文章。当然，如果你熟悉
       </tags>
   </entry>
   <entry>
+    <title>Java 函数式编程详解</title>
+    <url>/archives/java-functional-program/</url>
+    <content><![CDATA[<p>Java 8 中有着许许多多特别好用的特性，Lambda 表达式就是其中一个。</p>
+<span id="more"></span>
+<h2 id="函数式接口">函数式接口</h2>
+<p><strong>函数式接口</strong>指<strong>只有</strong>一个<strong>抽象方法</strong>的接口。如果定义函数式接口只需在接口上方加入<code>@FunctionalInterface</code>注解。<strong>函数式接口</strong>中可以有<strong>类方法</strong>、<strong>默认方法</strong>等，<strong>但只能有一个抽象方法</strong>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有类方法</span></span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有默认方法</span></span><br><span class="line">    System.out.println(<span class="string">&quot;bar&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<strong>Lambda 表达式</strong>出现之前，通常使用 <a
+href="/archives/java-oop#匿名内部类"><strong>匿名内部类</strong></a>
+来创建实例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Foo</span>() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">f.foo();    <span class="comment">// 匿名内部类测试...</span></span><br><span class="line"></span><br><span class="line">System.out.println(Foo.sum(<span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 3</span></span><br><span class="line">f.bar();    <span class="comment">// bar</span></span><br></pre></td></tr></table></figure>
+<h2 id="lambda-表达式">Lambda 表达式</h2>
+<p>由以上代码可见，使用<strong>匿名内部类</strong>时会有大量多余的代码（如<code>new Foo()</code>、重写唯一的抽象方法）。Java
+8 引入了 Lambda 表达式，用于简化代码。</p>
+<p><strong>Lambda 表达式本质上就是函数式接口的匿名内部类。</strong></p>
+<p>以上代码使用 Lambda 表达式则为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> () -&gt; &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>如果该抽象方法有参数，参数不可省略</strong></p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> (String name) -&gt; &#123;   <span class="comment">// 参数类型可以省略</span></span><br><span class="line">      System.out.println(<span class="string">&quot;欢迎回来，&quot;</span> + name);</span><br><span class="line">      System.out.println(<span class="string">&quot;——来自Lambda表达式&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    f.foo(<span class="string">&quot;巴掌&quot;</span>);</span><br><span class="line">    <span class="comment">// 欢迎回来，巴掌</span></span><br><span class="line">    <span class="comment">// ——来自Lambda表达式</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="lambda-表达式简化">Lambda 表达式简化</h2>
+<p>Lambda 表达式可以有如下简化：</p>
+<ul>
+<li>形参列表中参数类型可以省略；</li>
+<li>如果形参列表只有一个参数，那么圆括号可以省略；</li>
+<li>如果方法体只有一行代码，花括号可以省略；</li>
+<li>如果方法体只有一行代码，且为<code>return</code>语句，<code>return</code>可以省略。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="title function_">foo</span><span class="params">(<span class="type">int</span> a)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> a -&gt; a * a;</span><br><span class="line">    System.out.println(f.foo(<span class="number">5</span>));   <span class="comment">// 25</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法引用和构造器引用-重点">方法引用和构造器引用 (重点)</h2>
+<p><strong>当方法体只有一条代码时才可以使用</strong>。<strong>方法引用</strong>本质是<strong>进一步省略形参列表</strong>，形参列表顺序与传入参数的顺序完全相同。</p>
+<h3 id="引用类方法">引用类方法</h3>
+<p><strong>引用类方法</strong>转化前的格式为<code>(参数列表) -&gt; 类.类方法(参数列表)</code>，转化后为<code>类::类方法</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">double</span> <span class="title function_">min</span><span class="params">(<span class="type">double</span> i1, <span class="type">double</span> i2)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (i1, i2) -&gt; Math.min(i1, i2);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> Math::min;</span><br><span class="line">    System.out.println(f.min(<span class="number">5.0</span>, <span class="number">2.0</span>));  <span class="comment">// 2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引用实例方法">引用实例方法</h3>
+<p><strong>引用实例方法</strong>转化前的格式为<code>(参数1, 其他参数) -&gt; 参数1.实例方法(其他参数)</code>，转化后为<code>类::实例方法</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(String s, <span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (s, start, end) -&gt; s.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> String::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="string">&quot;Java, yes!&quot;</span>, <span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引用特定对象的实例方法">引用特定对象的实例方法</h3>
+<p><strong>引用特定对象的实例方法</strong>转化前的格式为<code>(参数) -&gt; 某对象.实例方法(参数)</code>，转化后为<code>某对象::实例方法</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (start, end) -&gt; &quot;Java, yes!&quot;.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="string">&quot;Java, yes!&quot;</span>::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="构造器引用">构造器引用</h3>
+<p><strong>构造器引用</strong>转化前的格式为<code>(参数) -&gt; 类.构造器(参数)</code>，转化后为<code>类::new</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  StringBuilder <span class="title function_">foo</span><span class="params">(String s)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = s -&gt; new StringBuilder(s);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> StringBuilder::<span class="keyword">new</span>;</span><br><span class="line">    System.out.println(f.foo(<span class="string">&quot;Welcome to Java World!&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a
+href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMUJK1olXDYCV1pdAUoUB19MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksUB28BGlgRQl9HCANtdUpkA2twQgV1PE59KjxDcCNISg1pXVcZbQcyVF9cC04VBWsBHGslXQEyAjBdCUoWAm4NG14WbQcyVFlfC0oTAmYNGVoTWTYFVFdtUx55dQRLWCBQCXlcMgM9OHsnAF84K1slXjZAOlhYARtHBTtaHgsRXwNXA1cNC0hHBTwJGFkSDVJRB1ddOEkWAmsBKw">《疯狂
+Java 讲义 · 第 5 版》</a></li>
+<li><a href="https://bfw.h5.xeknow.com/s/1YClVz">跟着李刚老师学
+Java（视频）</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>函数式编程</tag>
+        <tag>Lambda</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 注解笔记</title>
     <url>/archives/java-annotation/</url>
     <content><![CDATA[<p>Java 注解笔记</p>
@@ -1623,70 +1687,6 @@ Java 8 的重复注解。</li>
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 函数式编程详解</title>
-    <url>/archives/java-functional-program/</url>
-    <content><![CDATA[<p>Java 8 中有着许许多多特别好用的特性，Lambda 表达式就是其中一个。</p>
-<span id="more"></span>
-<h2 id="函数式接口">函数式接口</h2>
-<p><strong>函数式接口</strong>指<strong>只有</strong>一个<strong>抽象方法</strong>的接口。如果定义函数式接口只需在接口上方加入<code>@FunctionalInterface</code>注解。<strong>函数式接口</strong>中可以有<strong>类方法</strong>、<strong>默认方法</strong>等，<strong>但只能有一个抽象方法</strong>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有类方法</span></span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有默认方法</span></span><br><span class="line">    System.out.println(<span class="string">&quot;bar&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在<strong>Lambda 表达式</strong>出现之前，通常使用 <a
-href="/archives/java-oop#匿名内部类"><strong>匿名内部类</strong></a>
-来创建实例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Foo</span>() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">f.foo();    <span class="comment">// 匿名内部类测试...</span></span><br><span class="line"></span><br><span class="line">System.out.println(Foo.sum(<span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 3</span></span><br><span class="line">f.bar();    <span class="comment">// bar</span></span><br></pre></td></tr></table></figure>
-<h2 id="lambda-表达式">Lambda 表达式</h2>
-<p>由以上代码可见，使用<strong>匿名内部类</strong>时会有大量多余的代码（如<code>new Foo()</code>、重写唯一的抽象方法）。Java
-8 引入了 Lambda 表达式，用于简化代码。</p>
-<p><strong>Lambda 表达式本质上就是函数式接口的匿名内部类。</strong></p>
-<p>以上代码使用 Lambda 表达式则为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> () -&gt; &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>如果该抽象方法有参数，参数不可省略</strong></p>
-<p>例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> (String name) -&gt; &#123;   <span class="comment">// 参数类型可以省略</span></span><br><span class="line">      System.out.println(<span class="string">&quot;欢迎回来，&quot;</span> + name);</span><br><span class="line">      System.out.println(<span class="string">&quot;——来自Lambda表达式&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    f.foo(<span class="string">&quot;巴掌&quot;</span>);</span><br><span class="line">    <span class="comment">// 欢迎回来，巴掌</span></span><br><span class="line">    <span class="comment">// ——来自Lambda表达式</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="lambda-表达式简化">Lambda 表达式简化</h2>
-<p>Lambda 表达式可以有如下简化：</p>
-<ul>
-<li>形参列表中参数类型可以省略；</li>
-<li>如果形参列表只有一个参数，那么圆括号可以省略；</li>
-<li>如果方法体只有一行代码，花括号可以省略；</li>
-<li>如果方法体只有一行代码，且为<code>return</code>语句，<code>return</code>可以省略。</li>
-</ul>
-<p>例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="title function_">foo</span><span class="params">(<span class="type">int</span> a)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> a -&gt; a * a;</span><br><span class="line">    System.out.println(f.foo(<span class="number">5</span>));   <span class="comment">// 25</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法引用和构造器引用-重点">方法引用和构造器引用 (重点)</h2>
-<p><strong>当方法体只有一条代码时才可以使用</strong>。<strong>方法引用</strong>本质是<strong>进一步省略形参列表</strong>，形参列表顺序与传入参数的顺序完全相同。</p>
-<h3 id="引用类方法">引用类方法</h3>
-<p><strong>引用类方法</strong>转化前的格式为<code>(参数列表) -&gt; 类.类方法(参数列表)</code>，转化后为<code>类::类方法</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">double</span> <span class="title function_">min</span><span class="params">(<span class="type">double</span> i1, <span class="type">double</span> i2)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (i1, i2) -&gt; Math.min(i1, i2);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> Math::min;</span><br><span class="line">    System.out.println(f.min(<span class="number">5.0</span>, <span class="number">2.0</span>));  <span class="comment">// 2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="引用实例方法">引用实例方法</h3>
-<p><strong>引用实例方法</strong>转化前的格式为<code>(参数1, 其他参数) -&gt; 参数1.实例方法(其他参数)</code>，转化后为<code>类::实例方法</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(String s, <span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (s, start, end) -&gt; s.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> String::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="string">&quot;Java, yes!&quot;</span>, <span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="引用特定对象的实例方法">引用特定对象的实例方法</h3>
-<p><strong>引用特定对象的实例方法</strong>转化前的格式为<code>(参数) -&gt; 某对象.实例方法(参数)</code>，转化后为<code>某对象::实例方法</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (start, end) -&gt; &quot;Java, yes!&quot;.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="string">&quot;Java, yes!&quot;</span>::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="构造器引用">构造器引用</h3>
-<p><strong>构造器引用</strong>转化前的格式为<code>(参数) -&gt; 类.构造器(参数)</code>，转化后为<code>类::new</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  StringBuilder <span class="title function_">foo</span><span class="params">(String s)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = s -&gt; new StringBuilder(s);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> StringBuilder::<span class="keyword">new</span>;</span><br><span class="line">    System.out.println(f.foo(<span class="string">&quot;Welcome to Java World!&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料">参考资料</h2>
-<ul>
-<li><a
-href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMUJK1olXDYCV1pdAUoUB19MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksUB28BGlgRQl9HCANtdUpkA2twQgV1PE59KjxDcCNISg1pXVcZbQcyVF9cC04VBWsBHGslXQEyAjBdCUoWAm4NG14WbQcyVFlfC0oTAmYNGVoTWTYFVFdtUx55dQRLWCBQCXlcMgM9OHsnAF84K1slXjZAOlhYARtHBTtaHgsRXwNXA1cNC0hHBTwJGFkSDVJRB1ddOEkWAmsBKw">《疯狂
-Java 讲义 · 第 5 版》</a></li>
-<li><a href="https://bfw.h5.xeknow.com/s/1YClVz">跟着李刚老师学
-Java（视频）</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>函数式编程</tag>
-        <tag>Lambda</tag>
       </tags>
   </entry>
   <entry>
