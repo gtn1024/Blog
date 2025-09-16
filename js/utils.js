@@ -13,7 +13,11 @@ HTMLElement.prototype.wrap = function(wrapper) {
     })
   );
 
-  document.addEventListener('DOMContentLoaded', onPageLoaded);
+  if (document.readyState === 'loading') {
+    document.addEventListener('readystatechange', onPageLoaded, { once: true });
+  } else {
+    onPageLoaded();
+  }
   document.addEventListener('pjax:success', onPageLoaded);
 })();
 
@@ -39,21 +43,34 @@ NexT.utils = {
     // One-click copy code support.
     target.insertAdjacentHTML('beforeend', '<div class="copy-btn"><i class="fa fa-copy fa-fw"></i></div>');
     const button = target.querySelector('.copy-btn');
-    button.addEventListener('click', async () => {
+    button.addEventListener('click', () => {
       if (!code) {
         const lines = element.querySelector('.code') || element.querySelector('code');
         code = lines.innerText;
       }
       if (navigator.clipboard) {
         // https://caniuse.com/mdn-api_clipboard_writetext
-        try {
-          await navigator.clipboard.writeText(code);
+        navigator.clipboard.writeText(code).then(() => {
           button.querySelector('i').className = 'fa fa-check-circle fa-fw';
-        } catch {
+        }, () => {
           button.querySelector('i').className = 'fa fa-times-circle fa-fw';
-        }
+        });
       } else {
-        button.querySelector('i').className = 'fa fa-times-circle fa-fw';
+        const ta = document.createElement('textarea');
+        ta.style.top = window.scrollY + 'px'; // Prevent page scrolling
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.readOnly = true;
+        ta.value = code;
+        document.body.append(ta);
+        ta.select();
+        ta.setSelectionRange(0, code.length);
+        ta.readOnly = false;
+        const result = document.execCommand('copy');
+        button.querySelector('i').className = result ? 'fa fa-check-circle fa-fw' : 'fa fa-times-circle fa-fw';
+        ta.blur(); // For iOS
+        button.blur();
+        document.body.removeChild(ta);
       }
     });
     // If copycode.style is not mac, element is larger than target
@@ -76,7 +93,6 @@ NexT.utils = {
     figure.forEach(element => {
       // Skip pre > .mermaid for folding and copy button
       if (element.querySelector('.mermaid')) return;
-      const languageName = [...element.classList].find(cls => cls !== 'highlight');
       if (!inited) {
         let span = element.querySelectorAll('.code .line span');
         if (span.length === 0) {
@@ -90,10 +106,10 @@ NexT.utils = {
         });
       }
       const height = parseInt(window.getComputedStyle(element).height, 10);
-      const needFold = CONFIG.codeblock.fold.enable && (height > CONFIG.codeblock.fold.height);
-      if (!needFold && !CONFIG.codeblock.copy_button.enable && !CONFIG.codeblock.language) return;
+      const needFold = CONFIG.fold.enable && (height > CONFIG.fold.height);
+      if (!needFold && !CONFIG.copycode.enable) return;
       let target;
-      if (CONFIG.hljswrap && CONFIG.codeblock.copy_button.style === 'mac') {
+      if (CONFIG.hljswrap && CONFIG.copycode.style === 'mac') {
         target = element;
       } else {
         let box = element.querySelector('.code-container');
@@ -118,14 +134,8 @@ NexT.utils = {
           target.classList.add('unfold');
         });
       }
-      if (!inited && CONFIG.codeblock.copy_button.enable) {
+      if (!inited && CONFIG.copycode.enable) {
         this.registerCopyButton(target, element);
-      }
-      if (!inited && CONFIG.codeblock.language && languageName) {
-        const lang = document.createElement('div');
-        lang.className = 'code-lang';
-        lang.innerText = languageName.toUpperCase();
-        target.insertAdjacentElement('afterbegin', lang);
       }
     });
   },
@@ -163,7 +173,7 @@ NexT.utils = {
   updateActiveNav() {
     if (!Array.isArray(this.sections)) return;
     let index = this.sections.findIndex(element => {
-      return element?.getBoundingClientRect().top > 10;
+      return element && element.getBoundingClientRect().top > 10;
     });
     if (index === -1) {
       index = this.sections.length - 1;
@@ -192,7 +202,7 @@ NexT.utils = {
       this.updateActiveNav();
     }, { passive: true });
 
-    backToTop?.addEventListener('click', () => {
+    backToTop && backToTop.addEventListener('click', () => {
       window.anime({
         targets  : document.scrollingElement,
         duration : 500,
@@ -427,18 +437,6 @@ NexT.utils = {
     updateFooterPosition();
     window.addEventListener('resize', updateFooterPosition);
     window.addEventListener('scroll', updateFooterPosition, { passive: true });
-  },
-
-  /**
-   * Sets the CSS variable '--dialog-scrollgutter' to the specified gap value.
-   * If no gap is provided, it calculates the gap as the difference between
-   * the window's inner width and the document body's client width.
-   *
-   * @param {string} [gap] - The gap value to be set. If not provided, the
-   *                         default gap is calculated automatically.
-   */
-  setGutter(gap) {
-    document.body.style.setProperty('--dialog-scrollgutter', gap || `${window.innerWidth - document.body.clientWidth}px`);
   },
 
   getScript(src, options = {}, legacyCondition) {
