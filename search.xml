@@ -1517,6 +1517,70 @@ Hexo 页面、创建 Hexo 文章。当然，如果你熟悉
       </tags>
   </entry>
   <entry>
+    <title>Java 函数式编程详解</title>
+    <url>/archives/java-functional-program/</url>
+    <content><![CDATA[<p>Java 8 中有着许许多多特别好用的特性，Lambda 表达式就是其中一个。</p>
+<span id="more"></span>
+<h2 id="函数式接口">函数式接口</h2>
+<p><strong>函数式接口</strong>指<strong>只有</strong>一个<strong>抽象方法</strong>的接口。如果定义函数式接口只需在接口上方加入<code>@FunctionalInterface</code>注解。<strong>函数式接口</strong>中可以有<strong>类方法</strong>、<strong>默认方法</strong>等，<strong>但只能有一个抽象方法</strong>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有类方法</span></span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有默认方法</span></span><br><span class="line">    System.out.println(<span class="string">&quot;bar&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<strong>Lambda 表达式</strong>出现之前，通常使用 <a
+href="/archives/java-oop#匿名内部类"><strong>匿名内部类</strong></a>
+来创建实例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Foo</span>() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">f.foo();    <span class="comment">// 匿名内部类测试...</span></span><br><span class="line"></span><br><span class="line">System.out.println(Foo.sum(<span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 3</span></span><br><span class="line">f.bar();    <span class="comment">// bar</span></span><br></pre></td></tr></table></figure>
+<h2 id="lambda-表达式">Lambda 表达式</h2>
+<p>由以上代码可见，使用<strong>匿名内部类</strong>时会有大量多余的代码（如<code>new Foo()</code>、重写唯一的抽象方法）。Java
+8 引入了 Lambda 表达式，用于简化代码。</p>
+<p><strong>Lambda 表达式本质上就是函数式接口的匿名内部类。</strong></p>
+<p>以上代码使用 Lambda 表达式则为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> () -&gt; &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>如果该抽象方法有参数，参数不可省略</strong></p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> (String name) -&gt; &#123;   <span class="comment">// 参数类型可以省略</span></span><br><span class="line">      System.out.println(<span class="string">&quot;欢迎回来，&quot;</span> + name);</span><br><span class="line">      System.out.println(<span class="string">&quot;——来自Lambda表达式&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    f.foo(<span class="string">&quot;巴掌&quot;</span>);</span><br><span class="line">    <span class="comment">// 欢迎回来，巴掌</span></span><br><span class="line">    <span class="comment">// ——来自Lambda表达式</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="lambda-表达式简化">Lambda 表达式简化</h2>
+<p>Lambda 表达式可以有如下简化：</p>
+<ul>
+<li>形参列表中参数类型可以省略；</li>
+<li>如果形参列表只有一个参数，那么圆括号可以省略；</li>
+<li>如果方法体只有一行代码，花括号可以省略；</li>
+<li>如果方法体只有一行代码，且为<code>return</code>语句，<code>return</code>可以省略。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="title function_">foo</span><span class="params">(<span class="type">int</span> a)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> a -&gt; a * a;</span><br><span class="line">    System.out.println(f.foo(<span class="number">5</span>));   <span class="comment">// 25</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法引用和构造器引用-重点">方法引用和构造器引用 (重点)</h2>
+<p><strong>当方法体只有一条代码时才可以使用</strong>。<strong>方法引用</strong>本质是<strong>进一步省略形参列表</strong>，形参列表顺序与传入参数的顺序完全相同。</p>
+<h3 id="引用类方法">引用类方法</h3>
+<p><strong>引用类方法</strong>转化前的格式为<code>(参数列表) -&gt; 类.类方法(参数列表)</code>，转化后为<code>类::类方法</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">double</span> <span class="title function_">min</span><span class="params">(<span class="type">double</span> i1, <span class="type">double</span> i2)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (i1, i2) -&gt; Math.min(i1, i2);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> Math::min;</span><br><span class="line">    System.out.println(f.min(<span class="number">5.0</span>, <span class="number">2.0</span>));  <span class="comment">// 2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引用实例方法">引用实例方法</h3>
+<p><strong>引用实例方法</strong>转化前的格式为<code>(参数1, 其他参数) -&gt; 参数1.实例方法(其他参数)</code>，转化后为<code>类::实例方法</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(String s, <span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (s, start, end) -&gt; s.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> String::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="string">&quot;Java, yes!&quot;</span>, <span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引用特定对象的实例方法">引用特定对象的实例方法</h3>
+<p><strong>引用特定对象的实例方法</strong>转化前的格式为<code>(参数) -&gt; 某对象.实例方法(参数)</code>，转化后为<code>某对象::实例方法</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (start, end) -&gt; &quot;Java, yes!&quot;.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="string">&quot;Java, yes!&quot;</span>::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="构造器引用">构造器引用</h3>
+<p><strong>构造器引用</strong>转化前的格式为<code>(参数) -&gt; 类.构造器(参数)</code>，转化后为<code>类::new</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  StringBuilder <span class="title function_">foo</span><span class="params">(String s)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = s -&gt; new StringBuilder(s);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> StringBuilder::<span class="keyword">new</span>;</span><br><span class="line">    System.out.println(f.foo(<span class="string">&quot;Welcome to Java World!&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a
+href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMUJK1olXDYCV1pdAUoUB19MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksUB28BGlgRQl9HCANtdUpkA2twQgV1PE59KjxDcCNISg1pXVcZbQcyVF9cC04VBWsBHGslXQEyAjBdCUoWAm4NG14WbQcyVFlfC0oTAmYNGVoTWTYFVFdtUx55dQRLWCBQCXlcMgM9OHsnAF84K1slXjZAOlhYARtHBTtaHgsRXwNXA1cNC0hHBTwJGFkSDVJRB1ddOEkWAmsBKw">《疯狂
+Java 讲义 · 第 5 版》</a></li>
+<li><a href="https://bfw.h5.xeknow.com/s/1YClVz">跟着李刚老师学
+Java（视频）</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>函数式编程</tag>
+        <tag>Lambda</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 注解笔记</title>
     <url>/archives/java-annotation/</url>
     <content><![CDATA[<p>Java 注解笔记</p>
@@ -1623,70 +1687,6 @@ Java 8 的重复注解。</li>
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 函数式编程详解</title>
-    <url>/archives/java-functional-program/</url>
-    <content><![CDATA[<p>Java 8 中有着许许多多特别好用的特性，Lambda 表达式就是其中一个。</p>
-<span id="more"></span>
-<h2 id="函数式接口">函数式接口</h2>
-<p><strong>函数式接口</strong>指<strong>只有</strong>一个<strong>抽象方法</strong>的接口。如果定义函数式接口只需在接口上方加入<code>@FunctionalInterface</code>注解。<strong>函数式接口</strong>中可以有<strong>类方法</strong>、<strong>默认方法</strong>等，<strong>但只能有一个抽象方法</strong>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有类方法</span></span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">bar</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 可以有默认方法</span></span><br><span class="line">    System.out.println(<span class="string">&quot;bar&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在<strong>Lambda 表达式</strong>出现之前，通常使用 <a
-href="/archives/java-oop#匿名内部类"><strong>匿名内部类</strong></a>
-来创建实例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Foo</span>() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">f.foo();    <span class="comment">// 匿名内部类测试...</span></span><br><span class="line"></span><br><span class="line">System.out.println(Foo.sum(<span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 3</span></span><br><span class="line">f.bar();    <span class="comment">// bar</span></span><br></pre></td></tr></table></figure>
-<h2 id="lambda-表达式">Lambda 表达式</h2>
-<p>由以上代码可见，使用<strong>匿名内部类</strong>时会有大量多余的代码（如<code>new Foo()</code>、重写唯一的抽象方法）。Java
-8 引入了 Lambda 表达式，用于简化代码。</p>
-<p><strong>Lambda 表达式本质上就是函数式接口的匿名内部类。</strong></p>
-<p>以上代码使用 Lambda 表达式则为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> () -&gt; &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;匿名内部类测试...&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>如果该抽象方法有参数，参数不可省略</strong></p>
-<p>例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> (String name) -&gt; &#123;   <span class="comment">// 参数类型可以省略</span></span><br><span class="line">      System.out.println(<span class="string">&quot;欢迎回来，&quot;</span> + name);</span><br><span class="line">      System.out.println(<span class="string">&quot;——来自Lambda表达式&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    f.foo(<span class="string">&quot;巴掌&quot;</span>);</span><br><span class="line">    <span class="comment">// 欢迎回来，巴掌</span></span><br><span class="line">    <span class="comment">// ——来自Lambda表达式</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="lambda-表达式简化">Lambda 表达式简化</h2>
-<p>Lambda 表达式可以有如下简化：</p>
-<ul>
-<li>形参列表中参数类型可以省略；</li>
-<li>如果形参列表只有一个参数，那么圆括号可以省略；</li>
-<li>如果方法体只有一行代码，花括号可以省略；</li>
-<li>如果方法体只有一行代码，且为<code>return</code>语句，<code>return</code>可以省略。</li>
-</ul>
-<p>例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">int</span> <span class="title function_">foo</span><span class="params">(<span class="type">int</span> a)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaTest</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> a -&gt; a * a;</span><br><span class="line">    System.out.println(f.foo(<span class="number">5</span>));   <span class="comment">// 25</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法引用和构造器引用-重点">方法引用和构造器引用 (重点)</h2>
-<p><strong>当方法体只有一条代码时才可以使用</strong>。<strong>方法引用</strong>本质是<strong>进一步省略形参列表</strong>，形参列表顺序与传入参数的顺序完全相同。</p>
-<h3 id="引用类方法">引用类方法</h3>
-<p><strong>引用类方法</strong>转化前的格式为<code>(参数列表) -&gt; 类.类方法(参数列表)</code>，转化后为<code>类::类方法</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  <span class="type">double</span> <span class="title function_">min</span><span class="params">(<span class="type">double</span> i1, <span class="type">double</span> i2)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (i1, i2) -&gt; Math.min(i1, i2);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> Math::min;</span><br><span class="line">    System.out.println(f.min(<span class="number">5.0</span>, <span class="number">2.0</span>));  <span class="comment">// 2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="引用实例方法">引用实例方法</h3>
-<p><strong>引用实例方法</strong>转化前的格式为<code>(参数1, 其他参数) -&gt; 参数1.实例方法(其他参数)</code>，转化后为<code>类::实例方法</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(String s, <span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (s, start, end) -&gt; s.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> String::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="string">&quot;Java, yes!&quot;</span>, <span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="引用特定对象的实例方法">引用特定对象的实例方法</h3>
-<p><strong>引用特定对象的实例方法</strong>转化前的格式为<code>(参数) -&gt; 某对象.实例方法(参数)</code>，转化后为<code>某对象::实例方法</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  String <span class="title function_">sub</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = (start, end) -&gt; &quot;Java, yes!&quot;.substring(start, end);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="string">&quot;Java, yes!&quot;</span>::substring;</span><br><span class="line">    System.out.println(f.sub(<span class="number">1</span>, <span class="number">4</span>));  <span class="comment">// ava</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="构造器引用">构造器引用</h3>
-<p><strong>构造器引用</strong>转化前的格式为<code>(参数) -&gt; 类.构造器(参数)</code>，转化后为<code>类::new</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">  StringBuilder <span class="title function_">foo</span><span class="params">(String s)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"><span class="comment">//  Foo f = s -&gt; new StringBuilder(s);</span></span><br><span class="line">    <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> StringBuilder::<span class="keyword">new</span>;</span><br><span class="line">    System.out.println(f.foo(<span class="string">&quot;Welcome to Java World!&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料">参考资料</h2>
-<ul>
-<li><a
-href="https://union-click.jd.com/jdc?e=&amp;p=JF8BAMUJK1olXDYCV1pdAUoUB19MRANLAjZbERscSkAJHTdNTwcKBlMdBgABFksUB28BGlgRQl9HCANtdUpkA2twQgV1PE59KjxDcCNISg1pXVcZbQcyVF9cC04VBWsBHGslXQEyAjBdCUoWAm4NG14WbQcyVFlfC0oTAmYNGVoTWTYFVFdtUx55dQRLWCBQCXlcMgM9OHsnAF84K1slXjZAOlhYARtHBTtaHgsRXwNXA1cNC0hHBTwJGFkSDVJRB1ddOEkWAmsBKw">《疯狂
-Java 讲义 · 第 5 版》</a></li>
-<li><a href="https://bfw.h5.xeknow.com/s/1YClVz">跟着李刚老师学
-Java（视频）</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>函数式编程</tag>
-        <tag>Lambda</tag>
       </tags>
   </entry>
   <entry>
